@@ -1,0 +1,42 @@
+.input{
+    position: relative;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.input > label{
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    color: var(--blue);
+    transform: translateY(-50%);
+
+    transition: all 0.3s linear;
+}
+
+.input > input{
+    display: block;
+    width: 100%;
+    padding: 10px 10px;
+    border: 2px solid var(--blue);
+    border-radius: 10px;
+    outline: none;
+
+    background-color: inherit;
+    color: inherit;
+
+    transition: all 0.3s linear;
+    
+}
+
+.input > input:focus{
+    border: 2px solid var(--light);
+    transition: all 0.3s linear;
+
+}
+
+
+input:not(:placeholder-shown) ~ label {
+    transform: translateY(-45px);
+}
+

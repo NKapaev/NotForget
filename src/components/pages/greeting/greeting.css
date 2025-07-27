@@ -1,0 +1,28 @@
+.greeting-section{
+    padding-top: 20px;
+}
+
+.greeting-container{
+    display: flex;
+}
+
+.greeting-hero{
+    display: flex;
+}
+
+.greeting-hero-column {
+    width: 50%;
+}
+
+.greeting-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.greeting-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
