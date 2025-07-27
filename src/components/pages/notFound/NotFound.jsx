@@ -1,8 +1,11 @@
 import "./notFound.css"
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+
+import Button from "../../ui/button/Button"
 
 export default function NotFound() {
 
+    const navigate = useNavigate()
     const location = useLocation()
     const error = location.state || {}
 
@@ -13,7 +16,9 @@ export default function NotFound() {
             </svg>
             <p className="error-code">{error.code}</p>
             <p>{error.message}</p>
-
+            <Button onClick={() => {
+                navigate("/")
+            }}>Back to main page</Button>
         </>
     )
 }
