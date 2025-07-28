@@ -1,7 +1,7 @@
 import "./themeToggle.css"
 import { useEffect, useState } from "react";
 
-const ThemeToggle = () => {
+const ThemeToggle = ({ className = "" }) => {
     const [theme, setTheme] = useState(() => {
         return localStorage.getItem("theme") || "light";
     });
@@ -16,7 +16,7 @@ const ThemeToggle = () => {
     };
 
     return (
-        <label className="themeToggle" aria-label="Переключить тему">
+        <label className={`themeToggle ${className}`} aria-label="Переключить тему">
             <input
                 className="themeToggle-checkbox visually-hidden"
                 type="checkbox"

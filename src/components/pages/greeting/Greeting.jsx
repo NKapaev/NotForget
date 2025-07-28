@@ -1,23 +1,16 @@
 import ThemeToggle from "../../ui/themeToggle/ThemeToggle"
 import LoginForm from "../../loginForm/LoginForm"
-import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
-import logOut from "../../../utils/logout"
 import "./greeting.css"
 
 
 export default function Greeting() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
-    const navigate = useNavigate()
-
-
+    const userHeight = window.innerHeight
 
     return (
-        <section className="greeting-section">
-            <div className="container">
-                <ThemeToggle></ThemeToggle>
+        <section className="greeting-section" style={{ height: userHeight }}>
+            <div className="container greeting-container">
+                <ThemeToggle className="greeting-theme-toggle"></ThemeToggle>
 
                 <div className="greeting-hero">
                     <div className="greeting-hero-column greeting-content">
@@ -32,10 +25,7 @@ export default function Greeting() {
                         <LoginForm />
                     </div>
                 </div>
-
-                <Link to="/registration">Зарегистрироваться</Link>
-                <button onClick={() => logOut(navigate)}>Logout</button>
             </div>
-        </section>
+        </section >
     )
 }

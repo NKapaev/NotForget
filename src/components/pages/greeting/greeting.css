@@ -1,28 +1,39 @@
-.greeting-section{
-    padding-top: 20px;
+.greeting-section {
+  position: relative;
+  padding-top: 20px;
 }
 
-.greeting-container{
-    display: flex;
+.greeting-container {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.greeting-hero{
-    display: flex;
+.greeting-hero {
+  display: flex;
 }
 
 .greeting-hero-column {
-    width: 50%;
+  width: 50%;
 }
 
-.greeting-content{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.greeting-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.greeting-login{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.greeting-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.greeting-theme-toggle {
+  position: absolute;
+  right: 20px;
+  top: 20px;
 }
