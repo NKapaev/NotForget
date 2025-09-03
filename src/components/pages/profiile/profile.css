@@ -1,4 +1,10 @@
 .profile {
-  background-color: inherit;
-  color: inherit;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.profile-container {
+  position: relative;
+
+  padding-top: 20px;
 }
