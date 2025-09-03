@@ -1,7 +1,7 @@
 import "./folderList.css"
 
 import Folder from "../folder/Folder"
-import AddTile from "../addtile/AddTile"
+import AddTile from "../addTile/AddTile"
 import { useNavigate, useParams } from "react-router-dom"
 import useFolders from "../../hooks/useFolders"
 
