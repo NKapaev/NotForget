@@ -1,19 +1,8 @@
-import "./themeToggle.css"
-import { useEffect, useState } from "react";
+import "./themeToggle.css";
+import { useTheme } from "../../../context/ThemeContext";
 
-const ThemeToggle = ({ className = "" }) => {
-    const [theme, setTheme] = useState(() => {
-        return localStorage.getItem("theme") || "light";
-    });
-
-    useEffect(() => {
-        document.body.className = theme;
-        localStorage.setItem("theme", theme);
-    }, [theme]);
-
-    const handleChange = () => {
-        setTheme(prev => (prev === "light" ? "dark" : "light"));
-    };
+export default function ThemeToggle({ className = "" }) {
+    const { theme, toggleTheme } = useTheme();
 
     return (
         <label className={`themeToggle ${className}`} aria-label="Переключить тему">
@@ -21,12 +10,10 @@ const ThemeToggle = ({ className = "" }) => {
                 className="themeToggle-checkbox visually-hidden"
                 type="checkbox"
                 checked={theme === "dark"}
-                onChange={handleChange}
+                onChange={toggleTheme}
                 aria-checked={theme === "dark"}
             />
             <span className="slider" />
         </label>
     );
-};
-
-export default ThemeToggle;
+}
