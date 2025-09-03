@@ -1,0 +1,42 @@
+.folder {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-color);
+}
+
+p {
+  margin: 5px;
+}
+
+.delete-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.delete-button:hover,
+.delete-button:focus {
+  transform: scale(1.1);
+}
+
+.delete-button-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.creation-date {
+  color: gray;
+  margin-top: auto;
+  align-self: end;
+}
