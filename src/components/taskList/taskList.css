@@ -1,0 +1,14 @@
+.task-list {
+  /* outline: 2px solid blue; */
+  position: fixed;
+  right: 0;
+  top: 70px;
+  transform: translateX(100%);
+
+  background-color: var(--bg-color);
+  width: 200px;
+}
+
+.task-list.open {
+  transform: translateX(-10%);
+}
