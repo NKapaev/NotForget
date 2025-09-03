@@ -1,45 +1,37 @@
-import { useState } from "react"
 import supabase from "../../../utils/supabase"
+import { useAuth } from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import Form from "../../form/Form";
 
-
+import "./registration.css"
 
 export default function Registration() {
+    const userHeight = window.innerHeight
+    const navigate = useNavigate()
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    // const [registrationError, setRegistrationError] = useState("")
-    const navigate = useNavigate();
+    const { signUpNewUser, error } = useAuth()
 
-    async function signUpNewUser(email, password) {
-        const { data, error } = await supabase.auth.signUp({
-            email,
-            password,
-            options: {
-                emailRedirectTo: '/confirmEmail',
-            },
-        })
-
-        if (!error) {
+    const handleRegistration = async (formData) => {
+        try {
+            const user = await signUpNewUser(formData.email, formData.password)
             navigate("/confirmEmail")
-        } else {
-            alert(error.message)
+            console.log(user)
+        } catch (_) {
+
         }
     }
 
+
     return (
-        <>
-            I am registration page
-
-            <form action="" onSubmit={(e) => {
-                e.preventDefault()
-                signUpNewUser(email, password)
-
-            }}>
-                <input type="text" onChange={(e) => { setEmail(e.target.value) }} />
-                <input type="text" onChange={(e) => { setPassword(e.target.value) }} />
-                <button>Register</button>
-            </form>
-        </>
+        <section className="registration-section" style={{ height: userHeight }}>
+            <div className="container registration-container">
+                <div className="registration-form-wrapper">
+                    <Form className="registration-form" buttonText="Register" fields={[{ name: "email", type: "email", placeholder: "Email" }, {
+                        name: "password", type: "password", placeholder: "Password"
+                    }]} onSubmit={handleRegistration} />
+                </div>
+            </div>
+        </section>
     )
 }
+
