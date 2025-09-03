@@ -2,6 +2,7 @@ import "./header.css"
 
 import { useNavigate, Link } from "react-router-dom"
 
+import Button from "../ui/button/Button"
 import ThemeToggle from "../ui/themeToggle/ThemeToggle"
 import logOut from "../../utils/logout"
 
@@ -11,7 +12,7 @@ export default function Header({ userData }) {
     return (
         <header className="header">
             <div className="container header-container">
-                <Link className="header-logo" to={`/profile/${userData.id}`}>
+                <Link className="header-logo" to={`/profile/${userData.id}`} width="70px">
                     <img src="/smallLogo.svg#smallLogo" alt="logo" width="70px" />
                 </Link>
 
@@ -19,12 +20,12 @@ export default function Header({ userData }) {
                     <p onClick={(e) => {
                         e.currentTarget.classList.toggle("isOpen")
                     }} className="user-name">{userData.username}</p>
-                    <button onClick={() => {
+                    <Button onClick={() => {
                         logOut(navigate)
-                    }} className="logout-button">Logout</button>
+                    }} className="logout-button">Logout</Button>
                 </div>
                 <ThemeToggle />
             </div>
-        </header>
+        </header >
     )
 }

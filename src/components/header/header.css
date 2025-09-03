@@ -12,14 +12,18 @@
 
 .header-logo {
   margin-right: auto;
+  width: 70px;
 }
 
 .user-container {
   position: relative;
+  z-index: 1;
 }
 
 .user-name {
+  color: #fff;
   margin-right: 20px;
+  cursor: pointer;
 }
 
 .logout-button {
