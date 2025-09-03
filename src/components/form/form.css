@@ -1,0 +1,10 @@
+.form-button {
+  width: 40%;
+}
+
+.button-container {
+  padding-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
