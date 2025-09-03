@@ -1,15 +1,15 @@
-.button{
-    margin-top: 20px;
-    padding: 10px;
-    border: 2px solid var(--blue);
-    border-radius: 10px;
-    background-color: inherit;
-    color: inherit;
+.button {
+  padding: 10px;
+  border: 2px solid var(--blue);
+  border-radius: 10px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 
-    transition: all 0.3s linear;
+  transition: all 0.3s linear;
 }
 
-.button:hover, .button:focus{
-    background-color: var(--light);
-    border-color: var(--light);
+.button:hover,
+.button:focus {
+  background-color: var(--light);
+  border-color: var(--light);
 }
