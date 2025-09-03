@@ -1,6 +1,6 @@
 import useNotes from "../../hooks/useNotes"
 import Note from "../note/Note"
-import AddTile from "../addtile/AddTile"
+import AddTile from "../addTile/AddTile"
 import useFolder from "../../hooks/useFolder"
 import "./noteList.css"
 
