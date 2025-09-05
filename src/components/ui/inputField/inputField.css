@@ -34,5 +34,5 @@
 }
 
 input:not(:placeholder-shown) ~ label {
-  transform: translateY(-45px);
+  transform: translateY(-50px);
 }
