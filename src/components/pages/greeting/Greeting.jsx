@@ -48,11 +48,9 @@ export default function Greeting() {
             style={{ minHeight: userHeight, paddingTop: userHeight < 470 ? "60px" : '' }}>
             <div className="container greeting-container">
                 <ThemeToggle className="greeting-theme-toggle" />
-
-                {/* <div className="greeting-hero"> */}
                 <div className="greeting-hero-column greeting-content">
-                    <svg className="greeting-logo" href="./logo.svg#logo" /* width="300px" height="300px"*/>
-                        <use className="greeting-logo" href="./logo.svg#logo" /*width="300px" height="300px"*/></use>
+                    <svg className="greeting-logo" href="./logo.svg#logo">
+                        <use className="greeting-logo" href="./logo.svg#logo"></use>
                     </svg>
                     <p className="greeting-text">
                         NotForget
@@ -70,18 +68,13 @@ export default function Greeting() {
                             ]}
                         >
                             <Link className="forget-password link">Забули пароль?</Link>
-
-
                         </Form>
                         <div className="registration-part">
                             <Link className="registration-link link" to={'/registration'}>Зареєструватись</Link>
                         </div>
                     </div>
-
                     {error && <p style={{ color: "red" }}>{error}</p>}
-
                 </div>
-                {/* </div> */}
             </div>
         </section >
     )

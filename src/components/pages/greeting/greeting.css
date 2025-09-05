@@ -70,12 +70,6 @@
   justify-content: center;
 }
 
-/* @media screen and (max-width: 480px) {
-  .greeting-content {
-    margin-bottom: 0;
-  }
-} */
-
 @media screen and (min-width: 769px) {
   .greeting-section {
     display: flex;
@@ -91,13 +85,6 @@
     align-items: center;
     justify-content: space-around;
   }
-
-  /* .greeting-hero {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-  } */
 
   .greeting-hero-column {
     width: 50%;
@@ -121,8 +108,5 @@
   .greeting-hero-form {
     width: 50%;
     max-width: 500px;
-  }
-
-  .greeting-form-wrapper {
   }
 }
