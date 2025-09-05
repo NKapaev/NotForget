@@ -9,7 +9,7 @@
   --text-color: #1a1b1d;
   --accent-color: #313ab1;
 
-  --mobile-min-width: 320px;
+  /* --mobile-min-width: 320px;
   --mobile-max-width: 480px;
 
   --tablet-min-width: 481px;
@@ -18,13 +18,14 @@
   --small-laptop-min-width: 769px;
   --small-laptop-max-width: 1024px;
 
-  --desktop-min-width: 1025px;
+  --desktop-min-width: 1025px; */
 }
 
 body {
   margin: 0;
   padding: 0;
   transition: all 0.3s linear;
+  font-family: 'Montserrat', sans-serif;
 
   background-color: var(--bg-color);
   color: var(--text-color);
@@ -33,6 +34,11 @@ body {
 body.dark {
   --bg-color: #1a1b1d;
   --text-color: #ffffff;
+}
+
+/* delete it */
+* {
+  font-size: 17px;
 }
 
 *,
