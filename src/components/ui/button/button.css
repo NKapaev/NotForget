@@ -4,7 +4,7 @@
   border-radius: 10px;
   background-color: var(--bg-color);
   color: var(--text-color);
-
+  font-family: 'Montserrat', sans-serif;
   transition: all 0.3s linear;
 }
 
