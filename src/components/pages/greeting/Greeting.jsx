@@ -1,11 +1,12 @@
 import ThemeToggle from "../../ui/themeToggle/ThemeToggle"
-import { useAuth } from "../../../hooks/useAuth"
 import supabase from '../../../utils/supabase'
-import "./greeting.css"
+import { useAuth } from "../../../hooks/useAuth"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import Form from "../../form/Form"
 import { Link } from "react-router-dom"
+
+import Form from "../../form/Form"
+import "./greeting.css"
 
 export default function Greeting() {
     const navigate = useNavigate()
@@ -43,47 +44,45 @@ export default function Greeting() {
     }
 
     return (
-        <section className="greeting-section" style={{ height: userHeight }}>
+        <section className="greeting-section"
+            style={{ minHeight: userHeight, paddingTop: userHeight < 470 ? "60px" : '' }}>
             <div className="container greeting-container">
                 <ThemeToggle className="greeting-theme-toggle" />
 
-                <div className="greeting-hero">
-                    <div className="greeting-hero-column greeting-content">
-                        <svg className="svg" href="./logo.svg#logo" width="300px" height="300px">
-                            <use className="use" href="./logo.svg#logo" width="300px" height="300px"></use>
-                        </svg>
-                        <p>
-                            Пам’ять може підвести. Ми — ніколи. <br />
-                            Запиши, прикріпи, збережи — й забудь... аж поки не знадобиться. <br />
-                            Твої думки в безпеці.
-                        </p>
-                    </div>
-                    <div className="greeting-hero-column ">
-                        <div className="greeting-form">
-                            <Form
-                                className="login-form"
-                                title="Вход"
-                                buttonText="Login"
-                                onSubmit={handleLogin}
-                                fields={[
-                                    { name: "email", type: "email", placeholder: "Email" },
-                                    { name: "password", type: "password", placeholder: "Пароль" }
-                                ]}
-                            >
-                                <Link className="forget-password link">Forget password?</Link>
-
-
-                            </Form>
-                            <div className="registration-part">
-                                <Link className="registration-link link" to={'/registration'}>Зареєструватись</Link>
-                            </div>
-                        </div>
-
-                        {error && <p style={{ color: "red" }}>{error}</p>}
-
-                    </div>
+                {/* <div className="greeting-hero"> */}
+                <div className="greeting-hero-column greeting-content">
+                    <svg className="greeting-logo" href="./logo.svg#logo" /* width="300px" height="300px"*/>
+                        <use className="greeting-logo" href="./logo.svg#logo" /*width="300px" height="300px"*/></use>
+                    </svg>
+                    <p className="greeting-text">
+                        NotForget
+                    </p>
                 </div>
+                <div className="greeting-hero-column greeting-hero-form">
+                    <div className="greeting-form">
+                        <Form
+                            className="login-form"
+                            buttonText="Увійти"
+                            onSubmit={handleLogin}
+                            fields={[
+                                { name: "email", type: "email", placeholder: "Email" },
+                                { name: "password", type: "password", placeholder: "Пароль" }
+                            ]}
+                        >
+                            <Link className="forget-password link">Забули пароль?</Link>
+
+
+                        </Form>
+                        <div className="registration-part">
+                            <Link className="registration-link link" to={'/registration'}>Зареєструватись</Link>
+                        </div>
+                    </div>
+
+                    {error && <p style={{ color: "red" }}>{error}</p>}
+
+                </div>
+                {/* </div> */}
             </div>
-        </section>
+        </section >
     )
 }

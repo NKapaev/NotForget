@@ -1,35 +1,7 @@
 .greeting-section {
   position: relative;
   padding-top: 20px;
-}
-
-.greeting-container {
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.greeting-hero {
-  display: flex;
-}
-
-.greeting-hero-column {
-  width: 50%;
-}
-
-.greeting-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.greeting-login {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding-bottom: 20px;
 }
 
 .greeting-theme-toggle {
@@ -38,19 +10,33 @@
   top: 20px;
 }
 
-.greeting-form {
-  padding: 20px;
-  padding-top: 0;
-  border-radius: 10px;
-  border: 2px solid var(--blue);
-  width: 60%;
+.greeting-content {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-.greeting-form-wrapper {
+.greeting-logo {
+  margin-right: 20px;
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+}
+
+.greeting-text {
+  font-size: 10vw;
+  color: var(--blue);
+}
+
+.greeting-form {
+  padding: 20px;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  border-radius: 10px;
+  border: 2px solid var(--blue);
 }
 
 .registration-part {
-  position: relative;
   padding-top: 20px;
 }
 
@@ -58,7 +44,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 36px;
+  height: 40px;
   border-radius: 10px;
   background-color: var(--blue);
   color: var(--white);
@@ -82,4 +68,61 @@
 .forget-password {
   display: flex;
   justify-content: center;
+}
+
+/* @media screen and (max-width: 480px) {
+  .greeting-content {
+    margin-bottom: 0;
+  }
+} */
+
+@media screen and (min-width: 769px) {
+  .greeting-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+  }
+
+  .greeting-container {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  /* .greeting-hero {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+  } */
+
+  .greeting-hero-column {
+    width: 50%;
+  }
+
+  .greeting-content {
+    flex-direction: column;
+    max-width: 600px;
+    margin-bottom: 0;
+  }
+
+  .greeting-logo {
+    max-width: 400px;
+    margin-right: 0;
+  }
+
+  .greeting-text {
+    font-size: 6vw;
+  }
+
+  .greeting-hero-form {
+    width: 50%;
+    max-width: 500px;
+  }
+
+  .greeting-form-wrapper {
+  }
 }
