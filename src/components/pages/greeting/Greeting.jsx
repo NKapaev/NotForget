@@ -69,10 +69,8 @@ export default function Greeting() {
                         >
                             <Link className="forget-password link">Забули пароль?</Link>
                         </Form>
-                        <div className="registration-part">
-                            <div className="registration-part-separator">або</div>
-                            <Link className="registration-link link" to={'/registration'}>Зареєструватись</Link>
-                        </div>
+                        <div className="registration-part-separator">або</div>
+                        <Link className="registration-link link" to={'/registration'}>Зареєструватись</Link>
                     </div>
                     {error && <p style={{ color: "red" }}>{error}</p>}
                 </div>
