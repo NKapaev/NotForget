@@ -56,13 +56,36 @@
   color: var(--white);
 }
 
-.registration-part::before {
+/* .registration-part::before {
   content: '';
   display: block;
   margin-bottom: 20px;
   width: 100%;
   height: 2px;
   background-color: var(--blue);
+} */
+
+.registration-part-separator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.registration-part-separator::before,
+.registration-part-separator::after {
+  content: '';
+  width: 100%;
+  height: 2px;
+  background-color: var(--blue);
+}
+
+.registration-part-separator::before {
+  margin-right: 20px;
+}
+
+.registration-part-separator::after {
+  margin-left: 20px;
 }
 
 .forget-password {
