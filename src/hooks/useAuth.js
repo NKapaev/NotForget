@@ -16,7 +16,7 @@ export function useAuth() {
             if (error) throw error
 
             const user = data.user
-            await ensureProfileExists(user)
+            // await ensureProfileExists(user)
             return user
         } catch (err) {
             setError(err.message)
@@ -34,9 +34,10 @@ export function useAuth() {
                 email,
                 password,
                 options: {
-                    emailRedirectTo: `${window.location.origin}/emailConfirmed`, // полный URL
+                    emailRedirectTo: `${window.location.origin}`, // полный URL
                 },
             })
+            console.log(window.location.origin)
 
             if (error) throw error
 
@@ -50,20 +51,20 @@ export function useAuth() {
         }
     }
 
-    const ensureProfileExists = async (user) => {
-        const { data } = await supabase
-            .from("profiles")
-            .select("*")
-            .eq("id", user.id)
-            .single()
+    // const ensureProfileExists = async (user) => {
+    //     const { data } = await supabase
+    //         .from("profiles")
+    //         .select("*")
+    //         .eq("id", user.id)
+    //         .single()
 
-        if (!data) {
-            await supabase.from("profiles").insert({
-                id: user.id,
-                username: user.email.split("@")[0],
-            })
-        }
-    }
+    //     if (!data) {
+    //         await supabase.from("profiles").insert({
+    //             id: user.id,
+    //             username: user.email.split("@")[0],
+    //         })
+    //     }
+    // }
 
     return { signIn, signUpNewUser, error, loading }
 }
