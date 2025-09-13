@@ -28,11 +28,18 @@
 
 .logout-button {
   position: absolute;
+  top: 130%;
   opacity: 0;
+  pointer-events: none;
 
   transition: all 0.3s linear;
 }
 
+.logout-button:hover {
+  cursor: pointer;
+}
+
 .user-name.isOpen + .logout-button {
   opacity: 1;
+  pointer-events: all;
 }

@@ -20,9 +20,9 @@ export default function Header({ userData }) {
                     <p onClick={(e) => {
                         e.currentTarget.classList.toggle("isOpen")
                     }} className="user-name">{userData.username}</p>
-                    <Button onClick={() => {
+                    <Button className="logout-button" onClick={() => {
                         logOut(navigate)
-                    }} className="logout-button">Logout</Button>
+                    }} >Logout</Button>
                 </div>
                 <ThemeToggle />
             </div>
