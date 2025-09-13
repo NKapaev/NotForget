@@ -4,7 +4,7 @@ const initialState = {
     taskListShown: false,
 }
 
-export const taskListSlise = createSlice({
+export const taskListSlice = createSlice({
     name: 'taskList',
     initialState,
     reducers: {
@@ -21,6 +21,6 @@ export const taskListSlise = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { showTaskList, hideTaskList, toggleTaskListOpen } = taskListSlise.actions
+export const { showTaskList, hideTaskList, toggleTaskListOpen } = taskListSlice.actions
 
-export default taskListSlise.reducer
+export default taskListSlice.reducer
