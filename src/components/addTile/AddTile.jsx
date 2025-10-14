@@ -1,7 +1,10 @@
-import Form from "../form/Form"
 import useAddFolder from "../../hooks/useAddFolder"
 import useAddNote from "../../hooks/useAddNote"
 import { useModal } from "../../context/ModalProvider"
+
+import Form from "../form/Form"
+import Button from "../ui/button/Button"
+
 
 export default function AddTile({ entity, folderId }) {
     const { openModal, closeModal } = useModal()
@@ -25,7 +28,11 @@ export default function AddTile({ entity, folderId }) {
             <li className="addFolder tile" onClick={(e) => {
                 if (e.detail === 2) {
                     e.preventDefault()
-                    openModal(<Form buttonText="Create" onSubmit={handleSubmit} fields={[{ name: "name", type: "text", placeholder: "Folder name" }, { name: "description", type: "text", placeholder: "Folder description" }]} />)
+                    openModal(<Form onSubmit={handleSubmit} fields={[{ name: "name", type: "text", placeholder: "Folder name" }, { name: "description", type: "text", placeholder: "Folder description" }]} >
+                        <div className="form-button-container">
+                            <Button type="submit">Створити</Button>
+                        </div>
+                    </Form>)
                 }
             }}>
                 <svg className="svg" width="100px" height="100px">
@@ -40,7 +47,11 @@ export default function AddTile({ entity, folderId }) {
             <li className="addFolder tile" onClick={(e) => {
                 if (e.detail === 2) {
                     e.preventDefault()
-                    openModal(<Form buttonText="Create" onSubmit={handleSubmit} fields={[{ name: "note", type: "text", placeholder: "Enter note" }]} />)
+                    openModal(<Form onSubmit={handleSubmit} fields={[{ name: "note", type: "text", placeholder: "Enter note" }]}>
+                        <div className="form-button-container">
+                            <Button type="submit">Створити</Button>
+                        </div>
+                    </Form>)
                 }
             }}>
                 <svg className="svg" width="100px" height="100px">

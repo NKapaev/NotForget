@@ -1,8 +1,9 @@
 .form-button {
+  font-weight: 400;
   width: 40%;
 }
 
-.button-container {
+.form-button-container {
   padding-top: 30px;
   display: flex;
   justify-content: space-between;

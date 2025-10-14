@@ -36,3 +36,7 @@
 input:not(:placeholder-shown) ~ label {
   transform: translateY(-50px);
 }
+
+.field-error {
+  margin-top: 10px;
+}

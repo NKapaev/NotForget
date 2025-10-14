@@ -1,14 +1,26 @@
 .task-list {
-  /* outline: 2px solid blue; */
-  position: fixed;
-  right: 0;
-  top: 70px;
-  transform: translateX(100%);
+  outline: 2px solid blue;
+  /* position: fixed; */
+  /* right: 0; */
+  /* top: 70px; */
+  /* transform: translateX(100%); */
 
   background-color: var(--bg-color);
   width: 200px;
+  z-index: 1;
 }
 
-.task-list.open {
+.task-list:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+/* .task-lists.open {
   transform: translateX(-10%);
+} */
+
+.taskList-item {
+  position: relative;
+  padding: 10px;
+
+  border: 2px solid purple;
 }

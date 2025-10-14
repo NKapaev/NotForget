@@ -5,6 +5,7 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 
+import Button from "../../ui/button/Button"
 import Form from "../../form/Form"
 import "./greeting.css"
 
@@ -59,15 +60,18 @@ export default function Greeting() {
                 <div className="greeting-hero-column greeting-hero-form">
                     <div className="greeting-form">
                         <Form
+                            validate={false}
                             className="login-form"
-                            buttonText="Увійти"
                             onSubmit={handleLogin}
                             fields={[
                                 { name: "email", type: "email", placeholder: "Email" },
                                 { name: "password", type: "password", placeholder: "Пароль" }
                             ]}
                         >
-                            <Link className="forget-password link">Забули пароль?</Link>
+                            <div className="form-button-container">
+                                <Button className="form-button" type="submit">Увійти</Button>
+                                <Link className="forget-password link">Забули пароль?</Link>
+                            </div>
                         </Form>
                         <div className="registration-part-separator">або</div>
                         <Link className="registration-link link" to={'/registration'}>Зареєструватись</Link>

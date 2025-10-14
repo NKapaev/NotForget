@@ -1,0 +1,18 @@
+.task-execution {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+}
+
+.task-execution.not-started {
+  background-color: gray;
+}
+.task-execution.in-progress {
+  background-color: orange;
+}
+.task-execution.completed {
+  background-color: green;
+}
+
+/* ["not started", "in progress", "completed"]; */

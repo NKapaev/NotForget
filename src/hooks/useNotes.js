@@ -1,9 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import supabase from "../utils/supabase";
+import { useQuery } from "@tanstack/react-query"
+import supabase from "../utils/supabase"
 
-export default function useNotes(folderId) {
+export default function useNotes(folderId = null, taskListId = null) {
     return useQuery({
-        queryKey: ["notes", folderId],
+        queryKey: ["notes", folderId, taskListId],
         queryFn: async () => {
             let query = supabase.from("notes").select("*")
 
@@ -11,10 +11,17 @@ export default function useNotes(folderId) {
                 query = query.eq("folder_id", folderId)
             }
 
+            if (taskListId) {
+                query = query.eq("task_list_id", taskListId) // 👈 новое имя поля
+            }
+
+            query = query.order("created_at", { ascending: true })
+
             const { data, error } = await query
             if (error) throw error
             return data
         },
-        enabled: !!folderId,
+        enabled: !!folderId || !!taskListId,
     })
+
 }
