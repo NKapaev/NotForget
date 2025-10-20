@@ -38,6 +38,11 @@ export default function NoteList({ folderId }) {
     return (
         <>
             {notes?.length === 0 ? "Here nothing yet" : ""}
+            <button>
+                <svg width="11px" height="20px">
+                    <use href="/arrow.svg#arrow"></use>
+                </svg>
+            </button>
             <h2>{folder?.name || ""}</h2>
             <ul className="note-list list"
                 onDrop={handleDrop}
