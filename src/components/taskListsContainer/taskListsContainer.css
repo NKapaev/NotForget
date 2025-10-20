@@ -1,19 +1,17 @@
 .task-lists-container {
   padding: 10px;
-  padding-left: 20px;
   outline: 2px solid blue;
   position: fixed;
   right: 0;
   top: 70px;
-  transform: translateX(100%);
+  /* transform: translateX(0); */
 
   background-color: var(--bg-color);
-  /* width: 200px; */
   z-index: 1;
 }
 
 .task-lists-container.open {
-  transform: translateX(0);
+  /* transform: translateX(0); */
 }
 
 .toggle-task-list-btn {

@@ -1,5 +1,6 @@
 import "./taskList.css"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
+import { useState } from "react"
 import TaskExecution from "../taskExecution/TaskExecution"
 import Button from "../ui/button/Button"
 import supabase from "../../utils/supabase"
@@ -7,6 +8,7 @@ import useNotes from "../../hooks/useNotes"
 import useDeleteNote from "../../hooks/useDeleteNote"
 
 export default function TaskList({ id, className, name }) {
+    const [isOpen, setIsOpen] = useState(false)
     const queryClient = useQueryClient()
     const { data: notes, isLoading, error } = useNotes(null, id)
 
@@ -20,6 +22,7 @@ export default function TaskList({ id, className, name }) {
                 .single()
 
             if (error) throw error
+
             return data
         },
         onSuccess: () => {
@@ -41,14 +44,16 @@ export default function TaskList({ id, className, name }) {
 
     return (
         <div
-            className={`task-list ${className ?? ""}`}
+            className={`task-list ${className ?? ""} ${isOpen ? "isOpen" : ""}`}
+            onClick={() => setIsOpen(!isOpen)}
             onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}
         >
             <p>{name}</p>
 
             {/* Проверяем, что notes не пустой массив */}
-            {notes?.length ? (
+
+            {isOpen && notes?.length ? (
                 notes.map((note) => (
                     <div key={note.id} className="taskList-item" draggable="true" onDragStart={(e) => {
                         e.dataTransfer.setData("text/plain", note.id)
@@ -72,7 +77,7 @@ export default function TaskList({ id, className, name }) {
                     </div>
                 ))
             ) : (
-                <p>Нет заметок</p>
+                <p>Перетягніть задачу для додавання</p>
             )}
         </div>
     )

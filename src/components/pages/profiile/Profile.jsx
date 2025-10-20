@@ -59,7 +59,7 @@ export default function Profile() {
 
 
             <div className="container profile-container">
-                <TaskListsContainer ></TaskListsContainer>
+                <TaskListsContainer></TaskListsContainer>
 
                 <button onClick={(e) => {
                     openModal(<Form onSubmit={handleSubmit} fields={[{ name: "name", type: "text", placeholder: "Task list name" }]} >

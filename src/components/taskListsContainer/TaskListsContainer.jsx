@@ -47,7 +47,7 @@ export default function TaskListsContainer() {
     return (
         <div className={`task-lists-container ${taskList.taskListShown ? "open" : ""}`}>
 
-            <Button className="toggle-task-list-btn" onClick={(e) => { dispatch(toggleTaskListOpen()) }}>{taskList.taskListShown ? ">" : "<"}</Button>
+            {/* <Button className="toggle-task-list-btn" onClick={(e) => { dispatch(toggleTaskListOpen()) }}>{taskList.taskListShown ? ">" : "<"}</Button> */}
 
             {taskLists?.map((taskList) => {
                 return (
