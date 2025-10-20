@@ -61,7 +61,8 @@ export default function TaskExecution({ taskId }) {
         fetchTask()
     }, [taskId])
 
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e.stopPropagation()
         if (!executionState) return
         const newState = taskStateGenerator(executionState)
         setExecutionState(newState)
