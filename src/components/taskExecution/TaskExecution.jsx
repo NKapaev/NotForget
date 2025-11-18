@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import debounce from "../../utils/debounce"
 
+import Loader from "../ui/loader/Loader"
+
 function taskStateGenerator(currentState) {
     const states = ["not started", "in progress", "completed"]
     const currentIndex = states.indexOf(currentState)
@@ -70,7 +72,7 @@ export default function TaskExecution({ taskId }) {
 
     }
 
-    if (isLoading) return <div className="task-execution loading">Loading...</div>
+    if (isLoading) return <Loader />
 
     return (
         <div
