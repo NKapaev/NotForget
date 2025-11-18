@@ -2,23 +2,31 @@ import "./taskListsContainer.css"
 
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { toggleTaskListOpen } from "../redux/taskListSlice"
 import Button from "../ui/button/Button"
 import { useParams } from "react-router-dom"
 import supabase from "../../utils/supabase"
 import TaskList from "../taskList/TaskList"
 import { useSelector } from "react-redux"
+import { useModal } from "../../context/ModalProvider"
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query"
+import Form from "../form/Form"
+import useAddTaskList from "../../hooks/useAddTaskList"
 
 
-export default function TaskListsContainer() {
-
+export default function TaskListsContainer({ isMobile = false }) {
+    const { openModal, closeModal } = useModal()
+    const addTaskList = useAddTaskList()
     const dispatch = useDispatch()
     const taskList = useSelector((state) => state.taskList)
 
     const { id } = useParams()
 
     const queryClient = useQueryClient()
+
+    function handleSubmit(formData) {
+        addTaskList.mutateAsync({ name: formData.name })
+        closeModal()
+    }
 
     // Queries
     const { data: taskLists } = useQuery({
@@ -33,7 +41,7 @@ export default function TaskListsContainer() {
         }
     })
 
-    // Mutations
+    // Mutations  REWRITE THIS USING useAddTaskList HOOK
     const mutation = useMutation({
         mutationFn: async () => {
             const { data, error } = await supabase.from("taskLists").insert([{ name: formData.name }]).select().single()
@@ -45,7 +53,17 @@ export default function TaskListsContainer() {
     })
 
     return (
-        <div className={`task-lists-container ${taskList.taskListShown ? "open" : ""}`}>
+        <div className={`task-lists-container ${taskList.taskListShown ? "open" : ""} ${isMobile ? "mobile" : ""}`}>
+
+            <Button aria-label="Створити новий список задач" className="add-tasklist-button" onClick={(e) => {
+                openModal(<Form onSubmit={handleSubmit} fields={[{ name: "name", type: "text", placeholder: "Task list name" }]} >
+                    <div className="form-button-container">
+                        <Button type="submit">Створити</Button>
+                    </div>
+                </Form>)
+            }}>{<svg className="tasklist-add-icon" width="20px" height="20px">
+                <use href="/icons/plus-icon.svg#plus" fill="var(--blue)" width="20px" height="20px"></use>
+            </svg>}</Button>
 
             {/* <Button className="toggle-task-list-btn" onClick={(e) => { dispatch(toggleTaskListOpen()) }}>{taskList.taskListShown ? ">" : "<"}</Button> */}
 

@@ -1,9 +1,10 @@
 .task-lists-container {
+  /* display: none; */
   padding: 10px;
   outline: 2px solid blue;
-  position: fixed;
-  right: 0;
-  top: 70px;
+  /* position: fixed; */
+  /* right: 0; */
+  /* top: 90px; */
   /* transform: translateX(0); */
 
   background-color: var(--bg-color);
@@ -22,4 +23,20 @@
   top: 50%;
   left: 0;
   transform: translateX(-100%);
+}
+
+.add-tasklist-button {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tasklist-add-icon {
+  color: var(--blue);
+}
+
+.tasklist-add-icon > use {
 }
