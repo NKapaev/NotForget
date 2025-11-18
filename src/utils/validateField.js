@@ -7,7 +7,7 @@ export default function validateField(name, value, allValues) {
 
         case "password":
             if (value.length < 6) return "Пароль надто короткий";
-            // Если уже есть confirmPassword, проверим сразу
+
             if (allValues.confirmPassword && allValues.confirmPassword !== value) {
                 return "Паролі не збігаються";
             }
