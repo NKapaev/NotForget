@@ -1,5 +1,6 @@
 import "./folderList.css"
 
+
 import Folder from "../folder/Folder"
 import AddTile from "../addTile/AddTile"
 import { useNavigate, useParams } from "react-router-dom"
@@ -13,7 +14,7 @@ export default function FolderList() {
     const { data: folders } = useFolders()
 
     return (
-        <ul className="folder-list list">
+        <ul className="folder-list list unselectable">
             <AddTile entity={"folder"} />
             {folders?.map((folder) => {
                 return < Folder key={folder.id} id={folder.id} name={folder.name} description={folder.description} creationDate={folder.created_at} />
