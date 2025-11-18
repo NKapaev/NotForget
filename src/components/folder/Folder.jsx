@@ -53,9 +53,9 @@ export default function Folder({ id, name, description, creationDate }) {
             }}>
                 <img width={"40px"} className="delete-button-icon" src="/icons/trash-icon.svg#trash-icon" alt="" />
             </Button>
-            <p className="folder-name">{name}</p>
-            <p className="folder-description">{description}</p>
-            <p className="creation-date">{new Date(creationDate).toLocaleDateString()}</p>
+            <p className="folder-name ">{name}</p>
+            <p className="folder-description ">{description}</p>
+            <p className="creation-date ">{new Date(creationDate).toLocaleDateString()}</p>
         </li>
     )
 }
