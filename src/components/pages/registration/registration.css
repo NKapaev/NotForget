@@ -8,7 +8,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60%;
 }
 
 .registration-form-wrapper {
@@ -16,11 +15,30 @@
   padding-top: 0;
   border-radius: 10px;
   border: 2px solid var(--blue);
-  width: 60%;
 }
 
 .registration-form {
 }
 
 .form-error {
+}
+
+@media screen and (max-width: 480px) {
+  .registration-container {
+    width: 100%;
+  }
+
+  .registration-form-wrapper {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .registration-container {
+    width: 60%;
+  }
+
+  .registration-form-wrapper {
+    width: 60%;
+  }
 }
