@@ -17,29 +17,45 @@
 
 .task-list:hover,
 .task-list:focus {
-  transform: translateX(10%);
+  transform: translateX(60%);
 }
 
-.taskList-item {
+.task-list.isOpen:hover,
+.task-list.isOpen:focus {
+  transform: translateX(0);
+}
+
+.task-list-header{
+  margin-bottom: 20px;
+}
+
+.task-list-item {
   position: relative;
   padding: 10px;
 
   border: 2px solid purple;
 }
 
-.taskList-item > .delete-button {
+.task-list-item > .delete-button {
   opacity: 0;
 }
 
-.taskList-item:hover > .delete-button,
-.taskList-item:focus > .delete-button {
+.task-list-item:not(:last-child){
+  margin-bottom: 10px;
+}
+
+.task-list-item:hover > .delete-button,
+.task-list-item:focus > .delete-button {
   opacity: 1;
 }
 
 .task-list.isOpen {
-  animation-name: toggleTaskList;
+  /* animation-name: toggleTask-list;
   animation-duration: 700ms;
   animation-iteration-count: 1;
+  animation-fill-mode: forwards */
+
+  transform: translateX(0);
 }
 
 @keyframes toggleTaskList {
@@ -47,6 +63,6 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateY(-80%);
+    /* transform: translateY(-80%); */
   }
 }
