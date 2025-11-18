@@ -69,6 +69,7 @@ export default function Greeting() {
                             ]}
                         >
                             <div className="form-button-container">
+                                {error && <p style={{ color: "red" }}>{error}</p>}
                                 <Button className="form-button" type="submit">Увійти</Button>
                                 <Link className="forget-password link">Забули пароль?</Link>
                             </div>
