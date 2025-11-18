@@ -1,16 +1,19 @@
+import supabase from "../../utils/supabase"
 import useNotes from "../../hooks/useNotes"
 import Note from "../note/Note"
 import AddTile from "../addTile/AddTile"
 import useFolder from "../../hooks/useFolder"
+import Button from "../ui/button/Button"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import supabase from "../../utils/supabase"
+import { useParams, useNavigate } from "react-router-dom"
 import "./noteList.css"
 
-
 export default function NoteList({ folderId }) {
+    const params = useParams()
+    const navigate = useNavigate()
+    const queryClient = useQueryClient()
     const { data: notes } = useNotes(folderId, null)
     const { data: folder } = useFolder(folderId)
-    const queryClient = useQueryClient()
 
     const moveNoteMutation = useMutation({
         mutationFn: async ({ noteId, folderId }) => {
@@ -38,13 +41,10 @@ export default function NoteList({ folderId }) {
     return (
         <>
             {notes?.length === 0 ? "Here nothing yet" : ""}
-            <button>
-                <svg width="11px" height="20px">
-                    <use href="/arrow.svg#arrow"></use>
-                </svg>
-            </button>
+
             <h2>{folder?.name || ""}</h2>
-            <ul className="note-list list"
+
+            <ul className="note-list list unselectable"
                 onDrop={handleDrop}
                 onDragOver={(e) => {
                     e.preventDefault()
@@ -56,6 +56,7 @@ export default function NoteList({ folderId }) {
                     return <Note key={note.id} id={note.id} folderId={note.folder_id} userId={note.user_id} content={note.content} createdAt={note.created_at} />
                 })}
             </ul>
+
         </>
     )
 }

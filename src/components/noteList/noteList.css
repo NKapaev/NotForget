@@ -1,3 +1,26 @@
 .note-list {
   display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.note-taskList-container {
+  display: flex;
+}
+
+.go-back-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .back-button-icon{
+  display: block;
+} */
+
+@media screen and (min-width: 481px) {
+  .note-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }
