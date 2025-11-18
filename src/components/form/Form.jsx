@@ -22,6 +22,8 @@ export default function Form({ className, fields, onSubmit, validate = true, chi
             const errorMsg = validateField(name, value, nextData);
             setErrors(prev => ({ ...prev, [name]: errorMsg }));
 
+
+            //REWRITE CONDITIONS
             // Дополнительно: если изменился password — пересчитай confirmPassword
             if (name === "password" && nextData.confirmPassword) {
                 const confirmError = validateField(
@@ -30,6 +32,15 @@ export default function Form({ className, fields, onSubmit, validate = true, chi
                     nextData
                 );
                 setErrors(prev => ({ ...prev, confirmPassword: confirmError }));
+            }
+            // Дополнительно: если изменился confirmPassword — пересчитай password
+            if (name === "confirmPassword" && nextData.password) {
+                const passwordError = validateField(
+                    "password",
+                    nextData.password,
+                    nextData
+                );
+                setErrors(prev => ({ ...prev, password: passwordError }));
             }
         }
     }
