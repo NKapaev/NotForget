@@ -4,7 +4,7 @@ export default function InputField({ className, type = "text", name, error, plac
     return (
         <>
             <div className={`input ${className ? className : ""}`}>
-                <input value={value} onChange={onChange} placeholder="" name={name} id={placeholder} type={type} />
+                <input value={value} onChange={onChange} placeholder=" " name={name} id={placeholder} type={type} />
                 <label htmlFor={placeholder}>{placeholder}</label>
             </div>
             {error && <p className="field-error">{error}</p>}
