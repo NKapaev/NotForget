@@ -1,7 +1,7 @@
 import supabase from "../../../utils/supabase"
 import { useAuth } from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Form from "../../form/Form";
 import Button from "../../ui/button/Button";
@@ -15,19 +15,29 @@ export default function Registration() {
     const { signUpNewUser, error } = useAuth()
     const [formError, setFormError] = useState(null)
 
+    useEffect(() => {
+        if (error) {
+            setFormError(error)
+        }
+    }, [error])
+
     const handleRegistration = async (formData) => {
-        console.log(formData)
 
         if (formData.password !== formData.confirmPassword) {
             setFormError("Пароль не співпадає")
         } else {
             setFormError(null)
             try {
-                const user = await signUpNewUser(formData.email, formData.password)
-                navigate("/confirmEmail")
-                console.log(user)
-            } catch (_) {
+                const data = await signUpNewUser(formData.email, formData.password)
 
+                // Если ошибки нет и пользователь создан
+                if (data && !error) {
+                    navigate("/confirmEmail")
+                    console.log("Успешная регистрация", data)
+                }
+            } catch (err) {
+                // Ошибка уже установлена в хуке и будет показана через useEffect
+                console.error("Ошибка регистрации:", err)
             }
         }
 
@@ -43,11 +53,13 @@ export default function Registration() {
                     }, {
                         name: "confirmPassword", type: "password", placeholder: "Confirm password"
                     }]} onSubmit={handleRegistration} >
+
+                        {formError ? <p className="form-error">{formError}</p> : ""}
+
                         <div className="form-button-container">
                             <Button type="submit">Зареєструватись</Button>
                         </div>
                     </Form>
-                    {formError ? <p className="form-error">{formError}</p> : ""}
                 </div>
             </div>
         </section>
