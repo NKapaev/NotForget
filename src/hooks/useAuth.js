@@ -1,4 +1,3 @@
-// hooks/useAuth.js
 import { useState } from "react"
 import supabase from "../utils/supabase"
 import { useNavigate } from "react-router-dom"
@@ -16,7 +15,6 @@ export function useAuth() {
             if (error) throw error
 
             const user = data.user
-            // await ensureProfileExists(user)
             return user
         } catch (err) {
             setError(err.message)
@@ -34,14 +32,22 @@ export function useAuth() {
                 email,
                 password,
                 options: {
-                    emailRedirectTo: `${window.location.origin}`, // полный URL
+                    // emailRedirectTo: `${window.location.origin}`,
                 },
             })
-            console.log(window.location.origin)
 
-            if (error) throw error
+            if (error) {
+                setError(error.message)
+                throw error
+            }
 
-            // если подтверждение включено — user может быть null
+            // КЛЮЧЕВАЯ ПРОВЕРКА: если identities пустой - пользователь уже существует
+            if (data.user && data.user.identities && data.user.identities.length === 0) {
+                const duplicateError = "Користувач з таким email вже зареєстрований"
+                setError(duplicateError)
+                throw new Error(duplicateError)
+            }
+
             return data
         } catch (err) {
             setError(err.message)
@@ -50,21 +56,6 @@ export function useAuth() {
             setLoading(false)
         }
     }
-
-    // const ensureProfileExists = async (user) => {
-    //     const { data } = await supabase
-    //         .from("profiles")
-    //         .select("*")
-    //         .eq("id", user.id)
-    //         .single()
-
-    //     if (!data) {
-    //         await supabase.from("profiles").insert({
-    //             id: user.id,
-    //             username: user.email.split("@")[0],
-    //         })
-    //     }
-    // }
 
     return { signIn, signUpNewUser, error, loading }
 }
