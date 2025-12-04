@@ -14,13 +14,10 @@ export const taskListSlice = createSlice({
         hideTaskList: (state) => {
             state.taskListShown = false;
         },
-        toggleTaskListOpen: (state) => {
-            state.taskListShown = !state.taskListShown
-        }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { showTaskList, hideTaskList, toggleTaskListOpen } = taskListSlice.actions
+export const { showTaskList, hideTaskList } = taskListSlice.actions
 
 export default taskListSlice.reducer
