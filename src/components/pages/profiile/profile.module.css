@@ -1,0 +1,22 @@
+.profile {
+  position: relative;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+
+  transition: all cubic-bezier(0.17, 0.67, 0.71, 0.3) 3s;
+}
+
+.profileContainer {
+  padding-top: 10px;
+  overflow-x: hidden;
+}
+
+.shifted {
+}
+
+.profileContentWrapper {
+  display: flex;
+}
+
+.profile-content-wrapper.shifted {
+}
