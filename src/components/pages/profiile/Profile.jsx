@@ -1,14 +1,18 @@
-import "./profile.css"
+import styles from './profile.module.css'
 
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import useAddTaskList from "../../../hooks/useAddTaskList"
+
+import { useDispatch, useSelector } from 'react-redux'
+import { hideTaskList, showTaskList } from '../../redux/taskListSlice'
 import supabase from '../../../utils/supabase'
 
 import Header from '../../header/Header'
 import FolderList from '../../folderList/FolderList'
 import NoteList from '../../noteList/NoteList'
 import TaskListsContainer from "../../taskListsContainer/TaskListsContainer"
+import WorkspaceSwitcher from "../../workspaceSwitcher/WorkspaceSwitcher"
 import Button from "../../ui/button/Button"
 
 import Loader from "../../ui/loader/Loader"
@@ -17,7 +21,15 @@ export default function Profile() {
     const { id, folderId } = useParams()
     const [profile, setProfile] = useState(null)
     const navigate = useNavigate()
-    const isMobile = window.innerWidth < 768;
+    // const isMobile = window.innerWidth < 768;
+    const isMobile = true
+
+    const [startTouchX, setStartTouchX] = useState(0);
+    const [translate, setTranslate] = useState(0);
+    const [isSwiping, setIsSwiping] = useState(false);
+
+    const dispatch = useDispatch()
+    const taskListState = useSelector((state) => state.taskList.taskListShown)
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -42,37 +54,85 @@ export default function Profile() {
 
     if (!profile) return <Loader />
 
+    const baseTranslate = taskListState === false ? 0 : -document.querySelector('.container').offsetWidth;
+    const totalTranslate = baseTranslate + translate;
+
+    console.log(taskListState)
+
     return (
         <section className="profile">
+            {taskListState ?
+                <WorkspaceSwitcher className={"toLeft"} onTrigger={() => { dispatch(hideTaskList()) }}></WorkspaceSwitcher>
+                :
+                <WorkspaceSwitcher className={"toRight"} onTrigger={() => { dispatch(showTaskList()) }}></WorkspaceSwitcher>
+
+            }
+
+
             <Header userData={profile} />
 
-            <div className="container profile-container">
-                {/* <TaskListsContainer isMobile={isMobile ? true : false}></TaskListsContainer> */}
+            <button style={{ marginLeft: "100px" }} onClick={() => {
+                dispatch(showTaskList())
+            }}>TaskList</button>
+
+            <button onClick={() => {
+                dispatch(hideTaskList())
+            }}>Hide</button>
+            <div className={`container ${styles.profileContainer}`}>
 
 
+                <div className={`${styles.profileContentWrapper} ${taskListState ? styles.shifted : ""}`}
+                    style={{ transform: `translateX(${totalTranslate}px)`, transition: "all linear 0.3" }}
+                    // "all cubic-bezier(0.8, -0.2, 0.5, 1) 0.6s"
+                    onTouchStart={(e) => {
+                        setStartTouchX(e.touches[0].clientX);
+                        setIsSwiping(true);
+                    }}
+                    onTouchMove={(e) => {
+                        if (!isSwiping) return;
 
-                {folderId ? (
-                    <>
-                        <Button className="go-back-button" onClick={() => {
+                        const deltaX = e.touches[0].clientX - startTouchX;
+
+                        if ((taskListState === false && deltaX < 0) || (taskListState === true && deltaX > 0)) {
+                            setTranslate(deltaX);
+                        }
+                    }}
+                    onTouchEnd={(e) => {
+                        if (translate < -60) {
+                            dispatch(showTaskList());
+                            setIsSwiping(false);
+                        }
+                        else if (translate > 60) {
+                            dispatch(hideTaskList());
+                            setIsSwiping(false);
+                        }
+                        setTranslate(0)
+
+                    }}
+                >
+                    {/* <TaskListsContainer isMobile={isMobile ? true : false}></TaskListsContainer> */}
+
+
+                    {folderId ? (
+                        <>
+                            {/* <Button className="go-back-button" onClick={() => {
                             navigate(`/profile/${id}`)
                         }}>
                             <svg className="back-button-icon" width="20px" height="20px">
                                 <use href="/icons/arrow.svg#arrow"></use>
                             </svg>
-                        </Button>
-                        <NoteList folderId={folderId} userId={profile.id} />
-                    </>
-                ) : (
-                    <FolderList userId={profile.id} />
-                )}
+                        </Button> */}
+                            <NoteList folderId={folderId} userId={profile.id} />
+                        </>
+                    ) : (
+                        <FolderList userId={profile.id} />
+                    )}
 
-                {isMobile &&
-                    <TaskListsContainer isMobile={isMobile ? true : false}>
-                        <p>This is mobile device</p>
-                    </TaskListsContainer>
-                }
-
+                    {isMobile &&
+                        <TaskListsContainer isMobile={isMobile} />
+                    }
+                </div>
             </div>
-        </section>
+        </section >
     )
 }
