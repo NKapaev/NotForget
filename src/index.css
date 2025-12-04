@@ -36,6 +36,11 @@ body.dark {
   --text-color: #ffffff;
 }
 
+body.dragging .workspaceSwitcher {
+  opacity: 1;
+  z-index: 5;
+}
+
 /* delete it */
 * {
   font-size: 17px;
@@ -92,6 +97,9 @@ link:focus {
 }
 
 .tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   margin-right: 0;
   cursor: pointer;
@@ -118,6 +126,10 @@ link:focus {
 }
 
 @media screen and (min-width: 481px) {
+  .container {
+    max-width: 480px;
+  }
+
   .tile {
     width: calc((100% - 1 * 15px) / 2);
     margin-right: 15px;
@@ -129,6 +141,10 @@ link:focus {
 }
 
 @media screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+
   .tile {
     width: calc((100% - 3 * 15px) / 4);
     margin-right: 15px;
@@ -140,5 +156,11 @@ link:focus {
 
   .tile:nth-child(4n) {
     margin-right: 0;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .container {
+    max-width: 1024px;
   }
 }

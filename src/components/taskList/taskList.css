@@ -1,31 +1,44 @@
 .task-list {
-  outline: 2px solid blue;
+  position: relative;
+  outline: 2px solid green;
   /* position: fixed; */
   /* right: 0; */
   /* top: 70px; */
-  transform: translateX(80%);
+  /* transform: translateX(80%); */
 
   background-color: var(--bg-color);
-  width: 200px;
+  /* max-height: 50px; */
   padding: 10px;
   z-index: 1;
+  /* transition: max-height 1s linear; */
+  /* overflow: hidden; */
 }
 
 .task-list:not(:last-child) {
   margin-bottom: 20px;
 }
 
+.task-list.isOpen {
+  /* animation-name: toggleTask-list;
+  animation-duration: 700ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards */
+  /* max-height: 100%; */
+
+  /* transform: translateX(0); */
+}
+
 .task-list:hover,
 .task-list:focus {
-  transform: translateX(60%);
+  /* transform: translateX(60%); */
 }
 
 .task-list.isOpen:hover,
 .task-list.isOpen:focus {
-  transform: translateX(0);
+  /* transform: translateX(0); */
 }
 
-.task-list-header{
+.task-list-header {
   margin-bottom: 20px;
 }
 
@@ -40,29 +53,11 @@
   opacity: 0;
 }
 
-.task-list-item:not(:last-child){
+.task-list-item:not(:last-child) {
   margin-bottom: 10px;
 }
 
 .task-list-item:hover > .delete-button,
 .task-list-item:focus > .delete-button {
   opacity: 1;
-}
-
-.task-list.isOpen {
-  /* animation-name: toggleTask-list;
-  animation-duration: 700ms;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards */
-
-  transform: translateX(0);
-}
-
-@keyframes toggleTaskList {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    /* transform: translateY(-80%); */
-  }
 }
