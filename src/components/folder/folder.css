@@ -1,9 +1,20 @@
 .folder {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--bg-color);
   z-index: 0;
+}
+
+.folder::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  background-image: url('/icons/folder-icon.svg#folder');
+  background-repeat: no-repeat;
+  background-size: 130px 130px;
+  background-position: center;
+  opacity: 0.2;
 }
 
 p {
