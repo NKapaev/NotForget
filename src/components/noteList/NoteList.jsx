@@ -35,14 +35,13 @@ export default function NoteList({ folderId }) {
     const handleDrop = (e) => {
         e.preventDefault()
         const noteId = e.dataTransfer.getData("text/plain")
+        document.body.classList.remove("dragging")
         if (!noteId) return
         moveNoteMutation.mutateAsync({ noteId, folderId })
     }
     return (
         <>
-            {notes?.length === 0 ? "Here nothing yet" : ""}
-
-            <h2>{folder?.name || ""}</h2>
+            {/* <h2>{folder?.name || ""}</h2> */}
 
             <ul className="note-list list unselectable"
                 onDrop={handleDrop}
@@ -52,7 +51,6 @@ export default function NoteList({ folderId }) {
 
                 <AddTile entity={"note"} folderId={folderId}></AddTile>
                 {notes?.map((note) => {
-                    console.log(note)
                     return <Note key={note.id} id={note.id} folderId={note.folder_id} userId={note.user_id} content={note.content} createdAt={note.created_at} />
                 })}
             </ul>

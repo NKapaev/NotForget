@@ -33,8 +33,8 @@ export default function Folder({ id, name, description, creationDate }) {
     const handleDrop = (e) => {
         e.preventDefault()
         const noteId = e.dataTransfer.getData("text/plain")
-        console.log(noteId);
-        console.log(id)
+        document.body.classList.remove("dragging")
+
         if (!noteId) return
         moveNoteMutation.mutate({ noteId, folderId: id })
     }

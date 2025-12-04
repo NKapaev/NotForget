@@ -1,6 +1,8 @@
 import "./taskListsContainer.css"
 
 import { useEffect, useState } from "react"
+
+import { hideTaskList } from "../redux/taskListSlice"
 import { useDispatch } from "react-redux"
 import Button from "../ui/button/Button"
 import { useParams } from "react-router-dom"
@@ -17,7 +19,6 @@ export default function TaskListsContainer({ isMobile = false }) {
     const { openModal, closeModal } = useModal()
     const addTaskList = useAddTaskList()
     const dispatch = useDispatch()
-    const taskList = useSelector((state) => state.taskList)
 
     const { id } = useParams()
 
@@ -53,8 +54,11 @@ export default function TaskListsContainer({ isMobile = false }) {
     })
 
     return (
-        <div className={`task-lists-container ${taskList.taskListShown ? "open" : ""} ${isMobile ? "mobile" : ""}`}>
-
+        // ${taskList.taskListShown ? "open" : ""}
+        <div className={`task-lists-container  ${isMobile ? "mobile" : ""}`}>
+            <button onClick={() => {
+                dispatch(hideTaskList())
+            }}>TaskList Hide</button>
             <Button aria-label="Створити новий список задач" className="add-tasklist-button" onClick={(e) => {
                 openModal(<Form onSubmit={handleSubmit} fields={[{ name: "name", type: "text", placeholder: "Task list name" }]} >
                     <div className="form-button-container">

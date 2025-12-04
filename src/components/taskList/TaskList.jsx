@@ -5,6 +5,7 @@ import supabase from "../../utils/supabase"
 import useNotes from "../../hooks/useNotes"
 import useDeleteNote from "../../hooks/useDeleteNote"
 import useDeleteTaskList from "../../hooks/useDeleteTaskList"
+import { useModal } from "../../context/ModalProvider"
 
 import TaskExecution from "../taskExecution/TaskExecution"
 import Button from "../ui/button/Button"
@@ -12,6 +13,7 @@ import Loader from "../ui/loader/Loader"
 
 export default function TaskList({ id, className, name }) {
     const [isOpen, setIsOpen] = useState(true)
+    const { openModal } = useModal()
     const queryClient = useQueryClient()
     const deleteTaskList = useDeleteTaskList()
     const { data: notes, isLoading, error } = useNotes(null, id)
@@ -39,6 +41,7 @@ export default function TaskList({ id, className, name }) {
     const handleDrop = (e) => {
         e.preventDefault()
         const noteId = e.dataTransfer.getData("text/plain")
+        document.body.classList.remove("dragging")
         if (!noteId) return
         moveNoteMutation.mutate({ noteId, taskListId: id })
     }
@@ -70,16 +73,27 @@ export default function TaskList({ id, className, name }) {
 
             {/* Проверяем, что notes не пустой массив */}
 
-            {isOpen && notes?.length ? (
+            {notes?.length ? (
                 notes.map((note) => (
                     <div key={note.id} className="task-list-item" draggable="true" onDragStart={(e) => {
                         e.dataTransfer.setData("text/plain", note.id)
+                        document.body.classList.add("dragging")
                     }}
+                        onDragEnd={() => {
+                            document.body.classList.remove("dragging")
+                        }}
+                        onClick={() => {
+                            openModal(<div style={{
+                                hyphens: "auto",
+                                overflowWrap: "break-word",
+                            }}>{note.content}</div>)
+                        }}
                         onDragOver={(e) => { e.currentTarget.style.transform = "scale(1.2)" }}
                         onDragLeave={(e) => { e.currentTarget.style.transform = "scale(1)" }}
 
                         onDrop={(e) => {
                             e.currentTarget.style.transform = "scale(1)"
+                            document.body.classList.remove("dragging")
                         }}
                     >
                         <Button
