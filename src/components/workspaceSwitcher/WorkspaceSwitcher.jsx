@@ -1,4 +1,4 @@
-import "./WorkspaceSwitcher.css";
+import "./workspaceSwitcher.css";
 import { showTaskList } from "../redux/taskListSlice";
 import { useDispatch } from "react-redux";
 import { useRef } from "react";
