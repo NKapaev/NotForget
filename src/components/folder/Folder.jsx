@@ -44,9 +44,9 @@ export default function Folder({ id, name, description, creationDate }) {
             onDragOver={(e) => e.preventDefault()}
 
             className="folder tile" onClick={(e) => {
-                if (e.detail === 2) {
-                    navigate(pathname + "/folder/" + id)
-                }
+
+                navigate(pathname + "/folder/" + id)
+
             }}>
             <Button className="delete-button" onClick={() => {
                 mutation.mutateAsync(id)
