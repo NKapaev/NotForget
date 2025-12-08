@@ -1,6 +1,7 @@
 .task-list {
   position: relative;
-  outline: 2px solid green;
+  outline: 2px solid var(--blue);
+  border-radius: 10px;
   /* position: fixed; */
   /* right: 0; */
   /* top: 70px; */
@@ -44,20 +45,21 @@
 
 .task-list-item {
   position: relative;
+  display: flex;
   padding: 10px;
 
-  border: 2px solid purple;
+  /* border: 2px solid purple; */
 }
 
-.task-list-item > .delete-button {
+/* .task-list-item > .delete-button {
   opacity: 0;
-}
+} */
 
 .task-list-item:not(:last-child) {
   margin-bottom: 10px;
 }
 
-.task-list-item:hover > .delete-button,
+/* .task-list-item:hover > .delete-button,
 .task-list-item:focus > .delete-button {
   opacity: 1;
-}
+} */

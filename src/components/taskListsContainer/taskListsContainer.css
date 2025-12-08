@@ -1,7 +1,7 @@
 .task-lists-container {
   display: block;
   padding: 10px;
-  outline: 2px solid blue;
+  /* outline: 2px solid blue; */
   width: 100%;
   /* position: fixed; */
   /* right: 0; */

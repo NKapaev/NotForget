@@ -16,6 +16,7 @@
 
 .profileContentWrapper {
   display: flex;
+  align-items: flex-start;
 }
 
 .profile-content-wrapper.shifted {

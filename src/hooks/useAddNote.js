@@ -5,7 +5,7 @@ export default function useAddNote() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async ({ content, folderId }) => {
+        mutationFn: async ({ content, folderId = null, taskListId = null }) => {
             const user = (await supabase.auth.getUser()).data.user
 
             const { data, error } = await supabase
@@ -13,6 +13,7 @@ export default function useAddNote() {
                 .insert([{
                     content,
                     folder_id: folderId,
+                    task_list_id: taskListId,
                     user_id: user?.id,
                 }])
                 .select()
@@ -21,9 +22,9 @@ export default function useAddNote() {
             if (error) throw error
             return data
         },
-        onSuccess: (data, { folderId }) => {
+        onSuccess: () => {
             // инвалидируем только кэш этой папки
-            queryClient.invalidateQueries({ queryKey: ["notes", folderId] })
+            queryClient.invalidateQueries({ queryKey: ["notes"] })
         }
     })
 }

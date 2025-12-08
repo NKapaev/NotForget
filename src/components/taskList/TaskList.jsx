@@ -5,18 +5,21 @@ import supabase from "../../utils/supabase"
 import useNotes from "../../hooks/useNotes"
 import useDeleteNote from "../../hooks/useDeleteNote"
 import useDeleteTaskList from "../../hooks/useDeleteTaskList"
+import useAddNote from "../../hooks/useAddNote"
 import { useModal } from "../../context/ModalProvider"
 
 import TaskExecution from "../taskExecution/TaskExecution"
+import Form from "../form/Form"
 import Button from "../ui/button/Button"
 import Loader from "../ui/loader/Loader"
 
 export default function TaskList({ id, className, name }) {
     const [isOpen, setIsOpen] = useState(true)
-    const { openModal } = useModal()
+    const { openModal, closeModal } = useModal()
     const queryClient = useQueryClient()
     const deleteTaskList = useDeleteTaskList()
     const { data: notes, isLoading, error } = useNotes(null, id)
+    const addNote = useAddNote()
 
     const moveNoteMutation = useMutation({
         mutationFn: async ({ noteId, taskListId }) => {
@@ -46,6 +49,11 @@ export default function TaskList({ id, className, name }) {
         moveNoteMutation.mutate({ noteId, taskListId: id })
     }
 
+    const handleSubmit = ((formData) => {
+        addNote.mutateAsync({ content: formData.task, taskListId: id })
+        closeModal()
+    })
+
     if (isLoading) return <Loader />
     if (error) return <div>Ошибка: {error.message}</div>
 
@@ -58,6 +66,21 @@ export default function TaskList({ id, className, name }) {
         >
             <div className="task-list-header">
                 <p>{name}</p>
+
+                <Button
+                    className="add-task-button"
+                    onClick={async () => {
+                        openModal(<Form onSubmit={handleSubmit} fields={[{ name: "task", type: "text", placeholder: "Task content" }]} >
+                            <div className="form-button-container">
+                                <Button type="submit">Створити</Button>
+                            </div>
+                        </Form>)
+                    }}
+                >
+
+                    Додати задачу
+                </Button>
+
                 <Button
                     className="delete-button"
                     onClick={() => deleteTaskList.mutateAsync({ id })}
@@ -98,7 +121,11 @@ export default function TaskList({ id, className, name }) {
                     >
                         <Button
                             className="delete-button"
-                            onClick={() => deleteNote.mutateAsync(note.id)}
+                            onClick={(e) => {
+                                e.stopPropagation()
+                                deleteNote.mutateAsync(note.id)
+                            }
+                            }
                         >
                             <img
                                 width="40px"
