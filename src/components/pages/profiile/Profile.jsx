@@ -71,13 +71,23 @@ export default function Profile() {
 
             <Header userData={profile} />
 
-            <button style={{ marginLeft: "100px" }} onClick={() => {
+            <button className={`${styles.showTaskListButton} ${styles.workspaceController} ${taskListState ? styles.none : ""}`} onClick={() => {
                 dispatch(showTaskList())
-            }}>TaskList</button>
+            }}>
+                <svg width={"32px"} height={"32px"}>
+                    <use href='/icons/tasklist-icon.svg#tasklist-icon'></use>
+                </svg>
 
-            <button onClick={() => {
+            </button>
+
+            <button className={`${styles.hideTaskListButton} ${styles.workspaceController} ${taskListState ? "" : styles.none}`} onClick={() => {
                 dispatch(hideTaskList())
-            }}>Hide</button>
+            }}>
+                <svg width="25px" height="25px">
+                    <use href="/icons/folder-icon.svg#folder"></use>
+                </svg>
+
+            </button>
             <div className={`container ${styles.profileContainer}`}>
 
 

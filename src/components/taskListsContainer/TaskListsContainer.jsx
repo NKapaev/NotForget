@@ -56,9 +56,6 @@ export default function TaskListsContainer({ isMobile = false }) {
     return (
         // ${taskList.taskListShown ? "open" : ""}
         <div className={`task-lists-container  ${isMobile ? "mobile" : ""}`}>
-            <button onClick={() => {
-                dispatch(hideTaskList())
-            }}>TaskList Hide</button>
             <Button aria-label="Створити новий список задач" className="add-tasklist-button" onClick={(e) => {
                 openModal(<Form onSubmit={handleSubmit} fields={[{ name: "name", type: "text", placeholder: "Task list name" }]} >
                     <div className="form-button-container">
