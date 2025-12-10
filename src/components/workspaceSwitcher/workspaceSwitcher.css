@@ -2,8 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 70px;
+  position: fixed;
+  top: 0;
   bottom: 0;
   width: 60px;
 
@@ -12,6 +12,7 @@
 
   min-height: calc(100vh - 70px);
   opacity: 0;
+  pointer-events: none;
 
   transition: all cubic-bezier(0.17, 0.67, 0.71, 0.3) 0.3s;
 }
@@ -32,4 +33,9 @@
 
 .workspaceswitcher-icon {
   pointer-events: none;
+}
+
+body.dragging .workspaceSwitcher {
+  opacity: 1;
+  pointer-events: all;
 }

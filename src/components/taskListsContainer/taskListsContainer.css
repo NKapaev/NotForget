@@ -11,6 +11,10 @@
   background-color: var(--bg-color);
   z-index: 1;
   flex-shrink: 0;
+  height: calc(100vh - 70px);
+  overflow-y: scroll;
+  scrollbar-width: none;
+  padding: 30px;
 }
 
 .task-lists-container.open {

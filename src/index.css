@@ -21,6 +21,10 @@
   --desktop-min-width: 1025px; */
 }
 
+html {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -92,6 +96,7 @@ link:focus {
 .container {
   padding-left: 15px;
   padding-right: 15px;
+  width: 100%;
 
   margin: 0 auto;
 }
@@ -126,9 +131,9 @@ link:focus {
 }
 
 @media screen and (min-width: 481px) {
-  .container {
+  /* .container {
     max-width: 480px;
-  }
+  } */
 
   .tile {
     width: calc((100% - 1 * 15px) / 2);
@@ -141,9 +146,9 @@ link:focus {
 }
 
 @media screen and (min-width: 768px) {
-  .container {
+  /* .container {
     max-width: 768px;
-  }
+  } */
 
   .tile {
     width: calc((100% - 3 * 15px) / 4);
@@ -160,7 +165,7 @@ link:focus {
 }
 
 @media screen and (min-width: 1025px) {
-  .container {
+  /* .container {
     max-width: 1024px;
-  }
+  } */
 }
