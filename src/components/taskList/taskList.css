@@ -12,7 +12,7 @@
   padding: 10px;
   z-index: 1;
   /* transition: max-height 1s linear; */
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .task-list:not(:last-child) {
@@ -27,6 +27,9 @@
   /* max-height: 100%; */
 
   /* transform: translateX(0); */
+}
+
+.task-list.isOpen .task-list-content {
 }
 
 .task-list:hover,
@@ -48,7 +51,16 @@
   display: flex;
   padding: 10px;
 
+  /* display: none;
+  opacity: 0; */
+
+  transition: all linear 2s;
   /* border: 2px solid purple; */
+}
+
+.task-list-item.isOpen {
+  /* display: flex;
+  opacity: 1; */
 }
 
 /* .task-list-item > .delete-button {
@@ -62,4 +74,17 @@
 /* .task-list-item:hover > .delete-button,
 .task-list-item:focus > .delete-button {
   opacity: 1;
+} */
+
+.task-list-content {
+  /* position: absolute;
+
+  transform: translateY(-10%);
+  opacity: 0;
+  transition: all linear 0.3; */
+}
+/*
+.task-list-content.isOpen {
+  position: static;
+  transform: translateY(0);
 } */
