@@ -72,11 +72,11 @@ export default function TaskList({ id, className, name }) {
         <div
             className={`task-list ${className ?? ""} `}
             // ${isOpen ? "isOpen" : ""}
-            onClick={toggle}
+            // onClick={toggle}
             onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}
         >
-            <div className="task-list-header">
+            <div className="task-list-header" onClick={toggle}>
                 <p>{name}</p>
 
                 <Button
@@ -126,7 +126,7 @@ export default function TaskList({ id, className, name }) {
                                     overflowWrap: "break-word",
                                 }}>{note.content}</div>)
                             }}
-                            onDragOver={(e) => { e.currentTarget.style.transform = "scale(1.2)" }}
+                            onDragOver={(e) => { e.currentTarget.style.transform = "scale(1.01)" }}
                             onDragLeave={(e) => { e.currentTarget.style.transform = "scale(1)" }}
 
                             onDrop={(e) => {
