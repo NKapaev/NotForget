@@ -54,7 +54,7 @@
   /* display: none;
   opacity: 0; */
 
-  transition: all linear 2s;
+  transition: all linear 0.3s;
   /* border: 2px solid purple; */
 }
 
