@@ -7,9 +7,9 @@ export function useFadeToggle(duration = 300, display = "block") {
         const el = ref.current;
         if (!el) return;
 
-        el.style.transform = "translateY(-50px)"
+        el.style.transform = "translateY(-30px)"
         el.style.opacity = "0";
-        el.style.transition = `all ${duration}ms ease`;
+        el.style.transition = `all ${duration}ms linear`;
 
         const onEnd = () => {
             el.style.display = "none";
@@ -28,7 +28,7 @@ export function useFadeToggle(duration = 300, display = "block") {
 
         requestAnimationFrame(() => {
             el.style.transform = "translateY(0)"
-            el.style.transition = `all ${duration}ms ease`;
+            el.style.transition = `all ${duration}ms linear`;
 
             el.style.opacity = "1";
         });
