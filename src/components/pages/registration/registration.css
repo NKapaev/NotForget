@@ -17,6 +17,12 @@
   border: 2px solid var(--blue);
 }
 
+.registration-title {
+  color: var(--blue);
+  margin-bottom: 20px;
+  font-size: 32px;
+}
+
 .registration-form {
 }
 

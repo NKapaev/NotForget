@@ -1,4 +1,3 @@
-import supabase from "../../../utils/supabase"
 import { useAuth } from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -33,11 +32,9 @@ export default function Registration() {
                 // Если ошибки нет и пользователь создан
                 if (data && !error) {
                     navigate("/confirmEmail")
-                    console.log("Успешная регистрация", data)
                 }
             } catch (err) {
                 // Ошибка уже установлена в хуке и будет показана через useEffect
-                console.error("Ошибка регистрации:", err)
             }
         }
 
@@ -48,10 +45,11 @@ export default function Registration() {
         <section className="registration-section" style={{ height: userHeight }}>
             <div className="container registration-container">
                 <div className="registration-form-wrapper">
+                    <h2 className="registration-title">Реєстрація</h2>
                     <Form className="registration-form" fields={[{ name: "email", type: "email", placeholder: "Email" }, {
-                        name: "password", type: "password", placeholder: "Password"
+                        name: "password", type: "password", placeholder: "Пароль"
                     }, {
-                        name: "confirmPassword", type: "password", placeholder: "Confirm password"
+                        name: "confirmPassword", type: "password", placeholder: "Підтвердіть пароль"
                     }]} onSubmit={handleRegistration} >
 
                         {formError ? <p className="form-error">{formError}</p> : ""}
