@@ -15,12 +15,12 @@ import Button from "../ui/button/Button"
 import Loader from "../ui/loader/Loader"
 
 export default function TaskList({ id, className, name }) {
-    const [isOpen, setIsOpen] = useState(true)
+    // const [isOpen, setIsOpen] = useState(true)
     const { openModal, closeModal } = useModal()
     const queryClient = useQueryClient()
     const deleteTaskList = useDeleteTaskList()
     const { data: notes, isLoading, error } = useNotes(null, id)
-    const { ref, hide, show } = useFadeToggle(300);
+    const { ref, hide, show } = useFadeToggle(200);
     const addNote = useAddNote()
 
     const moveNoteMutation = useMutation({
@@ -70,7 +70,8 @@ export default function TaskList({ id, className, name }) {
 
     return (
         <div
-            className={`task-list ${className ?? ""} ${isOpen ? "isOpen" : ""}`}
+            className={`task-list ${className ?? ""} `}
+            // ${isOpen ? "isOpen" : ""}
             onClick={toggle}
             onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}
@@ -108,7 +109,6 @@ export default function TaskList({ id, className, name }) {
             {/* Проверяем, что notes не пустой массив */}
 
             <div ref={ref} className={`task-list-content`}>
-                {/*  style={isOpen ? { height: notes.length * 50 + (notes.length - 1) * 10 } : { height: 0 }} */}
                 {/* ${isOpen ? "isOpen" : ""} */}
                 {notes?.length ? (
                     notes.map((note) => (

@@ -4,16 +4,19 @@
   width: 30px;
   height: 30px;
   border-radius: 10px;
+  border: 1px solid var(--blue);
 }
 
 .task-execution.not-started {
-  background-color: gray;
+  background-image: linear-gradient(to right, #55555536, #aaaaaa86);
 }
 .task-execution.in-progress {
-  background-color: orange;
+  background-image: linear-gradient(to right, #ffa60048, #ffc800c2);
 }
 .task-execution.completed {
-  background-color: green;
+  background-image: linear-gradient(to right, #004b23, #38b000);
+
+  /* background-color: #008000; */
 }
 
 /* ["not started", "in progress", "completed"]; */
