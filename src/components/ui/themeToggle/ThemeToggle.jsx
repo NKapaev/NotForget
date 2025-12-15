@@ -13,7 +13,14 @@ export default function ThemeToggle({ className = "" }) {
                 onChange={toggleTheme}
                 aria-checked={theme === "dark"}
             />
-            <span className="slider" />
+            <div className="slider">
+                <div className="slider-circle">
+                    <svg width={24} height={24}>
+                        <use className="themeToggleIcon moon-icon" href="/icons/moon-icon.svg#moon-icon"></use>
+                        <use className="themeToggleIcon sun-icon" href="/icons/sun-icon.svg#sun-icon"></use>
+                    </svg>
+                </div>
+            </div>
         </label>
     );
 }
