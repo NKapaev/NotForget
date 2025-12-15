@@ -8,10 +8,10 @@
 }
 
 .task-execution.not-started {
-  background-image: linear-gradient(to right, #55555536, #aaaaaa86);
+  background-image: linear-gradient(to right, #313030, #aaaaaa);
 }
 .task-execution.in-progress {
-  background-image: linear-gradient(to right, #ffa60048, #ffc800c2);
+  background-image: linear-gradient(to right, #553803, #d3a604);
 }
 .task-execution.completed {
   background-image: linear-gradient(to right, #004b23, #38b000);
