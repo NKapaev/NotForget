@@ -15,7 +15,7 @@ export default function useNotes(folderId = null, taskListId = null) {
                 query = query.eq("task_list_id", taskListId) // 👈 новое имя поля
             }
 
-            query = query.order("created_at", { ascending: true })
+            query = query.order("created_at", { ascending: false })
 
             const { data, error } = await query
             if (error) throw error

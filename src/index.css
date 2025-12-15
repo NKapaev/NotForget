@@ -40,6 +40,10 @@ body.dark {
   --text-color: #ffffff;
 }
 
+body.modalIsOpen {
+  overflow: hidden;
+}
+
 body.dragging .workspaceSwitcher {
   opacity: 1;
   z-index: 5;

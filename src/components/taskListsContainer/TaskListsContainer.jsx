@@ -35,7 +35,7 @@ export default function TaskListsContainer({ isMobile = false }) {
             const { data, error } = await supabase
                 .from("taskLists")
                 .select("*")
-                .eq("user_id", id)
+                .eq("user_id", id).order("created_at", { ascending: false })
 
             if (error) throw error
             return data

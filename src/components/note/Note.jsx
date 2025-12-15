@@ -25,10 +25,7 @@ export default function Note({ id, content, createdAt }) {
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
             onClick={() => {
-                openModal(<div style={{
-                    hyphens: "auto",
-                    overflowWrap: "break-word",
-                }}>{content}</div>)
+                openModal(content)
             }}
         >
             <Button

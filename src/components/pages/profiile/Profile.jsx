@@ -57,7 +57,7 @@ export default function Profile() {
     const baseTranslate =
         taskListState === false
             ? 0
-            : -document.querySelector('.container').offsetWidth;
+            : -document.querySelector('.profileContentWrapper').offsetWidth;
     const totalTranslate = baseTranslate + translate;
 
     return (
@@ -106,8 +106,7 @@ export default function Profile() {
                 )}
 
                 <div
-                    className={`${styles.profileContentWrapper} ${taskListState ? styles.shifted : ''
-                        }`}
+                    className={`profileContentWrapper ${styles.profileContentWrapper}`}
                     style={{
                         transform: `translateX(${totalTranslate}px)`,
                         transition: 'all linear 0.3',

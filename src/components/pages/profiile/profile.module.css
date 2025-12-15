@@ -12,15 +12,9 @@
   overflow-x: hidden;
 }
 
-.shifted {
-}
-
 .profileContentWrapper {
   display: flex;
   align-items: flex-start;
-}
-
-.profile-content-wrapper.shifted {
 }
 
 .workspaceController {
