@@ -2,7 +2,7 @@ export default function validateField(name, value, allValues) {
     switch (name) {
         case "email":
             if (!value) return "Email обов'язковий";
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return "некоректний email";
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return "Некоректний email";
             return "";
 
         case "password":
