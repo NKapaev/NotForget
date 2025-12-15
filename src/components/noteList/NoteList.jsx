@@ -40,8 +40,8 @@ export default function NoteList({ folderId }) {
         moveNoteMutation.mutateAsync({ noteId, folderId })
     }
     return (
-        <>
-            {/* <h2>{folder?.name || ""}</h2> */}
+        <div className="note-list-section">
+            <h2>{folder?.name || ""}</h2>
 
             <ul className="note-list list unselectable"
                 onDrop={handleDrop}
@@ -55,6 +55,6 @@ export default function NoteList({ folderId }) {
                 })}
             </ul>
 
-        </>
+        </div>
     )
 }

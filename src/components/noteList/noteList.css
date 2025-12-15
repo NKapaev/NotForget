@@ -23,6 +23,11 @@
   height: 42px;
 }
 
+.note-list-section {
+  width: 100%;
+  flex-shrink: 0;
+}
+
 /* .back-button-icon{
   display: block;
 } */

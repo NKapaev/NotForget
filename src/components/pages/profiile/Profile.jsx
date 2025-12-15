@@ -60,8 +60,6 @@ export default function Profile() {
             : -document.querySelector('.container').offsetWidth;
     const totalTranslate = baseTranslate + translate;
 
-    console.log(taskListState);
-
     return (
         <section className="profile">
             <Header userData={profile} />
@@ -153,6 +151,7 @@ export default function Profile() {
                                 <use href="/icons/arrow.svg#arrow"></use>
                             </svg>
                         </Button> */}
+
                             <NoteList folderId={folderId} userId={profile.id} />
                         </>
                     ) : (
