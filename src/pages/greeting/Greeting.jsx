@@ -1,12 +1,12 @@
-import ThemeToggle from "../../ui/themeToggle/ThemeToggle"
-import supabase from '../../../utils/supabase'
-import { useAuth } from "../../../hooks/useAuth"
+import ThemeToggle from "../../components/ui/themeToggle/ThemeToggle"
+import supabase from '../../utils/supabase'
+import { useAuth } from "../../hooks/useAuth"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 
-import Button from "../../ui/button/Button"
-import Form from "../../form/Form"
+import Button from "../../components/ui/button/Button"
+import Form from "../../components/form/Form"
 import "./greeting.css"
 
 export default function Greeting() {

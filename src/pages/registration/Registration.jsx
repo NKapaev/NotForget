@@ -1,9 +1,9 @@
-import { useAuth } from "../../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import Form from "../../form/Form";
-import Button from "../../ui/button/Button";
+import Form from "../../components/form/Form";
+import Button from "../../components/ui/button/Button";
 
 import "./registration.css"
 

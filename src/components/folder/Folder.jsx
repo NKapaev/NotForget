@@ -48,7 +48,8 @@ export default function Folder({ id, name, description, creationDate }) {
                 navigate(pathname + "/folder/" + id)
 
             }}>
-            <Button className="delete-button" onClick={() => {
+            <Button className="delete-button" onClick={(e) => {
+                e.stopPropagation();
                 mutation.mutateAsync(id)
             }}>
                 <img width={"40px"} className="delete-button-icon" src="/icons/trash-icon.svg#trash-icon" alt="" />

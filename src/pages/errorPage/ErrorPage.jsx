@@ -1,7 +1,7 @@
 import "./errorPage.css"
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import Button from "../../ui/button/Button"
+import Button from "../../components/ui/button/Button"
 
 export default function ErrorPage() {
 

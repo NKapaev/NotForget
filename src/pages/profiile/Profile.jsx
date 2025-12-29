@@ -2,20 +2,20 @@ import styles from './profile.module.css';
 
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import useAddTaskList from '../../../hooks/useAddTaskList';
+import useAddTaskList from '../../hooks/useAddTaskList';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { hideTaskList, showTaskList } from '../../redux/taskListSlice';
-import supabase from '../../../utils/supabase';
+import { hideTaskList, showTaskList } from '../../components/redux/taskListSlice';
+import supabase from '../../utils/supabase';
 
-import Header from '../../header/Header';
-import FolderList from '../../folderList/FolderList';
-import NoteList from '../../noteList/NoteList';
-import TaskListsContainer from '../../taskListsContainer/TaskListsContainer';
-import WorkspaceSwitcher from '../../workspaceSwitcher/WorkspaceSwitcher';
-import Button from '../../ui/button/Button';
+import Header from '../../components/header/Header';
+import FolderList from '../../components/folderList/FolderList';
+import NoteList from '../../components/noteList/NoteList';
+import TaskListsContainer from '../../components/taskListsContainer/TaskListsContainer';
+import WorkspaceSwitcher from '../../components/workspaceSwitcher/WorkspaceSwitcher';
+import Button from '../../components/ui/button/Button';
 
-import Loader from '../../ui/loader/Loader';
+import Loader from '../../components/ui/loader/Loader';
 
 export default function Profile() {
     const { id, folderId } = useParams();

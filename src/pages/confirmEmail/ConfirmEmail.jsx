@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import supabase from '../../../utils/supabase'
+
+import supabase from "../../utils/supabase"
 
 export default function ConfirmEmail() {
     const navigate = useNavigate()

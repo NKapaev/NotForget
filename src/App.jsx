@@ -1,12 +1,12 @@
 import './App.css';
-import Greeting from "./components/pages/greeting/Greeting";
-import Registration from './components/pages/registration/Registration';
-import Profile from './components/pages/profiile/Profile';
-import ConfirmEmail from './components/pages/confirmEmail/ConfirmEmail';
-import ErrorPage from './components/pages/errorPage/ErrorPage';
+import Greeting from "./pages/greeting/Greeting";
+import Registration from './pages/registration/Registration';
+import Profile from './pages/profiile/Profile';
+import ConfirmEmail from './pages/confirmEmail/ConfirmEmail';
+import ErrorPage from './pages/errorPage/ErrorPage';
 import PrivateRoute from './components/PrivateRoute';
 import ThemeProvider from "./context/ThemeContext";
-import EmailConfirmed from './components/pages/emailConfirmed/EmailConfirmed';
+import EmailConfirmed from './pages/emailConfirmed/EmailConfirmed';
 import AuthController from './components/authController/AuthController';
 
 
