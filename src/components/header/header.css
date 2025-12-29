@@ -28,7 +28,11 @@
   cursor: pointer;
 }
 
-.logout-button {
+.userDropdown {
+  background-color: var(--bg-color);
+  border: 2px solid var(--blue);
+  border-radius: 10px;
+
   position: absolute;
   top: 130%;
   opacity: 0;
@@ -37,11 +41,29 @@
   transition: all 0.3s linear;
 }
 
-.logout-button:hover {
+.logout-button {
+  display: block;
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  /* margin: 10px 0; */
+}
+
+.logout-button:first-child {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.logout-button:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.userDropdown:hover {
   cursor: pointer;
 }
 
-.user-name.isOpen + .logout-button {
+.user-name.isOpen + .userDropdown {
   opacity: 1;
   pointer-events: all;
 }

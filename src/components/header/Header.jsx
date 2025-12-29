@@ -1,6 +1,6 @@
 import "./header.css"
 
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate, Link, useParams } from "react-router-dom"
 
 import Button from "../ui/button/Button"
 import ThemeToggle from "../ui/themeToggle/ThemeToggle"
@@ -9,6 +9,8 @@ import logOut from "../../utils/logout"
 export default function Header({ userData }) {
 
     const navigate = useNavigate();
+    const { id } = useParams()
+
     return (
         <header className="header">
             <div className="container header-container">
@@ -20,9 +22,16 @@ export default function Header({ userData }) {
                     <p onClick={(e) => {
                         e.currentTarget.classList.toggle("isOpen")
                     }} className="user-name">{userData.username}</p>
-                    <Button className="logout-button" onClick={() => {
-                        logOut(navigate)
-                    }} >Logout</Button>
+                    <div className="userDropdown">
+                        <Button className="logout-button" onClick={() => {
+                            navigate(`/profile/${id}/settings`)
+                        }} >Settings</Button>
+                        <Button className="logout-button" onClick={() => {
+                            logOut(navigate)
+                        }} >Logout</Button>
+
+                    </div>
+
                 </div>
                 <ThemeToggle />
             </div>

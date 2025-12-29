@@ -7,6 +7,7 @@ import ErrorPage from './pages/errorPage/ErrorPage';
 import PrivateRoute from './components/PrivateRoute';
 import ThemeProvider from "./context/ThemeContext";
 import EmailConfirmed from './pages/emailConfirmed/EmailConfirmed';
+import SettingsPage from './pages/settings/SettingsPage';
 import AuthController from './components/authController/AuthController';
 
 
@@ -32,6 +33,7 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route path="/profile/:id" element={<Profile />} />
               <Route path="/profile/:id/folder/:folderId" element={<Profile />} />
+              <Route path="/profile/:id/settings" element={<SettingsPage />} />
             </Route>
 
             {/* 404 */}
