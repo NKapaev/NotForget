@@ -14,6 +14,7 @@ import NoteList from '../../components/noteList/NoteList';
 import TaskListsContainer from '../../components/taskListsContainer/TaskListsContainer';
 import WorkspaceSwitcher from '../../components/workspaceSwitcher/WorkspaceSwitcher';
 import Button from '../../components/ui/button/Button';
+import Modal from '../../components/ui/modals/Modal';
 
 import Loader from '../../components/ui/loader/Loader';
 
@@ -30,6 +31,7 @@ export default function Profile() {
 
     const dispatch = useDispatch();
     const taskListState = useSelector(state => state.taskList.taskListShown);
+    const { stack } = useSelector(state => state.modals);
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -62,6 +64,11 @@ export default function Profile() {
 
     return (
         <section className="profile">
+            <>
+                {stack.map(modal => (
+                    <Modal key={modal.id} modal={modal} />
+                ))}
+            </>
             <Header userData={profile} />
 
             <button

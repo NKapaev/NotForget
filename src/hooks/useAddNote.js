@@ -5,12 +5,13 @@ export default function useAddNote() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async ({ content, folderId = null, taskListId = null }) => {
+        mutationFn: async ({ title, content, folderId = null, taskListId = null }) => {
             const user = (await supabase.auth.getUser()).data.user
 
             const { data, error } = await supabase
                 .from("notes")
                 .insert([{
+                    title,
                     content,
                     folder_id: folderId,
                     task_list_id: taskListId,

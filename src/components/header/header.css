@@ -2,8 +2,8 @@
   background-color: var(--dark);
   height: 70px;
   width: 100%;
-  border-bottom: 1px solid var(--blue);
-  border-top: 1px solid var(--blue);
+  /* border-bottom: 1px solid var(--blue);
+  border-top: 1px solid var(--blue); */
 }
 
 .header-container {
@@ -46,7 +46,6 @@
   width: 100%;
   border-radius: 0;
   border: none;
-  /* margin: 10px 0; */
 }
 
 .logout-button:first-child {

@@ -10,10 +10,7 @@ import EmailConfirmed from './pages/emailConfirmed/EmailConfirmed';
 import SettingsPage from './pages/settings/SettingsPage';
 import AuthController from './components/authController/AuthController';
 
-
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 
 function App() {
 

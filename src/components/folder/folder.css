@@ -20,8 +20,25 @@ p {
   margin: 5px;
 }
 
+.folderHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.folder-name {
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .delete-button {
-  position: absolute;
+  /* position: absolute; */
+  flex-shrink: 0;
   right: 10px;
   top: 10px;
   border: none;
@@ -49,5 +66,6 @@ p {
 .creation-date {
   color: gray;
   margin-top: auto;
+  padding-top: 5px;
   align-self: end;
 }

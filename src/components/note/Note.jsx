@@ -1,12 +1,15 @@
 import "./note.css"
 import useDeleteNote from "../../hooks/useDeleteNote"
 import Button from "../ui/button/Button"
-import { useModal } from "../../context/ModalProvider"
+import { openModal } from "../../components/redux/modalsSlice"
 
-export default function Note({ id, content, createdAt }) {
-    const mutation = useDeleteNote()
-    const { openModal } = useModal()
+import { useDispatch, useSelector } from "react-redux"
 
+export default function Note({ id, title, content, createdAt }) {
+    const deleteNote = useDeleteNote()
+    const dispatch = useDispatch()
+    const stack = useSelector((state) => state.modals.stack)
+    console.log(stack)
     const handleDragStart = (e) => {
         e.dataTransfer.setData("text/plain", id)
         e.dataTransfer.effectAllowed = "move"
@@ -24,24 +27,35 @@ export default function Note({ id, content, createdAt }) {
             id={id}
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
-            onClick={() => {
-                openModal(content)
+            onClick={(e) => {
+
+                e.preventDefault()
+                dispatch(openModal({
+                    type: 'view',
+                    id: crypto.randomUUID(),
+                    props: { content: content, title },
+                }))
+
             }}
         >
-            <Button
-                className="delete-button"
-                onClick={(e) => {
-                    e.stopPropagation()
-                    mutation.mutateAsync(id)
-                }}
-            >
-                <img
-                    width="40px"
-                    className="delete-button-icon"
-                    src="/icons/trash-icon.svg#trash-icon"
-                    alt=""
-                />
-            </Button>
+
+            <div className="noteHeader">
+                <p className="note-title">{title}</p>
+                <Button
+                    className="delete-button"
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        deleteNote.mutateAsync(id)
+                    }}
+                >
+                    <img
+                        width="40px"
+                        className="delete-button-icon"
+                        src="/icons/trash-icon.svg#trash-icon"
+                        alt=""
+                    />
+                </Button>
+            </div>
             <div className="note-content-wrapper">
                 <p className="note-content">{content}</p>
             </div>

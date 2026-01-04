@@ -5,10 +5,10 @@ export default function useAddFolder() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async ({ name, description }) => {
+        mutationFn: async ({ title, description }) => {
             const { data, error } = await supabase
                 .from("folders")
-                .insert([{ name, description, user_id: (await supabase.auth.getUser()).data.user?.id }])
+                .insert([{ title, description, user_id: (await supabase.auth.getUser()).data.user?.id }])
                 .select()
                 .single()
 

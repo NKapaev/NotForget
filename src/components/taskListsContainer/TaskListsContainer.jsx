@@ -9,14 +9,14 @@ import { useParams } from "react-router-dom"
 import supabase from "../../utils/supabase"
 import TaskList from "../taskList/TaskList"
 import { useSelector } from "react-redux"
-import { useModal } from "../../context/ModalProvider"
+// import { useModal } from "../../context/ModalProvider"
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query"
 import Form from "../form/Form"
 import useAddTaskList from "../../hooks/useAddTaskList"
 
 
 export default function TaskListsContainer({ isMobile = false }) {
-    const { openModal, closeModal } = useModal()
+    // const { openModal, closeModal } = useModal()
     const addTaskList = useAddTaskList()
     const dispatch = useDispatch()
 
@@ -25,7 +25,7 @@ export default function TaskListsContainer({ isMobile = false }) {
     const queryClient = useQueryClient()
 
     function handleSubmit(formData) {
-        addTaskList.mutateAsync({ name: formData.name })
+        addTaskList.mutateAsync({ title: formData.title })
         closeModal()
     }
 
@@ -45,7 +45,7 @@ export default function TaskListsContainer({ isMobile = false }) {
     // Mutations  REWRITE THIS USING useAddTaskList HOOK
     const mutation = useMutation({
         mutationFn: async () => {
-            const { data, error } = await supabase.from("taskLists").insert([{ name: formData.name }]).select().single()
+            const { data, error } = await supabase.from("taskLists").insert([{ title: formData.title }]).select().single()
         },
         onSuccess: () => {
             // Invalidate and refetch
@@ -70,7 +70,7 @@ export default function TaskListsContainer({ isMobile = false }) {
 
             {taskLists?.map((taskList) => {
                 return (
-                    <TaskList key={taskList.id} name={taskList.name} id={taskList.id} />
+                    <TaskList key={taskList.id} title={taskList.title} id={taskList.id} />
                 )
             })}
         </div>

@@ -1,4 +1,4 @@
-import "./taskList.css"
+import styles from "./taskList.module.css"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import supabase from "../../utils/supabase"
@@ -7,16 +7,16 @@ import useDeleteNote from "../../hooks/useDeleteNote"
 import useDeleteTaskList from "../../hooks/useDeleteTaskList"
 import useAddNote from "../../hooks/useAddNote"
 import { useFadeToggle } from "../../hooks/useFadeToggle"
-import { useModal } from "../../context/ModalProvider"
+// import { useModal } from "../../context/ModalProvider"
 
 import TaskExecution from "../taskExecution/TaskExecution"
 import Form from "../form/Form"
 import Button from "../ui/button/Button"
 import Loader from "../ui/loader/Loader"
 
-export default function TaskList({ id, className, name }) {
+export default function TaskList({ id, className, title }) {
     // const [isOpen, setIsOpen] = useState(true)
-    const { openModal, closeModal } = useModal()
+    // const { openModal, closeModal } = useModal()
     const queryClient = useQueryClient()
     const deleteTaskList = useDeleteTaskList()
     const { data: notes, isLoading, error } = useNotes(null, id)
@@ -70,28 +70,30 @@ export default function TaskList({ id, className, name }) {
 
     return (
         <div
-            className={`task-list ${className ?? ""} `}
+            className={`${styles.taskList} ${className ?? ""} `}
             // ${isOpen ? "isOpen" : ""}
             // onClick={toggle}
             onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}
         >
-            <div className="task-list-header" onClick={toggle}>
-                <p>{name}</p>
+            <div className={styles.taskListHeader} onClick={toggle}>
+                <div className="">
+                    <p className={styles.taskListTitle}>{title}</p>
 
-                <Button
-                    className="add-task-button"
-                    onClick={async () => {
-                        openModal(<Form onSubmit={handleSubmit} fields={[{ name: "task", type: "text", placeholder: "Task content" }]} >
-                            <div className="form-button-container">
-                                <Button type="submit">Створити</Button>
-                            </div>
-                        </Form>)
-                    }}
-                >
+                    <Button
+                        className="add-task-button"
+                        onClick={async () => {
+                            openModal(<Form onSubmit={handleSubmit} fields={[{ name: "task", type: "text", placeholder: "Task content" }]} >
+                                <div className="form-button-container">
+                                    <Button type="submit">Створити</Button>
+                                </div>
+                            </Form>)
+                        }}
+                    >
 
-                    Додати задачу
-                </Button>
+                        Додати задачу
+                    </Button>
+                </div>
 
                 <Button
                     className="delete-button"
@@ -112,7 +114,7 @@ export default function TaskList({ id, className, name }) {
                 {/* ${isOpen ? "isOpen" : ""} */}
                 {notes?.length ? (
                     notes.map((note) => (
-                        <div key={note.id} className={`task-list-item`} draggable="true"
+                        <div key={note.id} className={styles.taskListItem} draggable="true"
                             onDragStart={(e) => {
                                 e.dataTransfer.setData("text/plain", note.id)
                                 document.body.classList.add("dragging")
@@ -134,8 +136,11 @@ export default function TaskList({ id, className, name }) {
                                 document.body.classList.remove("dragging")
                             }}
                         >
+
+                            <TaskExecution key={note.id} taskId={note.id}></TaskExecution>
+                            <p className={styles.taskContent}>{note.content}</p>
                             <Button
-                                className="delete-button"
+                                className={`${styles.deleteButton} delete-button`}
                                 onClick={(e) => {
                                     e.stopPropagation()
                                     deleteNote.mutateAsync(note.id)
@@ -149,8 +154,6 @@ export default function TaskList({ id, className, name }) {
                                     alt=""
                                 />
                             </Button>
-                            <TaskExecution key={note.id} taskId={note.id}></TaskExecution>
-                            <p>{note.content}</p>
                         </div>
                     ))
                 ) : (

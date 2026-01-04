@@ -41,7 +41,7 @@ export default function NoteList({ folderId }) {
     }
     return (
         <div className="note-list-section">
-            <h2>{folder?.name || ""}</h2>
+            <h2>{folder?.title || ""}</h2>
 
             <ul className="note-list list unselectable"
                 onDrop={handleDrop}
@@ -51,7 +51,7 @@ export default function NoteList({ folderId }) {
 
                 <AddTile entity={"note"} folderId={folderId}></AddTile>
                 {notes?.map((note) => {
-                    return <Note key={note.id} id={note.id} folderId={note.folder_id} userId={note.user_id} content={note.content} createdAt={note.created_at} />
+                    return <Note key={note.id} id={note.id} folderId={note.folder_id} userId={note.user_id} title={note.title} content={note.content} createdAt={note.created_at} />
                 })}
             </ul>
 

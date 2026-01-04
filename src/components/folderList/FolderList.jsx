@@ -17,7 +17,7 @@ export default function FolderList() {
         <ul className="folder-list list unselectable">
             <AddTile entity={"folder"} />
             {folders?.map((folder) => {
-                return < Folder key={folder.id} id={folder.id} name={folder.name} description={folder.description} creationDate={folder.created_at} />
+                return < Folder key={folder.id} id={folder.id} title={folder.title} description={folder.description} creationDate={folder.created_at} />
             }
             )}
         </ul>

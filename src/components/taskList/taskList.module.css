@@ -1,4 +1,4 @@
-.task-list {
+.taskList {
   position: relative;
   outline: 2px solid var(--blue);
   border-radius: 10px;
@@ -15,11 +15,11 @@
   overflow: hidden;
 }
 
-.task-list:not(:last-child) {
+.taskList:not(:last-child) {
   margin-bottom: 20px;
 }
 
-.task-list.isOpen {
+.taskList.isOpen {
   /* animation-name: toggleTask-list;
   animation-duration: 700ms;
   animation-iteration-count: 1;
@@ -42,20 +42,36 @@
   /* transform: translateX(0); */
 }
 
-.task-list-header {
-  margin-bottom: 20px;
+.taskListHeader {
+  display: flex;
+  justify-content: space-between;
 }
 
-.task-list-item {
+.taskListTitle {
+  margin-bottom: 10px;
+}
+
+.taskListItem {
   position: relative;
   display: flex;
   padding: 10px;
+  padding-top: 20px;
 
   /* display: none;
   opacity: 0; */
 
   transition: all linear 0.3s;
   /* border: 2px solid purple; */
+}
+
+.taskContent {
+  hyphens: auto;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+}
+
+.deleteButton {
+  margin-left: auto;
 }
 
 .task-list-item.isOpen {
@@ -68,7 +84,7 @@
 } */
 
 .task-list-item:not(:last-child) {
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 /* .task-list-item:hover > .delete-button,

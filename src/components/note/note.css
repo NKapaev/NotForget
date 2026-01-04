@@ -1,13 +1,20 @@
 .note {
 }
 
+.noteHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
 .note-content-wrapper {
   hyphens: auto;
   overflow-y: hidden;
   overflow-wrap: break-word;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 7;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
 }
 

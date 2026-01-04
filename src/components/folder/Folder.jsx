@@ -5,7 +5,7 @@ import "./folder.css"
 import { useLocation, useNavigate } from "react-router-dom"
 import supabase from "../../utils/supabase"
 
-export default function Folder({ id, name, description, creationDate }) {
+export default function Folder({ id, title, description, creationDate }) {
     const queryClient = useQueryClient()
     const navigate = useNavigate()
     const { pathname } = useLocation()
@@ -14,7 +14,7 @@ export default function Folder({ id, name, description, creationDate }) {
 
     const moveNoteMutation = useMutation({
         mutationFn: async ({ noteId, folderId }) => {
-            console.log(noteId, folderId);
+            // console.log(noteId, folderId);
             const { data, error } = await supabase
                 .from("notes")
                 .update({ task_list_id: null, folder_id: folderId })
@@ -40,21 +40,19 @@ export default function Folder({ id, name, description, creationDate }) {
     }
 
     return (
-        <li onDrop={handleDrop}
+        <li className="folder tile"
+            onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}
-
-            className="folder tile" onClick={(e) => {
-
-                navigate(pathname + "/folder/" + id)
-
-            }}>
-            <Button className="delete-button" onClick={(e) => {
-                e.stopPropagation();
-                mutation.mutateAsync(id)
-            }}>
-                <img width={"40px"} className="delete-button-icon" src="/icons/trash-icon.svg#trash-icon" alt="" />
-            </Button>
-            <p className="folder-name ">{name}</p>
+            onClick={(e) => { navigate(pathname + "/folder/" + id) }}>
+            <div className="folderHeader">
+                <p className="folder-name ">{title}</p>
+                <Button className="delete-button" onClick={(e) => {
+                    e.stopPropagation();
+                    mutation.mutateAsync(id)
+                }}>
+                    <img width={"40px"} className="delete-button-icon" src="/icons/trash-icon.svg#trash-icon" alt="" />
+                </Button>
+            </div>
             <p className="folder-description ">{description}</p>
             <p className="creation-date ">{new Date(creationDate).toLocaleDateString()}</p>
         </li>
