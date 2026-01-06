@@ -24,7 +24,6 @@
 
 .user-name {
   color: #fff;
-  margin-right: 20px;
   cursor: pointer;
 }
 
@@ -34,28 +33,31 @@
   border-radius: 10px;
 
   position: absolute;
-  top: 130%;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 100%);
   opacity: 0;
   pointer-events: none;
 
   transition: all 0.3s linear;
 }
 
-.logout-button {
+.userDropdownItem {
   display: block;
   width: 100%;
   border-radius: 0;
   border: none;
+  cursor: pointer;
 }
 
-.logout-button:first-child {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+.userDropdownItem:first-child {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
-.logout-button:last-child {
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+.userDropdownItem:last-child {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .userDropdown:hover {
