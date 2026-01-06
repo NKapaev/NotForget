@@ -36,6 +36,14 @@
   border: 2px solid var(--blue);
 }
 
+.greeting-form-error {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+}
+
 .registration-link {
   display: flex;
   justify-content: center;
@@ -79,6 +87,7 @@
 .forget-password {
   display: flex;
   justify-content: center;
+  /* flex-shrink: 2; */
 }
 
 @media screen and (min-width: 769px) {

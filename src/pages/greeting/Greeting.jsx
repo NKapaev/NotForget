@@ -4,6 +4,7 @@ import { useAuth } from "../../hooks/useAuth"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
+import translateError from "../../utils/translateError"
 
 import Button from "../../components/ui/button/Button"
 import Form from "../../components/form/Form"
@@ -69,7 +70,7 @@ export default function Greeting() {
                             ]}
                         >
                             <div className="form-button-container">
-                                {error && <p style={{ color: "red" }}>{error}</p>}
+                                <div className="greeting-form-error">{error && <p>{translateError(error)}</p>}</div>
                                 <Button className="form-button" type="submit">Увійти</Button>
                                 <Link className="forget-password link">Забули пароль?</Link>
                             </div>
@@ -77,7 +78,6 @@ export default function Greeting() {
                         <div className="registration-part-separator">або</div>
                         <Link className="registration-link link" to={'/registration'}>Зареєструватись</Link>
                     </div>
-                    {error && <p style={{ color: "red" }}>{error}</p>}
                 </div>
             </div>
         </section >
