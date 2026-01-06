@@ -5,11 +5,16 @@ import InputField from "../ui/inputField/InputField"
 import validateField from "../../utils/validateField"
 import { useState } from "react"
 
-export default function Form({ className, fields, onSubmit, validate = true, children }) {
+export default function Form({ className, fields, onSubmit, initialValues = {}, validate = true, children }) {
 
     const [formData, setFormData] = useState(
-        Object.fromEntries(fields.map(field => [field.name, ""]))
-    )
+        Object.fromEntries(
+            fields.map(field => [
+                field.name,
+                initialValues[field.name] ?? ""
+            ])
+        )
+    );
     const [errors, setErrors] = useState({})
 
     function handleChange(e) {
@@ -53,8 +58,8 @@ export default function Form({ className, fields, onSubmit, validate = true, chi
     return (
         <form className={className ? className : ""} onSubmit={handleSubmit}>
 
-            {fields.map(({ type, name, placeholder }) => {
-                return < InputField key={name} name={name} type={type} placeholder={placeholder} value={formData[name]} onChange={handleChange} error={errors[name]} />
+            {fields.map(({ type, name, placeholder, value }) => {
+                return < InputField key={name} name={name} type={type} placeholder={placeholder} value={value ? value : formData[name]} onChange={handleChange} error={errors[name]} />
             })}
             {children}
         </form>
