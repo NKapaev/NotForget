@@ -23,12 +23,12 @@ export default function Header({ userData }) {
                         e.currentTarget.classList.toggle("isOpen")
                     }} className="user-name">{userData.username}</p>
                     <div className="userDropdown">
-                        <Button className="logout-button" onClick={() => {
+                        <Button className="userDropdownItem" onClick={() => {
                             navigate(`/profile/${id}/settings`)
-                        }} >Settings</Button>
-                        <Button className="logout-button" onClick={() => {
+                        }} >Налаштування</Button>
+                        <Button className="userDropdownItem" onClick={() => {
                             logOut(navigate)
-                        }} >Logout</Button>
+                        }} >Вийти</Button>
 
                     </div>
 
