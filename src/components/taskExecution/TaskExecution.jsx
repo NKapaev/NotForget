@@ -1,6 +1,6 @@
 import "./taskExecution.css"
 import supabase from "../../utils/supabase"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import debounce from "../../utils/debounce"
 
@@ -17,6 +17,12 @@ export default function TaskExecution({ taskId }) {
     const [isLoading, setIsLoading] = useState(true)
 
     const queryClient = useQueryClient()
+
+    const debouncedMutate = useRef(
+        debounce((newState) => {
+            mutation.mutate(newState)
+        }, 1000)
+    ).current
 
     // Мутация обновления состояния задачи
     const mutation = useMutation({
@@ -66,10 +72,11 @@ export default function TaskExecution({ taskId }) {
     const handleClick = (e) => {
         e.stopPropagation()
         if (!executionState) return
+
         const newState = taskStateGenerator(executionState)
         setExecutionState(newState)
-        debounce(mutation.mutate(newState), 1000)
 
+        debouncedMutate(newState)
     }
 
     if (isLoading) return <Loader />
