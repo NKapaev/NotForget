@@ -13,7 +13,7 @@ const modalsSlice = createSlice({
         },
         closeModal: (state, action) => {
             state.stack = state.stack.filter(
-                modal => modal.id !== action.payload
+                modal => modal.modalId !== action.payload
             );
         },
         closeLastModal: (state) => {

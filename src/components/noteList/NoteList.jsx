@@ -1,16 +1,15 @@
+import "./noteList.css"
+
 import supabase from "../../utils/supabase"
 import useNotes from "../../hooks/useNotes"
 import Note from "../note/Note"
 import AddTile from "../addTile/AddTile"
 import useFolder from "../../hooks/useFolder"
-import Button from "../ui/button/Button"
+
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useParams, useNavigate } from "react-router-dom"
-import "./noteList.css"
 
 export default function NoteList({ folderId }) {
-    const params = useParams()
-    const navigate = useNavigate()
+
     const queryClient = useQueryClient()
     const { data: notes } = useNotes(folderId, null)
     const { data: folder } = useFolder(folderId)
@@ -51,7 +50,7 @@ export default function NoteList({ folderId }) {
 
                 <AddTile entity={"note"} folderId={folderId}></AddTile>
                 {notes?.map((note) => {
-                    return <Note key={note.id} id={note.id} folderId={note.folder_id} userId={note.user_id} title={note.title} content={note.content} createdAt={note.created_at} />
+                    return <Note key={note.id} note={note} />
                 })}
             </ul>
 

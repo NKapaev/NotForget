@@ -1,15 +1,17 @@
 import "./note.css"
 import useDeleteNote from "../../hooks/useDeleteNote"
+import useNote from "../../hooks/useNote"
+
 import Button from "../ui/button/Button"
 import { openModal } from "../../components/redux/modalsSlice"
 
 import { useDispatch, useSelector } from "react-redux"
 
-export default function Note({ id, title, content, createdAt }) {
+export default function Note({ note: { id, title, content, created_at } }) {
     const deleteNote = useDeleteNote()
+
     const dispatch = useDispatch()
-    const stack = useSelector((state) => state.modals.stack)
-    console.log(stack)
+
     const handleDragStart = (e) => {
         e.dataTransfer.setData("text/plain", id)
         e.dataTransfer.effectAllowed = "move"
@@ -32,8 +34,9 @@ export default function Note({ id, title, content, createdAt }) {
                 e.preventDefault()
                 dispatch(openModal({
                     type: 'view',
-                    id: crypto.randomUUID(),
-                    props: { content: content, title },
+                    modalId: crypto.randomUUID(),
+                    noteId: id,
+                    props: { content, title },
                 }))
 
             }}
@@ -59,7 +62,7 @@ export default function Note({ id, title, content, createdAt }) {
             <div className="note-content-wrapper">
                 <p className="note-content">{content}</p>
             </div>
-            <p className="creation-date ">{new Date(createdAt).toLocaleDateString()}</p>
+            <p className="creation-date ">{new Date(created_at).toLocaleDateString()}</p>
         </li >
     )
 }

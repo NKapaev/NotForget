@@ -66,7 +66,7 @@ export default function Profile() {
         <section className="profile">
             <>
                 {stack.map(modal => (
-                    <Modal key={modal.id} modal={modal} />
+                    < Modal key={modal.modalId} modal={modal} />
                 ))}
             </>
             <Header userData={profile} />

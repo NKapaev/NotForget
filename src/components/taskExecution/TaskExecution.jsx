@@ -68,7 +68,7 @@ export default function TaskExecution({ taskId }) {
         if (!executionState) return
         const newState = taskStateGenerator(executionState)
         setExecutionState(newState)
-        debounce(mutation.mutate(newState), 500)
+        debounce(mutation.mutate(newState), 1000)
 
     }
 

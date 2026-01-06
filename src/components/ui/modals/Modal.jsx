@@ -1,11 +1,12 @@
 import styles from "./modal.module.css"
 
 import ViewModal from "./ViewModal"
-// import EditModal from "./EditModal"
+import EditModal from "./EditModal"
 import CreateModal from "./CreateModal"
 // import ConfirmModal from "./ConfirmModal"
 
 export default function Modal({ modal }) {
+    // console.log(modal)
     switch (modal.type) {
         case 'view':
             return <ViewModal className={styles.modalBackdrop} {...modal}></ViewModal>

@@ -44,6 +44,10 @@
   align-items: center;
 }
 
+.modalTitle {
+  margin: 0;
+}
+
 .contentWrapper {
   position: relative;
   overflow-y: auto;
@@ -63,10 +67,18 @@
   scrollbar-width: none;
 }
 
-.closeModalButton {
+.buttonsContainer {
+  display: flex;
+}
+
+.modalControlButton {
   padding: 0;
   width: 25px;
   height: 25px;
+}
+
+.modalControlButton:not(:last-child) {
+  margin-right: 10px;
 }
 
 .scrollArrowIcon {

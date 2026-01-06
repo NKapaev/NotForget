@@ -12,7 +12,7 @@ export default function useAddNote() {
                 .from("notes")
                 .insert([{
                     title,
-                    content,
+                    content: content.trim(),
                     folder_id: folderId,
                     task_list_id: taskListId,
                     user_id: user?.id,

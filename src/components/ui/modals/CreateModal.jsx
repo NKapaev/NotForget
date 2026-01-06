@@ -6,7 +6,7 @@ import Button from "../button/Button"
 import { useDispatch } from "react-redux"
 import { closeModal } from "../../redux/modalsSlice"
 
-export default function CreateModal({ entity, folderId, id }) {
+export default function CreateModal({ entity, folderId, modalId }) {
 
     const addFolder = useAddFolder()
     const addNote = useAddNote()
@@ -17,23 +17,23 @@ export default function CreateModal({ entity, folderId, id }) {
     const handleSubmit = (formData) => {
         if (entity === "folder") {
             addFolder.mutateAsync({ title: formData.title, description: formData.description })
-            dispatch(closeModal(id))
+            dispatch(closeModal(modalId))
         }
         if (entity === "note") {
             addNote.mutateAsync({ title: formData.title, content: formData.content, folderId })
-            dispatch(closeModal(id))
+            dispatch(closeModal(modalId))
         }
     }
 
     return (
         <div className={styles.modalBackdrop} onClick={() => {
-            dispatch(closeModal(id))
+            dispatch(closeModal(modalId))
         }}>
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 {entity === "folder" && (
                     <>
-                        <h2>Створення папки</h2>
-                        <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Folder name" }, { name: "description", type: "text", placeholder: "Folder description" }]} >
+                        <h2 className={styles.modalTitle}>Створення папки</h2>
+                        <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Назва" }, { name: "description", type: "text", placeholder: "Опис" }]} >
                             <div className="form-button-container">
                                 <Button type="submit">Створити</Button>
                             </div>
@@ -42,8 +42,8 @@ export default function CreateModal({ entity, folderId, id }) {
                 )}
                 {entity === "note" && (
                     <>
-                        <h2>Створення нотатки</h2>
-                        <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Enter title" }, { name: "content", type: "text", placeholder: "Enter note" }]}>
+                        <h2 className={styles.modalTitle}>Створення нотатки</h2>
+                        <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Заголовок" }, { name: "content", type: "text", placeholder: "Запис" }]}>
                             <div className="form-button-container">
                                 <Button type="submit">Створити</Button>
                             </div>
