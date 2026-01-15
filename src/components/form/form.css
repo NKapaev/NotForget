@@ -1,9 +1,5 @@
-.form-button {
-  font-weight: 400;
-  width: 40%;
-}
-
 .form-button-container {
+  margin-top: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;

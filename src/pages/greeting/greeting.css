@@ -90,6 +90,15 @@
   /* flex-shrink: 2; */
 }
 
+.form-button {
+  font-weight: 400;
+  width: 40%;
+}
+
+.reset-password-message {
+  margin-bottom: 10px;
+}
+
 @media screen and (min-width: 769px) {
   .greeting-section {
     display: flex;

@@ -7,14 +7,15 @@
 .input > label {
   position: absolute;
   left: 12px;
-  top: 50%;
+  top: 0;
   color: var(--blue);
-  transform: translateY(-50%);
+  transform: translateY(50%);
 
   transition: all 0.3s linear;
 }
 
-.input > input {
+.input > input,
+.input > textarea {
   display: block;
   width: 100%;
   padding: 10px 10px;
@@ -28,13 +29,23 @@
   transition: all 0.3s linear;
 }
 
-.input > input:focus {
+.input > input:focus,
+.input > textarea:focus {
   border: 2px solid var(--light);
   transition: all 0.3s linear;
 }
 
-input:not(:placeholder-shown) ~ label {
-  transform: translateY(-50px);
+input:not(:placeholder-shown) ~ label,
+textarea:not(:placeholder-shown) ~ label {
+  transform: translateY(-25px);
+}
+
+textarea {
+  resize: none;
+  font-family: inherit;
+  font-size: inherit;
+  scrollbar-width: none;
+  line-height: 25px;
 }
 
 .field-error {

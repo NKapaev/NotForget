@@ -93,7 +93,7 @@ img {
 }
 
 .link:hover,
-link:focus {
+.link:focus {
   color: var(--light);
 }
 

@@ -6,7 +6,7 @@ import CreateModal from "./CreateModal"
 // import ConfirmModal from "./ConfirmModal"
 
 export default function Modal({ modal }) {
-    // console.log(modal)
+
     switch (modal.type) {
         case 'view':
             return <ViewModal className={styles.modalBackdrop} {...modal}></ViewModal>

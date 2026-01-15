@@ -17,10 +17,18 @@ export default function EditModal({ props: { content, title }, modalId, noteId }
     return (
         <div className={styles.modalBackdrop} onClick={() => { dispatch(closeModal(modalId)) }}>
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+                <div className={styles.modalHeader}>
+                    <div className={styles.buttonsContainer} style={{ marginLeft: "auto" }}>
+                        <Button className={styles.modalControlButton} onClick={() => { dispatch(closeModal(modalId)) }} style={{ padding: 0 }}>
+                            <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
+                        </Button>
+                    </div>
+
+                </div>
                 <Form onSubmit={(formData) => {
                     updateNote.mutateAsync({ id: noteId, ...formData })
                     dispatch(closeModal(modalId))
-                }} fields={[{ name: "title", type: "text", placeholder: "Заголовок" }, { name: "content", type: "text", placeholder: "Запис" }]}
+                }} fields={[{ name: "title", type: "text", placeholder: "Заголовок" }, { name: "content", type: "textarea", placeholder: "Запис" }]}
                     initialValues={{
                         title,
                         content

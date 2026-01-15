@@ -6,6 +6,7 @@ export default function useAddNote() {
 
     return useMutation({
         mutationFn: async ({ title, content, folderId = null, taskListId = null }) => {
+
             const user = (await supabase.auth.getUser()).data.user
 
             const { data, error } = await supabase

@@ -1,15 +1,17 @@
 import styles from "./modal.module.css"
 import useAddFolder from "../../../hooks/useAddFolder"
 import useAddNote from "../../../hooks/useAddNote"
+import useAddTaskList from "../../../hooks/useAddTaskList"
 import Form from "../../form/Form"
 import Button from "../button/Button"
 import { useDispatch } from "react-redux"
 import { closeModal } from "../../redux/modalsSlice"
 
-export default function CreateModal({ entity, folderId, modalId }) {
+export default function CreateModal({ entity, folderId, taskListId, modalId }) {
 
     const addFolder = useAddFolder()
     const addNote = useAddNote()
+    const addTaskList = useAddTaskList()
 
     const dispatch = useDispatch();
     // const modals = useSelector((state) => state.modal.modals);
@@ -20,7 +22,13 @@ export default function CreateModal({ entity, folderId, modalId }) {
             dispatch(closeModal(modalId))
         }
         if (entity === "note") {
-            addNote.mutateAsync({ title: formData.title, content: formData.content, folderId })
+
+            addNote.mutateAsync({ title: formData.title, content: formData.content, folderId, taskListId })
+            dispatch(closeModal(modalId))
+
+        }
+        if (entity === "tasklist") {
+            addTaskList.mutateAsync({ title: formData.title })
             dispatch(closeModal(modalId))
         }
     }
@@ -32,7 +40,15 @@ export default function CreateModal({ entity, folderId, modalId }) {
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 {entity === "folder" && (
                     <>
-                        <h2 className={styles.modalTitle}>Створення папки</h2>
+                        <div className={styles.modalHeader}>
+                            <h2 className={styles.modalTitle}>Створення папки</h2>
+                            <div className={styles.buttonsContainer}>
+                                <Button className={styles.modalControlButton} onClick={() => { dispatch(closeModal(modalId)) }} style={{ padding: 0 }}>
+                                    <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
+                                </Button>
+                            </div>
+                        </div>
+
                         <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Назва" }, { name: "description", type: "text", placeholder: "Опис" }]} >
                             <div className="form-button-container">
                                 <Button type="submit">Створити</Button>
@@ -42,8 +58,34 @@ export default function CreateModal({ entity, folderId, modalId }) {
                 )}
                 {entity === "note" && (
                     <>
-                        <h2 className={styles.modalTitle}>Створення нотатки</h2>
+                        <div className={styles.modalHeader}>
+                            <h2 className={styles.modalTitle}>Створення нотатки</h2>
+                            <div className={styles.buttonsContainer}>
+                                <Button className={styles.modalControlButton} onClick={() => { dispatch(closeModal(modalId)) }} style={{ padding: 0 }}>
+                                    <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
+                                </Button>
+                            </div>
+
+                        </div>
                         <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Заголовок" }, { name: "content", type: "text", placeholder: "Запис" }]}>
+                            <div className="form-button-container">
+                                <Button type="submit">Створити</Button>
+                            </div>
+                        </Form>
+                    </>
+                )}
+                {entity === "tasklist" && (
+                    <>
+                        <div className={styles.modalHeader}>
+                            <h2 className={styles.modalTitle}>Створення списку задач</h2>
+                            <div className={styles.buttonsContainer}>
+                                <Button className={styles.modalControlButton} onClick={() => { dispatch(closeModal(modalId)) }} style={{ padding: 0 }}>
+                                    <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
+                                </Button>
+                            </div>
+
+                        </div>
+                        <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Назва списку задач" }]}>
                             <div className="form-button-container">
                                 <Button type="submit">Створити</Button>
                             </div>

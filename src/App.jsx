@@ -8,6 +8,7 @@ import PrivateRoute from './components/PrivateRoute';
 import ThemeProvider from "./context/ThemeContext";
 import EmailConfirmed from './pages/emailConfirmed/EmailConfirmed';
 import SettingsPage from './pages/settings/SettingsPage';
+import ResetPassword from './pages/resetPassword/ResetPassword';
 import AuthController from './components/authController/AuthController';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -24,6 +25,7 @@ function App() {
             <Route path="/" element={<Greeting />} />
             <Route path="/registration" element={<Registration />} />
             <Route path="/confirmEmail" element={<ConfirmEmail />} />
+            <Route path='/resetPassword' element={<ResetPassword />} />
             <Route path='/emailConfirmed' element={<EmailConfirmed />} />
 
             {/* Приватные маршруты */}

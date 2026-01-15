@@ -9,10 +9,24 @@
   color: var(--text-color);
   font-family: 'Montserrat', sans-serif;
   transition: all 0.3s linear;
+  cursor: pointer;
 }
 
 .button:hover,
 .button:focus {
   background-color: var(--light);
   border-color: var(--light);
+}
+
+.button.link {
+  background: transparent;
+  text-decoration: none;
+  color: var(--blue);
+  border: none;
+}
+
+.button.link:hover,
+.button.link:focus {
+  color: var(--light);
+  background-color: transparent;
 }

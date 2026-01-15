@@ -1,6 +1,8 @@
 import styles from "./taskList.module.css"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { openModal, closeModal } from "../redux/modalsSlice"
 import supabase from "../../utils/supabase"
 import useNotes from "../../hooks/useNotes"
 import useDeleteNote from "../../hooks/useDeleteNote"
@@ -22,6 +24,7 @@ export default function TaskList({ id, className, title }) {
     const { data: notes, isLoading, error } = useNotes(null, id)
     const { ref, hide, show } = useFadeToggle(200);
     const addNote = useAddNote()
+    const dispatch = useDispatch()
 
     const moveNoteMutation = useMutation({
         mutationFn: async ({ noteId, taskListId }) => {
@@ -51,11 +54,6 @@ export default function TaskList({ id, className, title }) {
         moveNoteMutation.mutate({ noteId, taskListId: id })
     }
 
-    const handleSubmit = ((formData) => {
-        addNote.mutateAsync({ content: formData.task, taskListId: id })
-        closeModal()
-    })
-
     const toggle = (e) => {
         e.stopPropagation();
         if (ref.current?.style.display === "none") {
@@ -82,15 +80,16 @@ export default function TaskList({ id, className, title }) {
 
                     <Button
                         className="add-task-button"
-                        onClick={async () => {
-                            openModal(<Form onSubmit={handleSubmit} fields={[{ name: "task", type: "text", placeholder: "Task content" }]} >
-                                <div className="form-button-container">
-                                    <Button type="submit">Створити</Button>
-                                </div>
-                            </Form>)
+                        onClick={async (e) => {
+                            e.stopPropagation()
+                            // <Form onSubmit={handleSubmit} fields={[{ name: "task", type: "text", placeholder: "Task content" }]} >
+                            //     <div className="form-button-container">
+                            //         <Button type="submit">Створити</Button>
+                            //     </div>
+                            // </Form>
+                            dispatch(openModal({ type: "create", entity: "note", modalId: crypto.randomUUID(), taskListId: id }))
                         }}
                     >
-
                         Додати задачу
                     </Button>
                 </div>

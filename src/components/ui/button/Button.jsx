@@ -4,7 +4,7 @@ export default function Button({ className, type = "button", variant = "default"
     return (
         <button
             type={type}
-            className={`${styles.button} ${className ? className : ""}`}
+            className={`${styles.button} ${variant === "link" ? styles.link : ""} ${className ? className : ""}`}
             onClick={onClick}
             style={style}
         >

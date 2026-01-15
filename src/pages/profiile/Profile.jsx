@@ -54,7 +54,7 @@ export default function Profile() {
         fetchProfile();
     }, [id, navigate]);
 
-    if (!profile) return <Loader />;
+    if (!profile) return <Loader variant="big"></Loader>;
 
     const baseTranslate =
         taskListState === false
@@ -63,6 +63,7 @@ export default function Profile() {
     const totalTranslate = baseTranslate + translate;
 
     return (
+
         <section className="profile">
             <>
                 {stack.map(modal => (

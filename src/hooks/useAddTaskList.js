@@ -5,10 +5,10 @@ export default function useAddTaskList() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async ({ name }) => {
+        mutationFn: async ({ title }) => {
             const { data, error } = await supabase
                 .from("taskLists")
-                .insert([{ name, user_id: (await supabase.auth.getUser()).data.user?.id }])
+                .insert([{ title, user_id: (await supabase.auth.getUser()).data.user?.id }])
                 .select()
                 .single()
 

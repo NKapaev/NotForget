@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 
 import { hideTaskList } from "../redux/taskListSlice"
 import { useDispatch } from "react-redux"
+import { openModal } from "../redux/modalsSlice"
 import Button from "../ui/button/Button"
 import { useParams } from "react-router-dom"
 import supabase from "../../utils/supabase"
@@ -23,11 +24,6 @@ export default function TaskListsContainer({ isMobile = false }) {
     const { id } = useParams()
 
     const queryClient = useQueryClient()
-
-    function handleSubmit(formData) {
-        addTaskList.mutateAsync({ title: formData.title })
-        closeModal()
-    }
 
     // Queries
     const { data: taskLists } = useQuery({
@@ -57,11 +53,12 @@ export default function TaskListsContainer({ isMobile = false }) {
         // ${taskList.taskListShown ? "open" : ""}
         <div className={`task-lists-container  ${isMobile ? "mobile" : ""}`}>
             <Button aria-label="Створити новий список задач" className="add-tasklist-button" onClick={(e) => {
-                openModal(<Form onSubmit={handleSubmit} fields={[{ name: "name", type: "text", placeholder: "Task list name" }]} >
-                    <div className="form-button-container">
-                        <Button type="submit">Створити</Button>
-                    </div>
-                </Form>)
+                // <Form onSubmit={handleSubmit} fields={[{ name: "name", type: "text", placeholder: "Task list name" }]} >
+                //     <div className="form-button-container">
+                //         <Button type="submit">Створити</Button>
+                //     </div>
+                // </Form>
+                dispatch(openModal({ type: "create", entity: "tasklist", modalId: crypto.randomUUID() }))
             }}>{<svg className="tasklist-add-icon" width="20px" height="20px">
                 <use href="/icons/plus-icon.svg#plus" fill="var(--blue)" width="20px" height="20px"></use>
             </svg>}</Button>

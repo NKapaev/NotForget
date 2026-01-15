@@ -14,7 +14,6 @@ export default function Folder({ id, title, description, creationDate }) {
 
     const moveNoteMutation = useMutation({
         mutationFn: async ({ noteId, folderId }) => {
-            // console.log(noteId, folderId);
             const { data, error } = await supabase
                 .from("notes")
                 .update({ task_list_id: null, folder_id: folderId })
