@@ -25,7 +25,7 @@ function App() {
             <Route path="/" element={<Greeting />} />
             <Route path="/registration" element={<Registration />} />
             <Route path="/confirmEmail" element={<ConfirmEmail />} />
-            <Route path='/resetPassword' element={<ResetPassword />} />
+            <Route path='/reset-password' element={<ResetPassword />} />
             <Route path='/emailConfirmed' element={<EmailConfirmed />} />
 
             {/* Приватные маршруты */}

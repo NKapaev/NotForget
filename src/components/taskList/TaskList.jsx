@@ -9,7 +9,7 @@ import useDeleteNote from "../../hooks/useDeleteNote"
 import useDeleteTaskList from "../../hooks/useDeleteTaskList"
 import useAddNote from "../../hooks/useAddNote"
 import { useFadeToggle } from "../../hooks/useFadeToggle"
-// import { useModal } from "../../context/ModalProvider"
+
 
 import TaskExecution from "../taskExecution/TaskExecution"
 import Form from "../form/Form"
@@ -82,11 +82,6 @@ export default function TaskList({ id, className, title }) {
                         className="add-task-button"
                         onClick={async (e) => {
                             e.stopPropagation()
-                            // <Form onSubmit={handleSubmit} fields={[{ name: "task", type: "text", placeholder: "Task content" }]} >
-                            //     <div className="form-button-container">
-                            //         <Button type="submit">Створити</Button>
-                            //     </div>
-                            // </Form>
                             dispatch(openModal({ type: "create", entity: "note", modalId: crypto.randomUUID(), taskListId: id }))
                         }}
                     >

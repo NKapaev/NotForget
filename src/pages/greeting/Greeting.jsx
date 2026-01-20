@@ -90,7 +90,10 @@ export default function Greeting() {
                             <h2>Відновлення пароля</h2>
 
                             {!emailSent ? (<Form validate="true" onSubmit={async ({ email }) => {
-                                let { error } = await supabase.auth.resetPasswordForEmail(email)
+                                let { error } = await supabase.auth.resetPasswordForEmail(email, {
+                                    redirectTo: `${window.location.origin}/reset-password`,
+                                }
+                                )
 
                                 setEmailSent(true)
 

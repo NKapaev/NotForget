@@ -20,7 +20,7 @@ export default function PrivateRoute() {
         checkAuth();
     }, []);
 
-    if (loading) return <Loader />;
+    if (loading) return <Loader variant="big" />;
 
     return session ? <Outlet /> : <Navigate to="/" />;
 }
