@@ -122,10 +122,7 @@ export default function TaskList({ id, className, title }) {
                                 document.body.classList.remove("dragging")
                             }}
                             onClick={() => {
-                                openModal(<div style={{
-                                    hyphens: "auto",
-                                    overflowWrap: "break-word",
-                                }}>{note.content}</div>)
+                                dispatch(openModal({ type: "view", entity: "note", modalId: crypto.randomUUID(), noteId: note.id, props: { content: note.content, title: note.title } }))
                             }}
                             onDragOver={(e) => { e.currentTarget.style.transform = "scale(1.01)" }}
                             onDragLeave={(e) => { e.currentTarget.style.transform = "scale(1)" }}
