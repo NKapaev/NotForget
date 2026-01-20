@@ -71,6 +71,7 @@
 
 .buttonsContainer {
   display: flex;
+  align-self: start;
 }
 
 .modalControlButton {
