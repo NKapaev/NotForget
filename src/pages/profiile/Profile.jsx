@@ -2,7 +2,6 @@ import styles from './profile.module.css';
 
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import useAddTaskList from '../../hooks/useAddTaskList';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { hideTaskList, showTaskList } from '../../components/redux/taskListSlice';
@@ -13,7 +12,6 @@ import FolderList from '../../components/folderList/FolderList';
 import NoteList from '../../components/noteList/NoteList';
 import TaskListsContainer from '../../components/taskListsContainer/TaskListsContainer';
 import WorkspaceSwitcher from '../../components/workspaceSwitcher/WorkspaceSwitcher';
-import Button from '../../components/ui/button/Button';
 import Modal from '../../components/ui/modals/Modal';
 
 import Loader from '../../components/ui/loader/Loader';
@@ -119,7 +117,6 @@ export default function Profile() {
                         transform: `translateX(${totalTranslate}px)`,
                         transition: 'all linear 0.3',
                     }}
-                    // "all cubic-bezier(0.8, -0.2, 0.5, 1) 0.6s"
                     onTouchStart={e => {
                         setStartTouchX(e.touches[0].clientX);
                         setIsSwiping(true);
