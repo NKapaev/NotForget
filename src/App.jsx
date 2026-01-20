@@ -5,7 +5,7 @@ import Profile from './pages/profiile/Profile';
 import ConfirmEmail from './pages/confirmEmail/ConfirmEmail';
 import ErrorPage from './pages/errorPage/ErrorPage';
 import PrivateRoute from './components/PrivateRoute';
-import ThemeProvider from "./context/ThemeContext";
+import ThemeProvider from "./components/ui/themeToggle/ThemeContext";
 import EmailConfirmed from './pages/emailConfirmed/EmailConfirmed';
 import SettingsPage from './pages/settings/SettingsPage';
 import ResetPassword from './pages/resetPassword/ResetPassword';
