@@ -5,10 +5,10 @@ export default function useUpdateNote() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async ({ id, ...patch }) => {
+        mutationFn: async ({ id, title, content }) => {
             const { data, error } = await supabase
                 .from("notes")
-                .update(patch)
+                .update({ title, content })
                 .eq("id", id)
                 .select()
                 .single()
@@ -18,11 +18,9 @@ export default function useUpdateNote() {
         },
 
         onSuccess: (updatedNote) => {
-            queryClient.setQueryData(["notes"], (old) =>
-                old?.map(note =>
-                    note.id === updatedNote.id ? updatedNote : note
-                )
-            )
+            // 🔥 обновляем кеш списка заметок
+            queryClient.invalidateQueries({ queryKey: ["notes"] })
+            queryClient.invalidateQueries({ queryKey: ["note", updatedNote.id] })
         },
     })
 }

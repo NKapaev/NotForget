@@ -4,14 +4,16 @@ import supabase from '../utils/supabase';
 export default function useNote(noteId) {
     return useQuery({
         queryKey: ['note', noteId],
+        enabled: !!noteId,
         queryFn: async () => {
-            await supabase.from("notes").eq("id", noteId)
-                .select()
+            const { data, error } = await supabase
+                .from("notes")
+                .select("*")
+                .eq("id", noteId)
                 .single()
+
+            if (error) throw error
+            return data
         },
-
-
-        // ваша функция получения заметки
-        enabled: !!noteId // запрос только если есть noteId
-    });
+    })
 }

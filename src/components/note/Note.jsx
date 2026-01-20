@@ -30,13 +30,11 @@ export default function Note({ note: { id, title, content, created_at } }) {
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
             onClick={(e) => {
-
                 e.preventDefault()
                 dispatch(openModal({
                     type: 'view',
                     modalId: crypto.randomUUID(),
                     noteId: id,
-                    props: { content, title },
                 }))
 
             }}
