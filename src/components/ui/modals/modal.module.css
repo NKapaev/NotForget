@@ -22,7 +22,8 @@
   top: 50%;
   left: 50%;
 
-  width: 50%;
+  max-width: 90%;
+  min-width: 200px;
   max-height: 60%;
 
   display: flex;
