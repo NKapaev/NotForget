@@ -47,6 +47,7 @@ export default function Folder({ id, title, description, creationDate }) {
                 <p className="folder-name ">{title}</p>
                 <Button className="delete-button" onClick={(e) => {
                     e.stopPropagation();
+                    e.target.closest("li").classList.add("fade-out")
                     mutation.mutateAsync(id)
                 }}>
                     <img width={"40px"} className="delete-button-icon" src="/icons/trash-icon.svg#trash-icon" alt="" />

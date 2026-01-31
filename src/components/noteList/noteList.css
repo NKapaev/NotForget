@@ -3,12 +3,11 @@
   flex-direction: column;
   flex-shrink: 0;
   width: 100%;
-  /* margin-right: 30px; */
-  height: calc(100vh - 70px);
+  max-height: calc(100vh - 70px);
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 30px;
-
+  gap: 15px;
   scrollbar-width: none;
 }
 

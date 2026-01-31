@@ -33,3 +33,19 @@
 .hidden {
   display: none;
 }
+
+.fade-out {
+  opacity: 0;
+  scale: 0;
+  padding: 0;
+  margin: 0;
+  width: 0;
+  border: none;
+  transition:
+    opacity 0.3s ease-out,
+    scale 0.3s ease-out,
+    width 0.3s ease-out,
+    padding 0.3s ease-out,
+    margin 0.3s ease-out,
+    border 0.3s ease-out;
+}

@@ -46,6 +46,7 @@ export default function Note({ note: { id, title, content, created_at } }) {
                     className="delete-button"
                     onClick={(e) => {
                         e.stopPropagation()
+                        e.target.closest("li").classList.add("fade-out")
                         deleteNote.mutateAsync(id)
                     }}
                 >
