@@ -12,6 +12,7 @@
 
 .folder-list {
   height: calc(100vh - 70px);
+  gap: 15px;
   overflow-y: scroll;
   overflow-x: hidden;
 
@@ -27,6 +28,5 @@
   .folder-list {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 15px;
   }
 }
