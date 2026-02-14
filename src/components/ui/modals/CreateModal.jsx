@@ -6,6 +6,7 @@ import Form from "../../form/Form"
 import Button from "../button/Button"
 import { useDispatch } from "react-redux"
 import { closeModal } from "../../redux/modalsSlice"
+import parseUrl from "../../../utils/parseUrl"
 
 export default function CreateModal({ entity, folderId, taskListId, modalId }) {
 
@@ -23,6 +24,7 @@ export default function CreateModal({ entity, folderId, taskListId, modalId }) {
         }
         if (entity === "note") {
 
+            parseUrl(formData.content)
             addNote.mutateAsync({ title: formData.title, content: formData.content, folderId, taskListId })
             dispatch(closeModal(modalId))
 
@@ -67,7 +69,7 @@ export default function CreateModal({ entity, folderId, taskListId, modalId }) {
                             </div>
 
                         </div>
-                        <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Заголовок" }, { name: "content", type: "text", placeholder: "Запис" }]}>
+                        <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Заголовок" }, { name: "content", type: "text", placeholder: "Запис", listenUrl: true }]}>
                             <div className="form-button-container">
                                 <Button type="submit">Створити</Button>
                             </div>
