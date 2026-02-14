@@ -58,8 +58,8 @@ export default function Form({ className, fields, onSubmit, initialValues = {}, 
     return (
         <form className={className ? className : ""} onSubmit={handleSubmit}>
 
-            {fields.map(({ type, name, placeholder, value }) => {
-                return < InputField key={name} name={name} type={type} placeholder={placeholder} value={value ? value : formData[name]} onChange={handleChange} error={errors[name]} />
+            {fields.map(({ type, name, placeholder, listenUrl, value }) => {
+                return < InputField key={name} name={name} type={type} placeholder={placeholder} listenUrl={listenUrl} value={value ? value : formData[name]} onChange={handleChange} error={errors[name]} />
             })}
             {children}
         </form>
