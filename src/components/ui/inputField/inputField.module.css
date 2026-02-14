@@ -48,6 +48,51 @@ textarea {
   line-height: 25px;
 }
 
-.field-error {
+.fieldError {
   margin-top: 10px;
+}
+
+.urlPreview {
+  padding: 20px;
+  max-height: 100px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  display: flex;
+  background-color: #282829;
+  border-radius: 25px 25px 0 0;
+}
+
+.withPreview > input {
+  border-radius: 0 0 10px 10px;
+}
+
+/* .urlPreview::before,
+.urlPreview::after {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-color: #282829;
+  bottom: -10px;
+}
+.urlPreview::before {
+  left: 0;
+}
+
+.urlPreview::after {
+  right: 0;
+} */
+
+.urlPreviewImageContainer {
+  max-width: 50px;
+  margin-right: 20px;
+  height: auto;
+}
+
+.previewTitle {
+  margin: 0;
+}
+
+.previewDescription {
+  margin: 0;
 }
