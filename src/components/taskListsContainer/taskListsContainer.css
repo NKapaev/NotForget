@@ -32,16 +32,18 @@
 }
 
 .add-tasklist-button {
-  width: 34px;
+  /* width: 34px; */
+  padding: 0 10px;
   height: 34px;
-  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .tasklist-add-icon {
   color: var(--blue);
+  margin-right: 10px;
 }
 
 .tasklist-add-icon > use {

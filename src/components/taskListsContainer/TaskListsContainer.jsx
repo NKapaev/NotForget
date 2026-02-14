@@ -61,7 +61,7 @@ export default function TaskListsContainer({ isMobile = false }) {
                 dispatch(openModal({ type: "create", entity: "tasklist", modalId: crypto.randomUUID() }))
             }}>{<svg className="tasklist-add-icon" width="20px" height="20px">
                 <use href="/icons/plus-icon.svg#plus" fill="var(--blue)" width="20px" height="20px"></use>
-            </svg>}</Button>
+            </svg>} Створити новый список </Button>
 
             {/* <Button className="toggle-task-list-btn" onClick={(e) => { dispatch(toggleTaskListOpen()) }}>{taskList.taskListShown ? ">" : "<"}</Button> */}
 
