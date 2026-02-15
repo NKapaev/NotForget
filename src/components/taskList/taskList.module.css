@@ -47,6 +47,12 @@
   justify-content: space-between;
 }
 
+.taskListHeaderContent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .taskListTitle {
   margin-bottom: 10px;
 }
