@@ -5,10 +5,10 @@ export default function useUpdateNote() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async ({ id, title, content }) => {
+        mutationFn: async ({ id, title, content, linkPreviewId = null }) => {
             const { data, error } = await supabase
                 .from("notes")
-                .update({ title, content })
+                .update({ title, content, link_preview_id: linkPreviewId })
                 .eq("id", id)
                 .select()
                 .single()

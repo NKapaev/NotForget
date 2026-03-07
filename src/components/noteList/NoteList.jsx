@@ -50,7 +50,8 @@ export default function NoteList({ folderId }) {
 
                 <AddTile entity={"note"} folderId={folderId}></AddTile>
                 {notes?.map((note) => {
-                    return <Note key={note.id} note={note} />
+                    console.log(note)
+                    return <Note key={note.id} note={note} linkPreviewId={note.link_preview_id} />
                 })}
             </ul>
 

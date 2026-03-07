@@ -2,13 +2,37 @@ import styles from "./modal.module.css"
 import { useSelector, useDispatch } from "react-redux"
 import { useState, useRef, useEffect, useLayoutEffect } from "react"
 import { closeModal, openModal } from "../../redux/modalsSlice"
+import { linkifyText } from "../../../utils/linkifyText"
+import UrlPreviewCard from "../urlPreviewCard/UrlPreviewCard"
 import useNote from "../../../hooks/useNote"
+import supabase from "../../../utils/supabase"
 
 import Button from "../button/Button"
 
 export default function ViewModal({ modalId, noteId }) {
 
     const { data: note, isLoading } = useNote(noteId)
+    const [previewData, setPreviewData] = useState(null)
+    console.log(note)
+
+    useEffect(() => {
+        let isCurrent = true;
+        if (note?.link_preview_id) {
+            const fetchPreviewData = async () => {
+                const { data, error } = await supabase.from("link_previews").select("*").eq("id", note.link_preview_id).single()
+                if (error) {
+                    console.error(error.message)
+                } else {
+                    setPreviewData(data)
+                }
+            }
+            fetchPreviewData()
+        }
+
+        return () => {
+            isCurrent = false
+        }
+    }, [note?.link_preview_id])
 
 
 
@@ -22,17 +46,18 @@ export default function ViewModal({ modalId, noteId }) {
 
         if (!el) return;
 
-        setCanScrollUp(el.scrollTop > 0);
-        setCanScrollDown(
-            el.scrollTop + el.clientHeight < el.scrollHeight
-        );
+        const scrollTop = el.scrollTop > 0;
+        const scrollBottom = el.scrollTop + el.clientHeight < el.scrollHeight;
+
+        setCanScrollUp(prev => (prev !== scrollTop ? scrollTop : prev));
+        setCanScrollDown(prev => (prev !== scrollBottom ? scrollBottom : prev));
     };
 
-    useLayoutEffect(() => {
-        if (note?.content) {
-            requestAnimationFrame(updateScrollState);
-        }
-    }, [note?.content]);
+
+    if (note?.content) {
+        requestAnimationFrame(updateScrollState);
+    }
+
 
     useEffect(() => {
         const el = contentRef.current;
@@ -74,7 +99,8 @@ export default function ViewModal({ modalId, noteId }) {
                     </svg>
                 </div>
                 <div className={styles.contentWrapper} ref={contentRef}>
-                    <p className={styles.modalContent} >{note.content}</p>
+                    {previewData && <UrlPreviewCard previewData={previewData} />}
+                    <p className={styles.modalContent} >{linkifyText(note.content)}</p>
                 </div>
                 <div className={`${styles.scrollArrow} ${styles.down} ${canScrollDown ? styles.visible : ""}`}>
                     <svg className={`${styles.rotated}`} width="30" height="30">

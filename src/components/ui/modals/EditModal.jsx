@@ -1,10 +1,10 @@
 import styles from "./modal.module.css"
 
-import useAddNote from "../../../hooks/useAddNote";
 import useNote from "../../../hooks/useNote"
 import useUpdateNote from "../../../hooks/useUpdateNote"
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { closeModal } from "../../redux/modalsSlice";
+import extractPreviewId from "../../../utils/extractPreviewId"
 
 import Form from "../../form/Form";
 import Button from "../button/Button";
@@ -29,10 +29,20 @@ export default function EditModal({ modalId, noteId }) {
                     </div>
 
                 </div>
-                <Form onSubmit={(formData) => {
-                    updateNote.mutateAsync({ id: noteId, ...formData })
+                <Form onSubmit={async (formData) => {
+
+                    const previewId = await extractPreviewId(formData.content)
+
+                    await updateNote.mutateAsync({
+                        id: noteId,
+                        title: formData.title,
+                        content: formData.content,
+                        linkPreviewId: previewId
+                    })
+
                     dispatch(closeModal(modalId))
-                }} fields={[{ name: "title", type: "text", placeholder: "Заголовок" }, { name: "content", type: "textarea", placeholder: "Запис" }]}
+
+                }} fields={[{ name: "title", type: "text", placeholder: "Заголовок" }, { name: "content", type: "textarea", placeholder: "Запис", listenUrl: true }]}
                     initialValues={{
                         title: note.title,
                         content: note.content

@@ -12,6 +12,11 @@
   cursor: pointer;
 }
 
+button:disabled {
+  pointer-events: none;
+  cursor: wait;
+}
+
 .button:hover,
 .button:focus {
   background-color: var(--light);
@@ -29,4 +34,9 @@
 .button.link:focus {
   color: var(--light);
   background-color: transparent;
+}
+
+.button.transparent {
+  background: transparent;
+  border: none;
 }

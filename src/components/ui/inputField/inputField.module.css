@@ -52,17 +52,8 @@ textarea {
   margin-top: 10px;
 }
 
-.urlPreview {
-  padding: 20px;
-  max-height: 100px;
-  overflow-y: scroll;
-  scrollbar-width: none;
-  display: flex;
-  background-color: #282829;
-  border-radius: 25px 25px 0 0;
-}
-
-.withPreview > input {
+.withPreview > input,
+.withPreview > textarea {
   border-radius: 0 0 10px 10px;
 }
 
@@ -82,17 +73,3 @@ textarea {
 .urlPreview::after {
   right: 0;
 } */
-
-.urlPreviewImageContainer {
-  max-width: 50px;
-  margin-right: 20px;
-  height: auto;
-}
-
-.previewTitle {
-  margin: 0;
-}
-
-.previewDescription {
-  margin: 0;
-}

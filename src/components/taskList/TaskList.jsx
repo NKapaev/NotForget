@@ -2,28 +2,23 @@ import styles from "./taskList.module.css"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { openModal, closeModal } from "../redux/modalsSlice"
+import { openModal } from "../redux/modalsSlice"
 import supabase from "../../utils/supabase"
 import useNotes from "../../hooks/useNotes"
 import useDeleteNote from "../../hooks/useDeleteNote"
 import useDeleteTaskList from "../../hooks/useDeleteTaskList"
-import useAddNote from "../../hooks/useAddNote"
 import { useFadeToggle } from "../../hooks/useFadeToggle"
 
-
 import TaskExecution from "../taskExecution/TaskExecution"
-import Form from "../form/Form"
 import Button from "../ui/button/Button"
 import Loader from "../ui/loader/Loader"
 
 export default function TaskList({ id, className, title }) {
-    // const [isOpen, setIsOpen] = useState(true)
-    // const { openModal, closeModal } = useModal()
+    const [isOpen, setIsOpen] = useState(true)
     const queryClient = useQueryClient()
     const deleteTaskList = useDeleteTaskList()
     const { data: notes, isLoading, error } = useNotes(null, id)
     const { ref, hide, show } = useFadeToggle(200);
-    const addNote = useAddNote()
     const dispatch = useDispatch()
 
     const moveNoteMutation = useMutation({
@@ -69,23 +64,34 @@ export default function TaskList({ id, className, title }) {
     return (
         <div
             className={`${styles.taskList} ${className ?? ""} `}
-            // ${isOpen ? "isOpen" : ""}
-            // onClick={toggle}
             onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}
         >
-            <div className={styles.taskListHeader} onClick={toggle}>
-                <div className="">
+            <div className={styles.taskListHeader} onClick={(e) => {
+                setIsOpen(prev => !prev)
+                toggle(e)
+            }}>
+                <div className={styles.taskListHeaderContent}>
+
+                    <Button variant="transparent" className={styles.dropButton}>
+                        <svg className={styles.dropButtonIcon} width="20px" height="20px" style={isOpen ? { transform: "rotate(90deg)" } : {}}>
+                            <use href="/icons/arrow.svg#arrow"></use>
+                        </svg>
+                    </Button>
+
                     <p className={styles.taskListTitle}>{title}</p>
 
                     <Button
-                        className="add-task-button"
+                        className={styles.addTaskButton}
                         onClick={async (e) => {
                             e.stopPropagation()
                             dispatch(openModal({ type: "create", entity: "note", modalId: crypto.randomUUID(), taskListId: id }))
                         }}
                     >
-                        Додати задачу
+
+                        <svg className="tasklist-add-icon" width="20px" height="20px" style={{ margin: 0 }}>
+                            <use href="/icons/plus-icon.svg#plus" fill="var(--blue)" width="20px" height="20px"></use>
+                        </svg>
                     </Button>
                 </div>
 
@@ -134,6 +140,7 @@ export default function TaskList({ id, className, title }) {
                                 className={`${styles.deleteButton} delete-button`}
                                 onClick={(e) => {
                                     e.stopPropagation()
+                                    e.target.closest("div").classList.add("fade-out")
                                     deleteNote.mutateAsync(note.id)
                                 }
                                 }

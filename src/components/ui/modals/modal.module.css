@@ -103,6 +103,10 @@
   animation: blink 1.5s infinite;
 }
 
+.addButtonLoader {
+  margin-right: 10px;
+}
+
 @keyframes blink {
   0%,
   100% {

@@ -5,7 +5,7 @@ export default function useAddNote() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async ({ title, content, folderId = null, taskListId = null }) => {
+        mutationFn: async ({ title, content, folderId = null, taskListId = null, linkPreviewId = null }) => {
 
             const user = (await supabase.auth.getUser()).data.user
 
@@ -17,6 +17,7 @@ export default function useAddNote() {
                     folder_id: folderId,
                     task_list_id: taskListId,
                     user_id: user?.id,
+                    link_preview_id: linkPreviewId,
                 }])
                 .select()
                 .single()

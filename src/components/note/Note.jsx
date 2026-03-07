@@ -1,13 +1,13 @@
 import "./note.css"
 import useDeleteNote from "../../hooks/useDeleteNote"
 import useNote from "../../hooks/useNote"
-
 import Button from "../ui/button/Button"
 import { openModal } from "../../components/redux/modalsSlice"
+import { linkifyText } from "../../utils/linkifyText"
 
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
-export default function Note({ note: { id, title, content, created_at } }) {
+export default function Note({ note: { id, title, content, linkPreviewId = null, created_at } }) {
     const deleteNote = useDeleteNote()
 
     const dispatch = useDispatch()
@@ -47,7 +47,8 @@ export default function Note({ note: { id, title, content, created_at } }) {
                     onClick={(e) => {
                         e.stopPropagation()
                         e.target.closest("li").classList.add("fade-out")
-                        deleteNote.mutateAsync(id)
+
+                        setTimeout(() => { deleteNote.mutateAsync(id) }, 100)
                     }}
                 >
                     <img
@@ -59,7 +60,7 @@ export default function Note({ note: { id, title, content, created_at } }) {
                 </Button>
             </div>
             <div className="note-content-wrapper">
-                <p className="note-content">{content}</p>
+                <p className="note-content">{linkifyText(content)}</p>
             </div>
             <p className="creation-date ">{new Date(created_at).toLocaleDateString()}</p>
         </li >
