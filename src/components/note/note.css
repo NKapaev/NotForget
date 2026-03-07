@@ -34,18 +34,36 @@
   display: none;
 }
 
-.fade-out {
-  opacity: 0;
-  scale: 0;
-  padding: 0;
-  margin: 0;
-  width: 0;
-  border: none;
-  transition:
-    opacity 0.3s ease-out,
-    scale 0.3s ease-out,
-    width 0.3s ease-out,
-    padding 0.3s ease-out,
-    margin 0.3s ease-out,
-    border 0.3s ease-out;
+@media screen and (max-width: 480px) {
+  .fade-out {
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    height: 0;
+    transform: scaleY(0);
+    transition:
+      height 0.3s ease-out,
+      padding 0.3s ease-out,
+      margin 0.3s ease-out,
+      opacity 0.3s ease-out,
+      border 0.3s ease-out;
+  }
+}
+
+@media screen and (min-width: 481px) {
+  .fade-out {
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    width: 0;
+    border: none;
+    transform: scaleX(0);
+    transition:
+      transform 0.3s ease-out,
+      opacity 0.3s ease-out,
+      width 0.3s ease-out,
+      padding 0.3s ease-out,
+      margin 0.3s ease-out,
+      border 0.3s ease-out;
+  }
 }
