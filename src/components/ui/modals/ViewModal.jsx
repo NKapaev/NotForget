@@ -99,7 +99,7 @@ export default function ViewModal({ modalId, noteId }) {
                     </svg>
                 </div>
                 <div className={styles.contentWrapper} ref={contentRef}>
-                    {previewData && <UrlPreviewCard previewData={previewData} />}
+                    {previewData && <UrlPreviewCard className={styles.borderRounded} previewData={previewData} />}
                     <p className={styles.modalContent} >{linkifyText(note.content)}</p>
                 </div>
                 <div className={`${styles.scrollArrow} ${styles.down} ${canScrollDown ? styles.visible : ""}`}>
