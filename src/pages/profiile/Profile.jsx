@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { hideTaskList, showTaskList } from '../../components/redux/taskListSlice';
-import { fetchBreadcrumbs } from '../../utils/getBreadCrumbs';
+// import { fetchBreadcrumbs } from '../../utils/getBreadCrumbs';
 import supabase from '../../utils/supabase';
 
 import Header from '../../components/header/Header';
