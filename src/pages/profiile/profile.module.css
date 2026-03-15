@@ -14,12 +14,21 @@
 .profileContainer {
   position: relative;
   padding-top: 10px;
+  max-height: calc(100vh - 70px);
+  overflow-y: scroll;
+  scrollbar-width: none;
   overflow-x: hidden;
 }
 
 .profileContentWrapper {
   display: flex;
   align-items: flex-start;
+}
+
+.mainPanel {
+  width: 100%;
+  flex-shrink: 0;
+  padding: 0 20px;
 }
 
 .workspaceController {
@@ -48,6 +57,11 @@
 
 .hideTaskListButton {
   left: 15px;
+}
+
+.showTaskListButton:hover,
+.hideTaskListButton:hover {
+  background-color: var(--grey-color);
 }
 
 .none {

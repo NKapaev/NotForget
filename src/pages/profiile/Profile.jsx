@@ -5,31 +5,64 @@ import { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { hideTaskList, showTaskList } from '../../components/redux/taskListSlice';
+import { fetchBreadcrumbs } from '../../utils/getBreadCrumbs';
 import supabase from '../../utils/supabase';
 
 import Header from '../../components/header/Header';
 import FolderList from '../../components/folderList/FolderList';
 import NoteList from '../../components/noteList/NoteList';
+import Folder from '../../components/folder/Folder';
+import Note from '../../components/note/Note';
 import TaskListsContainer from '../../components/taskListsContainer/TaskListsContainer';
 import WorkspaceSwitcher from '../../components/workspaceSwitcher/WorkspaceSwitcher';
 import Modal from '../../components/ui/modals/Modal';
+import CreateEntityButton from '../../components/createEntityButton/CreateEntityButton';
+import EntityList from "../../components/entityList/EntityList"
+
+import useNotes from '../../hooks/useNotes';
+import useFolders from '../../hooks/useFolders';
 
 import Loader from '../../components/ui/loader/Loader';
 
 export default function Profile() {
     const { id, folderId } = useParams();
     const [profile, setProfile] = useState(null);
+
     const navigate = useNavigate();
     // const isMobile = window.innerWidth < 768;
     const isMobile = true;
+    const { data: notes } = useNotes(folderId)
+    const { data: folders } = useFolders(folderId)
 
     const [startTouchX, setStartTouchX] = useState(0);
     const [translate, setTranslate] = useState(0);
     const [isSwiping, setIsSwiping] = useState(false);
 
+
     const dispatch = useDispatch();
     const taskListState = useSelector(state => state.taskList.taskListShown);
     const { stack } = useSelector(state => state.modals);
+
+    const dataToDisplay = [...(notes || []).map(note => ({ ...note, type: "note" })), ...(folders || []).map(folder => ({ ...folder, type: "folder" }))];
+    const sortedDataToDisplay = [...dataToDisplay].sort(
+        (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
+    )
+
+    // const [breadcrumbs, setBreadcrumbs] = useState([]);
+
+    // useEffect(() => {
+    //     const getCrumbs = async () => {
+    //         const path = await fetchBreadcrumbs(folderId);
+    //         setBreadcrumbs(path);
+    //     };
+
+    //     if (folderId) {
+    //         getCrumbs();
+    //     } else {
+    //         setBreadcrumbs([]); // Если мы в корне — очищаем крошки
+    //     }
+    //     console.log(breadcrumbs)
+    // }, [folderId]);
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -54,10 +87,12 @@ export default function Profile() {
 
     if (!profile) return <Loader variant="big"></Loader>;
 
+    const wrapper = document.querySelector('.profileContentWrapper');
+
     const baseTranslate =
-        taskListState === false
-            ? 0
-            : -document.querySelector('.profileContentWrapper').offsetWidth;
+        taskListState && wrapper
+            ? -wrapper.offsetWidth
+            : 0;
     const totalTranslate = baseTranslate + translate;
 
     return (
@@ -144,23 +179,42 @@ export default function Profile() {
                         setTranslate(0);
                     }}
                 >
-                    {/* <TaskListsContainer isMobile={isMobile ? true : false}></TaskListsContainer> */}
+                    <div className={styles.mainPanel}>
+                        <CreateEntityButton folderId={folderId} />
 
-                    {folderId ? (
-                        <>
-                            {/* <Button className="go-back-button" onClick={() => {
+                        {/* {notes?.map((note) => {
+                            return <Note key={note.id} note={note} linkPreviewId={note.link_preview_id} />
+                        })} */}
+
+                        <EntityList>
+                            {sortedDataToDisplay.map((item) => {
+                                if (item.type === "folder") {
+                                    return < Folder key={item.id} id={item.id} title={item.title} description={item.description} creationDate={item.created_at} />
+                                }
+                                if (item.type === "note") {
+                                    return <Note key={item.id} note={item} linkPreviewId={item.link_preview_id} />
+                                }
+                            })}
+                        </EntityList>
+
+                        {/* <TaskListsContainer isMobile={isMobile ? true : false}></TaskListsContainer> */}
+
+                        {/* {folderId ? (
+                            <>
+                                <Button className="go-back-button" onClick={() => {
                             navigate(`/profile/${id}`)
                         }}>
                             <svg className="back-button-icon" width="20px" height="20px">
                                 <use href="/icons/arrow.svg#arrow"></use>
                             </svg>
-                        </Button> */}
+                        </Button>
 
-                            <NoteList folderId={folderId} userId={profile.id} />
-                        </>
-                    ) : (
-                        <FolderList userId={profile.id} />
-                    )}
+                                <NoteList folderId={folderId} userId={profile.id} />
+                            </>
+                        ) : (
+                            <FolderList userId={profile.id} />
+                        )} */}
+                    </div>
 
                     {isMobile && <TaskListsContainer isMobile={isMobile} />}
                 </div>

@@ -2,13 +2,14 @@ import useDeleteFolder from "../../hooks/useDeleteFolder"
 import Button from "../ui/button/Button"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import "./folder.css"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import supabase from "../../utils/supabase"
 
 export default function Folder({ id, title, description, creationDate }) {
+    const { id: profileId } = useParams();
+
     const queryClient = useQueryClient()
     const navigate = useNavigate()
-    const { pathname } = useLocation()
 
     const mutation = useDeleteFolder();
 
@@ -16,7 +17,7 @@ export default function Folder({ id, title, description, creationDate }) {
         mutationFn: async ({ noteId, folderId }) => {
             const { data, error } = await supabase
                 .from("notes")
-                .update({ task_list_id: null, folder_id: folderId })
+                .update({ folder_id: folderId })
                 .eq("id", noteId)
                 .select()
                 .single()
@@ -42,7 +43,7 @@ export default function Folder({ id, title, description, creationDate }) {
         <li className="folder tile"
             onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}
-            onClick={(e) => { navigate(pathname + "/folder/" + id) }}>
+            onClick={(e) => { navigate(`/profile/${profileId}/folder/${id}`) }}>
             <div className="folderHeader">
                 <p className="folder-name ">{title}</p>
                 <Button className="delete-button" onClick={(e) => {

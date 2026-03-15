@@ -2,14 +2,20 @@
   position: absolute;
   backdrop-filter: blur(5px);
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100%);
+
   z-index: 4;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
-  width: 100%;
-  height: calc(100% + 70px);
+  /* width: 100%;
+  height: calc(100% + 70px); */
   opacity: 1;
   pointer-events: all;
   overflow: hidden;
@@ -18,9 +24,9 @@
 }
 
 .modal {
-  position: absolute;
+  /* position: absolute;
   top: 50%;
-  left: 50%;
+  left: 50%; */
 
   max-width: 90%;
   min-width: 200px;
@@ -37,8 +43,19 @@
   border-radius: 10px;
   background-color: var(--bg-color);
 
-  transform: translate(-50%, -50%);
+  /* transform: translate(-50%, -50%); */
+  /* transition: opacity 0.3 linear; */
+  animation: fadeIn 0.3s linear forwards;
 }
+
+.modal.isClosing {
+  animation: fadeOut 0.3s linear forwards;
+}
+
+/* .modalBackdrop.isClosing {
+  pointer-events: none;
+  opacity: 0;
+} */
 
 .modalHeader {
   display: flex;
@@ -156,5 +173,27 @@
   }
   50% {
     opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
   }
 }

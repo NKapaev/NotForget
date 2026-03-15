@@ -1,4 +1,4 @@
-.note-list {
+.entiyList {
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -9,30 +9,11 @@
   padding: 10px;
   gap: 15px;
   scrollbar-width: none;
+  max-height: calc(100vh - 70px - 110px - 20px);
 }
-
-.note-taskList-container {
-  display: flex;
-}
-
-.go-back-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 42px;
-}
-
-.note-list-section {
-  width: 100%;
-  flex-shrink: 0;
-}
-
-/* .back-button-icon{
-  display: block;
-} */
 
 @media screen and (min-width: 481px) {
-  .note-list {
+  .entiyList {
     flex-direction: row;
     flex-wrap: wrap;
   }

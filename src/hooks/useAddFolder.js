@@ -5,10 +5,10 @@ export default function useAddFolder() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async ({ title, description }) => {
+        mutationFn: async ({ title, description, folderId = null }) => {
             const { data, error } = await supabase
                 .from("folders")
-                .insert([{ title, description, user_id: (await supabase.auth.getUser()).data.user?.id }])
+                .insert([{ title, description, user_id: (await supabase.auth.getUser()).data.user?.id, folder_id: folderId }])
                 .select()
                 .single()
 
@@ -17,7 +17,10 @@ export default function useAddFolder() {
         },
         onSuccess: () => {
             // вариант 1: рефетч из базы
-            queryClient.invalidateQueries({ queryKey: ["folders"] })
+            queryClient.invalidateQueries({
+                queryKey: ["folders"],
+                exact: false
+            })
 
             // вариант 2 (быстрее): обновить кэш локально
             // queryClient.setQueryData(["folders"], (old) => [...(old || []), newFolder])

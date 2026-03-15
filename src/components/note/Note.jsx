@@ -33,8 +33,8 @@ export default function Note({ note: { id, title, content, linkPreviewId = null,
                 e.preventDefault()
                 dispatch(openModal({
                     type: 'view',
-                    modalId: crypto.randomUUID(),
                     noteId: id,
+                    modalId: crypto.randomUUID(),
                 }))
 
             }}

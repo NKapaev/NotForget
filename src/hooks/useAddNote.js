@@ -14,8 +14,8 @@ export default function useAddNote() {
                 .insert([{
                     title,
                     content: content.trim(),
-                    folder_id: folderId,
-                    task_list_id: taskListId,
+                    folder_id: folderId || null,
+                    task_list_id: taskListId || null,
                     user_id: user?.id,
                     link_preview_id: linkPreviewId,
                 }])
@@ -26,8 +26,10 @@ export default function useAddNote() {
             return data
         },
         onSuccess: () => {
-            // инвалидируем только кэш этой папки
-            queryClient.invalidateQueries({ queryKey: ["notes"] })
+            queryClient.invalidateQueries({
+                queryKey: ["notes"],
+                exact: false
+            })
         }
     })
 }

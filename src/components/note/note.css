@@ -1,6 +1,21 @@
 .note {
 }
 
+.note::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  background-image: url('/icons/note-icon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.2;
+}
+
 .noteHeader {
   display: flex;
   justify-content: space-between;

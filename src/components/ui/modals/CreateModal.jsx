@@ -13,10 +13,11 @@ import { useState } from "react"
 import getUrlPreviewData from "../../../utils/getUrlPreviewData"
 import extractPreviewId from "../../../utils/extractPreviewId"
 
-export default function CreateModal({ entity, folderId, taskListId, modalId }) {
+export default function CreateModal({ entity, folderId = null, taskListId = null, modalId }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isClosing, setIsClosing] = useState(false)
 
-    const addFolder = useAddFolder()
+    const addFolder = useAddFolder(folderId)
     const addNote = useAddNote()
     const addTaskList = useAddTaskList()
 
@@ -27,8 +28,11 @@ export default function CreateModal({ entity, folderId, taskListId, modalId }) {
         setIsSubmitting(true);
         try {
             if (entity === "folder") {
-                addFolder.mutateAsync({ title: formData.title, description: formData.description })
-                dispatch(closeModal(modalId))
+                addFolder.mutateAsync({ title: formData.title, description: formData.description, folderId: folderId ?? null })
+                setIsClosing(true);
+                setTimeout(() => {
+                    dispatch(closeModal(modalId));
+                }, 300);
             }
             if (entity === "note") {
                 const previewId = await extractPreviewId(formData.content)
@@ -36,16 +40,22 @@ export default function CreateModal({ entity, folderId, taskListId, modalId }) {
                 await addNote.mutateAsync({
                     title: formData.title,
                     content: formData.content,
-                    folderId,
-                    taskListId,
+                    folderId: folderId,      // Должно совпадать с аргументом в хуке (CamelCase)
+                    taskListId: taskListId,
                     linkPreviewId: previewId
                 })
 
-                dispatch(closeModal(modalId))
+                setIsClosing(true);
+                setTimeout(() => {
+                    dispatch(closeModal(modalId));
+                }, 300);
             }
             if (entity === "tasklist") {
                 addTaskList.mutateAsync({ title: formData.title })
-                dispatch(closeModal(modalId))
+                setIsClosing(true);
+                setTimeout(() => {
+                    dispatch(closeModal(modalId));
+                }, 300);
             }
         } catch (error) {
             console.error("Ошибка при создании:", error);
@@ -57,15 +67,23 @@ export default function CreateModal({ entity, folderId, taskListId, modalId }) {
 
     return (
         <div className={styles.modalBackdrop} onClick={() => {
-            dispatch(closeModal(modalId))
+            setIsClosing(true);
+            setTimeout(() => {
+                dispatch(closeModal(modalId));
+            }, 300);
         }}>
-            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div className={`${styles.modal} ${isClosing ? styles.isClosing : ""}`} onClick={(e) => e.stopPropagation()}>
                 {entity === "folder" && (
                     <>
                         <div className={styles.modalHeader}>
                             <h2 className={styles.modalTitle}>Створення папки</h2>
                             <div className={styles.buttonsContainer}>
-                                <Button className={styles.modalControlButton} onClick={() => { dispatch(closeModal(modalId)) }} style={{ padding: 0 }}>
+                                <Button className={styles.modalControlButton} onClick={() => {
+                                    setIsClosing(true);
+                                    setTimeout(() => {
+                                        dispatch(closeModal(modalId));
+                                    }, 300);
+                                }} style={{ padding: 0 }}>
                                     <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
                                 </Button>
                             </div>
@@ -85,7 +103,12 @@ export default function CreateModal({ entity, folderId, taskListId, modalId }) {
                         <div className={styles.modalHeader}>
                             <h2 className={styles.modalTitle}>Створення нотатки</h2>
                             <div className={styles.buttonsContainer}>
-                                <Button className={styles.modalControlButton} onClick={() => { dispatch(closeModal(modalId)) }} style={{ padding: 0 }}>
+                                <Button className={styles.modalControlButton} onClick={() => {
+                                    setIsClosing(true);
+                                    setTimeout(() => {
+                                        dispatch(closeModal(modalId));
+                                    }, 300);
+                                }} style={{ padding: 0 }}>
                                     <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
                                 </Button>
                             </div>
@@ -105,7 +128,12 @@ export default function CreateModal({ entity, folderId, taskListId, modalId }) {
                         <div className={styles.modalHeader}>
                             <h2 className={styles.modalTitle}>Створення списку задач</h2>
                             <div className={styles.buttonsContainer}>
-                                <Button className={styles.modalControlButton} onClick={() => { dispatch(closeModal(modalId)) }} style={{ padding: 0 }}>
+                                <Button className={styles.modalControlButton} onClick={() => {
+                                    setIsClosing(true);
+                                    setTimeout(() => {
+                                        dispatch(closeModal(modalId));
+                                    }, 300);
+                                }} style={{ padding: 0 }}>
                                     <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
                                 </Button>
                             </div>

@@ -18,16 +18,18 @@ export default function WorkspaceSwitcher({ onTrigger, className }) {
                 }
             }}
 
-            onDragLeave={() => {
+            onDragLeave={(e) => {
                 if (timerRef.current) {
                     clearTimeout(timerRef.current);
                     timerRef.current = null;
+                    e.target.style.backgroundColor = "var(--bg-color)"
                 }
             }}
 
             onDragOver={(e) => {
                 e.dataTransfer.dropEffect = "move";
                 e.preventDefault();
+                e.target.style.backgroundColor = "var(--grey-color)"
             }}
         >
 

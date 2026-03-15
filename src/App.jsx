@@ -9,7 +9,6 @@ import ThemeProvider from "./components/ui/themeToggle/ThemeContext";
 import EmailConfirmed from './pages/emailConfirmed/EmailConfirmed';
 import SettingsPage from './pages/settings/SettingsPage';
 import ResetPassword from './pages/resetPassword/ResetPassword';
-import AuthController from './components/authController/AuthController';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -31,7 +30,7 @@ function App() {
             {/* Приватные маршруты */}
             <Route element={<PrivateRoute />}>
               <Route path="/profile/:id" element={<Profile />} />
-              <Route path="/profile/:id/folder/:folderId" element={<Profile />} />
+              <Route path="/profile/:id/folder/:folderId/*" element={<Profile />} />
               <Route path="/profile/:id/settings" element={<SettingsPage />} />
             </Route>
 

@@ -25,7 +25,10 @@ export default function TaskList({ id, className, title }) {
         mutationFn: async ({ noteId, taskListId }) => {
             const { data, error } = await supabase
                 .from("notes")
-                .update({ task_list_id: taskListId, folder_id: null })
+                .update({
+                    task_list_id: taskListId,
+                    folder_id: null
+                })
                 .eq("id", noteId)
                 .select()
                 .single()
@@ -85,7 +88,7 @@ export default function TaskList({ id, className, title }) {
                         className={styles.addTaskButton}
                         onClick={async (e) => {
                             e.stopPropagation()
-                            dispatch(openModal({ type: "create", entity: "note", modalId: crypto.randomUUID(), taskListId: id }))
+                            dispatch(openModal({ type: "create", entity: "note", taskListId: id, modalId: crypto.randomUUID(), }))
                         }}
                     >
 

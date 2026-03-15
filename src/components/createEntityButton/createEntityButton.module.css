@@ -1,0 +1,97 @@
+.createEntityWrapper {
+  position: relative;
+  display: flex;
+  padding-left: 10px;
+}
+
+.createEntityButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--blue);
+  background-color: var(--bg-color);
+  cursor: pointer;
+  box-shadow: 0 0 8px 2px;
+}
+
+.createEntityButton:hover {
+  background-color: var(--grey-color);
+}
+
+.createEntityButton.isOpen {
+  transform: rotate(45deg);
+}
+
+.createEntityButtonIcon {
+  pointer-events: none;
+}
+
+.createEntityActionWrapper {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: 120px;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(0) translateX(calc(-30% + 10px));
+  transition: transform 0.3s linear;
+}
+
+.createEntityActionWrapper.isOpen {
+  transform: translateY(100%) translateX(calc(-30% + 10px));
+  z-index: 1;
+}
+
+.createEntityAction {
+  width: 50px;
+  height: 50px;
+  border: 2px solid var(--blue);
+  background-color: var(--bg-color);
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 8px 2px;
+
+  transition: background-color 5s linear;
+}
+
+.createEntityAction:hover {
+  background-color: var(--grey-color);
+}
+
+.createEntityAction.isOpen {
+  pointer-events: all;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.note {
+  transform: translate(70%, -100%) scale(0);
+  opacity: 0;
+  transition:
+    transform 0.3s cubic-bezier(1, -0.12, 0.1, 1.47),
+    background-color 0.3s linear,
+    opacity 0.3s linear;
+}
+
+.folder {
+  transform: translate(-70%, -100%) scale(0);
+  opacity: 0;
+  transition:
+    transform 0.3s 0.1s cubic-bezier(1, -0.12, 0.1, 1.47),
+    background-color 0.3s linear,
+    opacity 0.3s linear;
+}
+
+.note.isOpen {
+  transform: translateX(-10%) scale(1);
+  opacity: 1;
+}
+
+.folder.isOpen {
+  transform: translateX(10%) scale(1);
+  opacity: 1;
+}

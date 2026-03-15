@@ -18,7 +18,7 @@ export default function NoteList({ folderId }) {
         mutationFn: async ({ noteId, folderId }) => {
             const { data, error } = await supabase
                 .from("notes")
-                .update({ task_list_id: null, folder_id: folderId })
+                .update({ parent_id: folderId })
                 .eq("id", noteId)
                 .select()
                 .single()
@@ -50,7 +50,6 @@ export default function NoteList({ folderId }) {
 
                 <AddTile entity={"note"} folderId={folderId}></AddTile>
                 {notes?.map((note) => {
-                    console.log(note)
                     return <Note key={note.id} note={note} linkPreviewId={note.link_preview_id} />
                 })}
             </ul>
