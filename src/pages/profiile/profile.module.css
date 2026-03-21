@@ -76,6 +76,7 @@
   cursor: pointer;
   width: 45px;
   height: 45px;
+  box-shadow: 0 0 8px 2px;
   opacity: 0;
   transform: translateY(-50%) translateX(-20px);
   animation: goBackFadeIn 0.3s ease-out forwards;
