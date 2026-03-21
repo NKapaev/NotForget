@@ -1,6 +1,6 @@
 .task-lists-container {
   display: block;
-  padding: 10px;
+  /* padding: 10px; */
   /* outline: 2px solid blue; */
   width: 100%;
   /* position: fixed; */
@@ -11,10 +11,10 @@
   background-color: var(--bg-color);
   z-index: 1;
   flex-shrink: 0;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 80px);
   overflow-y: scroll;
   scrollbar-width: none;
-  padding: 30px;
+  padding: 0 30px 20px 30px;
 }
 
 .task-lists-container.open {

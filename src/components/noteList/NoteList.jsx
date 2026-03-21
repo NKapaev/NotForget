@@ -18,7 +18,7 @@ export default function NoteList({ folderId }) {
         mutationFn: async ({ noteId, folderId }) => {
             const { data, error } = await supabase
                 .from("notes")
-                .update({ parent_id: folderId })
+                .update({ folder_id: folderId })
                 .eq("id", noteId)
                 .select()
                 .single()

@@ -1,7 +1,8 @@
 .createEntityWrapper {
-  position: relative;
   display: flex;
-  padding-left: 10px;
+  position: relative;
+  z-index: 1;
+  margin-left: 30px;
 }
 
 .createEntityButton {
@@ -19,6 +20,7 @@
 
 .createEntityButton:hover {
   background-color: var(--grey-color);
+  transform: scale(1.1);
 }
 
 .createEntityButton.isOpen {
@@ -37,12 +39,12 @@
   width: 120px;
   display: flex;
   justify-content: space-between;
-  transform: translateY(0) translateX(calc(-30% + 10px));
+  transform: translateY(0) translateX(calc(-30% + 2px));
   transition: transform 0.3s linear;
 }
 
 .createEntityActionWrapper.isOpen {
-  transform: translateY(100%) translateX(calc(-30% + 10px));
+  transform: translateY(100%) translateX(calc(-30% + 2px));
   z-index: 1;
 }
 

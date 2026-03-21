@@ -14,7 +14,7 @@ import Button from "../ui/button/Button"
 import Loader from "../ui/loader/Loader"
 
 export default function TaskList({ id, className, title }) {
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
     const queryClient = useQueryClient()
     const deleteTaskList = useDeleteTaskList()
     const { data: notes, isLoading, error } = useNotes(null, id)
@@ -62,7 +62,7 @@ export default function TaskList({ id, className, title }) {
     };
 
     if (isLoading) return <Loader />
-    if (error) return <div>Ошибка: {error.message}</div>
+    if (error) return <div>Помилка: {error.message}</div>
 
     return (
         <div
@@ -143,7 +143,7 @@ export default function TaskList({ id, className, title }) {
                                 className={`${styles.deleteButton} delete-button`}
                                 onClick={(e) => {
                                     e.stopPropagation()
-                                    e.target.closest("div").classList.add("fade-out")
+                                    e.target.closest("div").classList.add(styles.fadeOut)
                                     deleteNote.mutateAsync(note.id)
                                 }
                                 }

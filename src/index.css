@@ -137,30 +137,18 @@ button {
 }
 
 @media screen and (min-width: 481px) {
-  /* .container {
-    max-width: 480px;
-  } */
-
   .tile {
     width: calc((100% - 1 * 15px) / 2);
   }
 }
 
 @media screen and (min-width: 768px) {
-  /* .container {
-    max-width: 768px;
-  } */
-
   .tile {
     width: calc((100% - 2 * 15px) / 3);
   }
 }
 
 @media screen and (min-width: 1024px) {
-  /* .container {
-    max-width: 1024px;
-  } */
-
   .tile {
     width: calc((100% - 3 * 15px) / 4);
   }

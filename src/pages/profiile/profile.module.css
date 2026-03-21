@@ -15,8 +15,8 @@
   position: relative;
   padding-top: 10px;
   max-height: calc(100vh - 70px);
-  overflow-y: scroll;
-  scrollbar-width: none;
+  overflow-y: hidden;
+  scrollbar-width: normal;
   overflow-x: hidden;
 }
 
@@ -29,6 +29,112 @@
   width: 100%;
   flex-shrink: 0;
   padding: 0 20px;
+}
+
+.subHeder {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1;
+}
+
+@keyframes goBackFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(80%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+@keyframes goBackFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-50%) translateX(80%);
+  }
+}
+
+.goBackButton {
+  position: absolute;
+  top: 50%;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-color);
+  border: 2px solid var(--blue);
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  width: 45px;
+  height: 45px;
+  opacity: 0;
+  transform: translateY(-50%) translateX(-20px);
+  animation: goBackFadeIn 0.3s ease-out forwards;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.goBackButton.fadeOut {
+  /* Перебиваем анимацию появления анимацией исчезновения */
+  animation: goBackFadeOut 0.3s linear forwards;
+  pointer-events: none;
+}
+
+.goBackButton:hover {
+  background-color: var(--grey-color);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.goBackButton > svg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.folderNameOutput {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 70%,
+    var(--blue) 70%
+  );
+  padding: 0 5px;
+  animation: titleFadeIn 0.3s linear forwards;
+}
+
+.folderNameOutput.fadeOut {
+  animation: titleFadeOut 0.3s linear forwards;
+}
+
+@keyframes titleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes titleFadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
 }
 
 .workspaceController {

@@ -48,7 +48,7 @@ export default function Note({ note: { id, title, content, linkPreviewId = null,
                         e.stopPropagation()
                         e.target.closest("li").classList.add("fade-out")
 
-                        setTimeout(() => { deleteNote.mutateAsync(id) }, 100)
+                        deleteNote.mutateAsync(id)
                     }}
                 >
                     <img

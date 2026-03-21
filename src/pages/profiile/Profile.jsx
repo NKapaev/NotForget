@@ -1,16 +1,13 @@
 import styles from './profile.module.css';
 
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { hideTaskList, showTaskList } from '../../components/redux/taskListSlice';
-// import { fetchBreadcrumbs } from '../../utils/getBreadCrumbs';
 import supabase from '../../utils/supabase';
 
 import Header from '../../components/header/Header';
-import FolderList from '../../components/folderList/FolderList';
-import NoteList from '../../components/noteList/NoteList';
 import Folder from '../../components/folder/Folder';
 import Note from '../../components/note/Note';
 import TaskListsContainer from '../../components/taskListsContainer/TaskListsContainer';
@@ -21,6 +18,7 @@ import EntityList from "../../components/entityList/EntityList"
 
 import useNotes from '../../hooks/useNotes';
 import useFolders from '../../hooks/useFolders';
+import useFolder from '../../hooks/useFolder';
 
 import Loader from '../../components/ui/loader/Loader';
 
@@ -28,15 +26,45 @@ export default function Profile() {
     const { id, folderId } = useParams();
     const [profile, setProfile] = useState(null);
 
+    const location = useLocation();
     const navigate = useNavigate();
+
     // const isMobile = window.innerWidth < 768;
     const isMobile = true;
     const { data: notes } = useNotes(folderId)
     const { data: folders } = useFolders(folderId)
+    const { data: folder } = useFolder(folderId || null)
 
     const [startTouchX, setStartTouchX] = useState(0);
     const [translate, setTranslate] = useState(0);
     const [isSwiping, setIsSwiping] = useState(false);
+
+    const [shouldRenderGoBack, setShouldRenderGoBack] = useState(!!folderId);
+    const [isExiting, setIsExiting] = useState(false);
+    const [displayTitle, setDisplayTitle] = useState("");
+
+
+    useEffect(() => {
+        console.log(folderId)
+        if (folderId) {
+            // Зашли в папку
+            setShouldRenderGoBack(true);
+            setIsExiting(false);
+        } else {
+            // Мы на главной (folderId === undefined)
+            setIsExiting(true);
+            const timer = setTimeout(() => {
+                setShouldRenderGoBack(false);
+            }, 300); // Время анимации из CSS
+            return () => clearTimeout(timer);
+        }
+    }, [folderId])
+
+    useEffect(() => {
+        if (folder?.title) {
+            setDisplayTitle(folder.title);
+        }
+    }, [folder]);
 
 
     const dispatch = useDispatch();
@@ -45,24 +73,9 @@ export default function Profile() {
 
     const dataToDisplay = [...(notes || []).map(note => ({ ...note, type: "note" })), ...(folders || []).map(folder => ({ ...folder, type: "folder" }))];
     const sortedDataToDisplay = [...dataToDisplay].sort(
-        (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
-    )
+        (a, b) => new Date(a.updated_at) - new Date(b.updated_at)
+    ).reverse()
 
-    // const [breadcrumbs, setBreadcrumbs] = useState([]);
-
-    // useEffect(() => {
-    //     const getCrumbs = async () => {
-    //         const path = await fetchBreadcrumbs(folderId);
-    //         setBreadcrumbs(path);
-    //     };
-
-    //     if (folderId) {
-    //         getCrumbs();
-    //     } else {
-    //         setBreadcrumbs([]); // Если мы в корне — очищаем крошки
-    //     }
-    //     console.log(breadcrumbs)
-    // }, [folderId]);
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -74,7 +87,7 @@ export default function Profile() {
 
             if (error) {
                 navigate('/error', {
-                    state: { code: error.code, message: 'Ошибка при загрузке профиля' },
+                    state: { code: error.code, message: 'Помилка під час завантаження профілю' },
                 });
                 return;
             }
@@ -180,16 +193,29 @@ export default function Profile() {
                     }}
                 >
                     <div className={styles.mainPanel}>
-                        <CreateEntityButton folderId={folderId} />
-
-                        {/* {notes?.map((note) => {
-                            return <Note key={note.id} note={note} linkPreviewId={note.link_preview_id} />
-                        })} */}
+                        <div className={styles.subHeder}>
+                            {shouldRenderGoBack && (
+                                <button
+                                    className={`${styles.goBackButton} ${isExiting ? styles.fadeOut : ''}`}
+                                    onClick={() => navigate(-1)}
+                                >
+                                    <svg width={'30px'} height={'30px'}>
+                                        <use href='/icons/go-back-icon.svg' width={'30px'} height={"30px"}></use>
+                                    </svg>
+                                </button>
+                            )}
+                            <CreateEntityButton folderId={folderId} />
+                            {shouldRenderGoBack && (
+                                <h2 className={`${styles.folderNameOutput} ${isExiting ? styles.fadeOut : ''}`}>
+                                    {displayTitle}
+                                </h2>
+                            )}
+                        </div>
 
                         <EntityList>
                             {sortedDataToDisplay.map((item) => {
                                 if (item.type === "folder") {
-                                    return < Folder key={item.id} id={item.id} title={item.title} description={item.description} creationDate={item.created_at} />
+                                    return <Folder key={item.id} id={item.id} title={item.title} description={item.description} creationDate={item.created_at} />
                                 }
                                 if (item.type === "note") {
                                     return <Note key={item.id} note={item} linkPreviewId={item.link_preview_id} />
@@ -197,28 +223,11 @@ export default function Profile() {
                             })}
                         </EntityList>
 
-                        {/* <TaskListsContainer isMobile={isMobile ? true : false}></TaskListsContainer> */}
-
-                        {/* {folderId ? (
-                            <>
-                                <Button className="go-back-button" onClick={() => {
-                            navigate(`/profile/${id}`)
-                        }}>
-                            <svg className="back-button-icon" width="20px" height="20px">
-                                <use href="/icons/arrow.svg#arrow"></use>
-                            </svg>
-                        </Button>
-
-                                <NoteList folderId={folderId} userId={profile.id} />
-                            </>
-                        ) : (
-                            <FolderList userId={profile.id} />
-                        )} */}
                     </div>
 
                     {isMobile && <TaskListsContainer isMobile={isMobile} />}
                 </div>
             </div>
-        </section>
+        </section >
     );
 }
