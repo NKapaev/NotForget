@@ -5,7 +5,7 @@ import useUpdateNote from "../../../hooks/useUpdateNote"
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../redux/modalsSlice";
 import extractPreviewId from "../../../utils/extractPreviewId"
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import Form from "../../form/Form";
 import Button from "../button/Button";
@@ -13,6 +13,7 @@ import Button from "../button/Button";
 export default function EditModal({ modalId, noteId }) {
     const [isClosing, setIsClosing] = useState(false)
     const { data: note } = useNote(noteId)
+    const clickTargetRef = useRef(null)
 
 
     const dispatch = useDispatch();
@@ -21,12 +22,19 @@ export default function EditModal({ modalId, noteId }) {
 
     if (!note) return null
     return (
-        <div className={styles.modalBackdrop} onClick={() => {
-            setIsClosing(true);
-            setTimeout(() => {
-                dispatch(closeModal(modalId));
-            }, 300);
-        }}>
+        <div className={styles.modalBackdrop} onClick={(e) => {
+            if (e.target === e.currentTarget && clickTargetRef.current === e.currentTarget) {
+                setIsClosing(true);
+                setTimeout(() => {
+                    dispatch(closeModal(modalId));
+                }, 300);
+            }
+        }}
+
+            onMouseDown={(e) => {
+                clickTargetRef.current = e.target;
+            }}>
+
             <div className={`${styles.modal} ${isClosing ? styles.isClosing : ""}`} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.modalHeader}>
                     <div className={styles.buttonsContainer} style={{ marginLeft: "auto" }}>

@@ -9,13 +9,15 @@ import Loader from "../loader/Loader"
 import supabase from "../../../utils/supabase"
 import { useDispatch } from "react-redux"
 import { closeModal } from "../../redux/modalsSlice"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import getUrlPreviewData from "../../../utils/getUrlPreviewData"
 import extractPreviewId from "../../../utils/extractPreviewId"
 
 export default function CreateModal({ entity, folderId = null, taskListId = null, modalId }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isClosing, setIsClosing] = useState(false)
+
+    const clickTargetRef = useRef(null)
 
     const addFolder = useAddFolder(folderId)
     const addNote = useAddNote()
@@ -58,7 +60,7 @@ export default function CreateModal({ entity, folderId = null, taskListId = null
                 }, 300);
             }
         } catch (error) {
-            console.error("Ошибка при создании:", error);
+            console.error("Помилка при створенні:", error);
         } finally {
             setIsSubmitting(false);
         }
@@ -66,12 +68,17 @@ export default function CreateModal({ entity, folderId = null, taskListId = null
     }
 
     return (
-        <div className={styles.modalBackdrop} onClick={() => {
-            setIsClosing(true);
-            setTimeout(() => {
-                dispatch(closeModal(modalId));
-            }, 300);
-        }}>
+        <div className={styles.modalBackdrop} onClick={(e) => {
+            if (e.target === e.currentTarget && clickTargetRef.current === e.currentTarget) {
+                setIsClosing(true);
+                setTimeout(() => {
+                    dispatch(closeModal(modalId));
+                }, 300);
+            }
+        }}
+            onMouseDown={(e) => {
+                clickTargetRef.current = e.target;
+            }}>
             <div className={`${styles.modal} ${isClosing ? styles.isClosing : ""}`} onClick={(e) => e.stopPropagation()}>
                 {entity === "folder" && (
                     <>

@@ -14,6 +14,7 @@ export default function ViewModal({ modalId, noteId }) {
     const [isClosing, setIsClosing] = useState(false)
     const { data: note, isLoading } = useNote(noteId)
     const [previewData, setPreviewData] = useState(null)
+    const clickTargetRef = useRef(null);
 
     useEffect(() => {
         let isCurrent = true;
@@ -88,12 +89,19 @@ export default function ViewModal({ modalId, noteId }) {
     if (isLoading) return null
     if (!note) return null
     return (
-        <div className={`${styles.modalBackdrop} ${isClosing ? styles.isClosing : ""}`} onClick={() => {
-            setIsClosing(true);
-            setTimeout(() => {
-                dispatch(closeModal(modalId));
-            }, 300);
-        }}>
+        <div className={`${styles.modalBackdrop} ${isClosing ? styles.isClosing : ""}`} onClick={(e) => {
+
+            if (e.target === e.currentTarget && clickTargetRef.current === e.currentTarget) {
+                setIsClosing(true);
+                setTimeout(() => {
+                    dispatch(closeModal(modalId));
+                }, 300);
+            }
+
+        }}
+            onMouseDown={(e) => {
+                clickTargetRef.current = e.target;
+            }}>
             <div className={`${styles.modal} ${isClosing ? styles.isClosing : ""}`} onClick={(e) => {
                 e.stopPropagation()
             }}>
