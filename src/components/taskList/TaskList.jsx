@@ -77,7 +77,7 @@ export default function TaskList({ id, className, title }) {
                 <div className={styles.taskListHeaderContent}>
 
                     <Button variant="transparent" className={styles.dropButton}>
-                        <svg className={styles.dropButtonIcon} width="20px" height="20px" style={isOpen ? { transform: "rotate(90deg)" } : {}}>
+                        <svg className={`${styles.dropButtonIcon} ${isOpen ? styles.rotated : ""}`} width="20px" height="20px" >
                             <use href="/icons/arrow.svg#arrow"></use>
                         </svg>
                     </Button>

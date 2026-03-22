@@ -1,0 +1,74 @@
+.tickerWindow {
+  max-width: calc(100vw - 150px);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0 20px;
+
+  mask-image: linear-gradient(
+    to right,
+    transparent 0px,
+    black 30px,
+    black calc(100% - 30px),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0px,
+    black 30px,
+    black calc(100% - 30px),
+    transparent 100%
+  );
+}
+
+.folderNameOutput {
+  font-size: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 0;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 70%,
+    var(--blue) 70%
+  );
+  padding: 0 5px;
+  transform-origin: left center;
+  animation: titleFadeIn 0.3s linear forwards;
+}
+
+.folderNameOutput.fadeOut {
+  animation: titleFadeOut 0.3s linear forwards;
+}
+
+.pingPongAnimation {
+  animation: pingPong 8s ease-in-out infinite alternate;
+  display: inline-block;
+}
+
+@keyframes pingPong {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(var(--move-distance, 0));
+  }
+}
+
+@keyframes titleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fadeOut {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}

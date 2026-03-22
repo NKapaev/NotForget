@@ -56,8 +56,12 @@
 }
 
 .dropButtonIcon {
-  transform: rotate(270deg);
+  transform: rotate(90deg);
   transition: all linear 0.3s;
+}
+
+.dropButtonIcon.rotated {
+  transform: rotate(270deg);
 }
 
 .addTaskButton {
