@@ -1,6 +1,6 @@
 import styles from './profile.module.css';
 
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ import Note from '../../components/note/Note';
 import TaskListsContainer from '../../components/taskListsContainer/TaskListsContainer';
 import WorkspaceSwitcher from '../../components/workspaceSwitcher/WorkspaceSwitcher';
 import Modal from '../../components/ui/modals/Modal';
+import FolderTitleOutput from '../../components/folderTitleOutput/FolderTitleOutput';
 import CreateEntityButton from '../../components/createEntityButton/CreateEntityButton';
 import EntityList from "../../components/entityList/EntityList"
 
@@ -26,7 +27,6 @@ export default function Profile() {
     const { id, folderId } = useParams();
     const [profile, setProfile] = useState(null);
 
-    const location = useLocation();
     const navigate = useNavigate();
 
     // const isMobile = window.innerWidth < 768;
@@ -40,18 +40,14 @@ export default function Profile() {
     const [isSwiping, setIsSwiping] = useState(false);
 
     const [shouldRenderGoBack, setShouldRenderGoBack] = useState(!!folderId);
-    const [isExiting, setIsExiting] = useState(false);
-    const [displayTitle, setDisplayTitle] = useState("");
+    const [isExiting, setIsExiting] = useState(false);;
 
 
     useEffect(() => {
-        console.log(folderId)
         if (folderId) {
-            // Зашли в папку
             setShouldRenderGoBack(true);
             setIsExiting(false);
         } else {
-            // Мы на главной (folderId === undefined)
             setIsExiting(true);
             const timer = setTimeout(() => {
                 setShouldRenderGoBack(false);
@@ -59,13 +55,6 @@ export default function Profile() {
             return () => clearTimeout(timer);
         }
     }, [folderId])
-
-    useEffect(() => {
-        if (folder?.title) {
-            setDisplayTitle(folder.title);
-        }
-    }, [folder]);
-
 
     const dispatch = useDispatch();
     const taskListState = useSelector(state => state.taskList.taskListShown);
@@ -206,9 +195,9 @@ export default function Profile() {
                             )}
                             <CreateEntityButton folderId={folderId} />
                             {shouldRenderGoBack && (
-                                <h2 className={`${styles.folderNameOutput} ${isExiting ? styles.fadeOut : ''}`}>
-                                    {displayTitle}
-                                </h2>
+                                <FolderTitleOutput
+                                    title={folder?.title}
+                                    isExiting={isExiting} />
                             )}
                         </div>
 

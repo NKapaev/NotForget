@@ -102,42 +102,6 @@
   justify-content: center;
 }
 
-.folderNameOutput {
-  background-image: linear-gradient(
-    to bottom,
-    transparent 70%,
-    var(--blue) 70%
-  );
-  padding: 0 5px;
-  animation: titleFadeIn 0.3s linear forwards;
-}
-
-.folderNameOutput.fadeOut {
-  animation: titleFadeOut 0.3s linear forwards;
-}
-
-@keyframes titleFadeIn {
-  from {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes titleFadeOut {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-}
-
 .workspaceController {
   z-index: 2;
   position: fixed;
