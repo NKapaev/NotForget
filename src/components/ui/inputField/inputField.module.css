@@ -57,6 +57,39 @@ textarea {
   border-radius: 0 0 10px 10px;
 }
 
+.showPasswordButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  position: absolute;
+  cursor: pointer;
+  right: 10px;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  transform: translateY(-50%);
+}
+
+.eyeIcon {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  fill: var(--blue);
+  opacity: 0;
+  transition: opacity 0.3s linear;
+}
+
+.eyeIcon.visible {
+  opacity: 1;
+}
+
 /* .urlPreview::before,
 .urlPreview::after {
   content: '';
