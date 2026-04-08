@@ -1,5 +1,4 @@
 import styles from './profile.module.css';
-
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
@@ -20,14 +19,16 @@ import EntityList from "../../components/entityList/EntityList"
 import useNotes from '../../hooks/useNotes';
 import useFolders from '../../hooks/useFolders';
 import useFolder from '../../hooks/useFolder';
+import useMoveNote from '../../hooks/useMoveNote';
 
 import Loader from '../../components/ui/loader/Loader';
 
 export default function Profile() {
-    const { id, folderId } = useParams();
+    const { id: profileId, folderId } = useParams();
     const [profile, setProfile] = useState(null);
 
     const navigate = useNavigate();
+    const moveNote = useMoveNote()
 
     // const isMobile = window.innerWidth < 768;
     const isMobile = true;
@@ -71,7 +72,7 @@ export default function Profile() {
             const { data, error } = await supabase
                 .from('profiles')
                 .select('*')
-                .eq('id', id)
+                .eq('id', profileId)
                 .single();
 
             if (error) {
@@ -85,7 +86,7 @@ export default function Profile() {
         };
 
         fetchProfile();
-    }, [id, navigate]);
+    }, [profileId, navigate]);
 
     if (!profile) return <Loader variant="big"></Loader>;
 
@@ -181,7 +182,19 @@ export default function Profile() {
                         setTranslate(0);
                     }}
                 >
-                    <div className={styles.mainPanel}>
+                    <div className={styles.mainPanel}
+                        onDrop={(e) => {
+                            console.log(e.target)
+                            e.preventDefault()
+                            e.stopPropagation()
+                            const noteId = e.dataTransfer.getData("text/plain")
+                            document.body.classList.remove("dragging")
+
+                            if (!noteId) return
+                            moveNote.mutate({ noteId, folderId: folderId || null })
+                        }}
+                        onDragOver={(e) => e.preventDefault()}
+                    >
                         <div className={styles.subHeder}>
                             {shouldRenderGoBack && (
                                 <button
