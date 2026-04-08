@@ -6,15 +6,18 @@ import { linkifyText } from "../../../utils/linkifyText"
 import UrlPreviewCard from "../urlPreviewCard/UrlPreviewCard"
 import useNote from "../../../hooks/useNote"
 import supabase from "../../../utils/supabase"
+import useScrollArrows from "../../../hooks/useScrollArrows";
 
 import Button from "../button/Button"
 
 export default function ViewModal({ modalId, noteId }) {
 
+    const dispatch = useDispatch();
     const [isClosing, setIsClosing] = useState(false)
     const { data: note, isLoading } = useNote(noteId)
     const [previewData, setPreviewData] = useState(null)
     const clickTargetRef = useRef(null);
+    const { contentRef, canScrollUp, canScrollDown } = useScrollArrows(note?.content);
 
     useEffect(() => {
         let isCurrent = true;
@@ -44,64 +47,24 @@ export default function ViewModal({ modalId, noteId }) {
         };
     }, [note?.link_preview_id]);
 
+    if (isLoading || !note) return null;
 
-
-    const [canScrollUp, setCanScrollUp] = useState(false);
-    const [canScrollDown, setCanScrollDown] = useState(false);
-
-    const contentRef = useRef(null);
-
-    const updateScrollState = () => {
-        const el = contentRef.current
-
-        if (!el) return;
-
-        const scrollTop = el.scrollTop > 0;
-        const scrollBottom = el.scrollTop + el.clientHeight < el.scrollHeight;
-
-        setCanScrollUp(prev => (prev !== scrollTop ? scrollTop : prev));
-        setCanScrollDown(prev => (prev !== scrollBottom ? scrollBottom : prev));
-    };
-
-
-    if (note?.content) {
-        requestAnimationFrame(updateScrollState);
-    }
-
-
-    useEffect(() => {
-        const el = contentRef.current;
-        if (!el) return;
-
-        el.addEventListener("scroll", updateScrollState);
-        window.addEventListener("resize", updateScrollState);
-
-        return () => {
-            el.removeEventListener("scroll", updateScrollState);
-            window.removeEventListener("resize", updateScrollState);
-        };
-    }, [note?.content]);
-
-
-
-    const dispatch = useDispatch();
-
-    if (isLoading) return null
-    if (!note) return null
     return (
-        <div className={`${styles.modalBackdrop} ${isClosing ? styles.isClosing : ""}`} onClick={(e) => {
+        <div className={`${styles.modalBackdrop} ${isClosing ? styles.isClosing : ""}`}
 
-            if (e.target === e.currentTarget && clickTargetRef.current === e.currentTarget) {
-                setIsClosing(true);
-                setTimeout(() => {
-                    dispatch(closeModal(modalId));
-                }, 300);
-            }
+            onClick={(e) => {
+                if (e.target === e.currentTarget && clickTargetRef.current === e.currentTarget) {
+                    setIsClosing(true);
+                    setTimeout(() => {
+                        dispatch(closeModal(modalId));
+                    }, 300);
+                }
+            }}
 
-        }}
             onMouseDown={(e) => {
                 clickTargetRef.current = e.target;
             }}>
+
             <div className={`${styles.modal} ${isClosing ? styles.isClosing : ""}`} onClick={(e) => {
                 e.stopPropagation()
             }}>
@@ -122,17 +85,21 @@ export default function ViewModal({ modalId, noteId }) {
                         </Button>
                     </div>
                 </div>
-                <div className={`${styles.scrollArrow} ${canScrollUp ? styles.visible : ""}`}>
-                    <svg className={styles.scrollArrowIcon} width="30" height="30">
+
+
+                <div className={`${styles.scrollArrow} ${styles.topScrollArrow} ${canScrollUp ? styles.visible : ""}`}>
+                    <svg className={styles.scrollArrowIcon} width="18" height="12">
                         <use href="/icons/small-arrow.svg#small-arrow"></use>
                     </svg>
                 </div>
+
                 <div className={styles.contentWrapper} ref={contentRef}>
                     {previewData && <UrlPreviewCard className={styles.borderRounded} previewData={previewData} />}
-                    <p className={styles.modalContent} >{linkifyText(note.content)}</p>
+                    <p className={styles.modalContent}>{linkifyText(note.content)}</p>
                 </div>
-                <div className={`${styles.scrollArrow} ${canScrollDown ? styles.visible : ""}`}>
-                    <svg className={`${styles.rotated}`} width="30" height="30">
+
+                <div className={`${styles.scrollArrow} ${styles.bottomScrollArrow} ${canScrollDown ? styles.visible : ""}`}>
+                    <svg className={`${styles.rotated}`} width="18" height="12">
                         <use href="/icons/small-arrow.svg#small-arrow"></use>
                     </svg>
                 </div>
