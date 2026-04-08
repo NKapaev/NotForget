@@ -36,7 +36,7 @@
   overflow-y: scroll;
   scrollbar-width: none;
 
-  padding: 0 20px 20px;
+  padding: 0 20px;
   border: 2px solid var(--blue);
   border-radius: 10px;
   background-color: var(--bg-color);
@@ -55,7 +55,7 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  background-color: #1a1b1d;
+  background-color: var(--bg-color);
   padding-top: 10px;
   padding-bottom: 10px;
   border-bottom: 2px solid var(--blue);
@@ -96,20 +96,21 @@
 
 .contentWrapper {
   position: relative;
+  padding: 5px 0;
   overflow-y: auto;
   scrollbar-width: none;
   max-width: 100%;
-  padding: 10px 0;
   mask-image: linear-gradient(
     to bottom,
     transparent,
-    black 10%,
-    black 90%,
+    black 8%,
+    black 92%,
     transparent
   );
 }
 
 .modalContent {
+  margin: 0;
   flex: 1;
   overflow-y: scroll;
   scrollbar-width: none;
@@ -140,7 +141,14 @@
   margin: 0 auto;
   z-index: 5;
   opacity: 0;
-  margin-top: 20px;
+}
+
+.topScrollArrow {
+  padding-top: 5px;
+}
+
+.bottomScrollArrow {
+  padding-bottom: 5px;
 }
 
 .scrollArrowIcon {
@@ -148,7 +156,6 @@
 }
 
 .rotated {
-  margin-top: -20px;
   composes: scrollArrowIcon;
   transform: rotate(180deg);
 }
