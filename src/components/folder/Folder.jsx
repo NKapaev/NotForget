@@ -1,55 +1,46 @@
 import useDeleteFolder from "../../hooks/useDeleteFolder"
 import Button from "../ui/button/Button"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
 import "./folder.css"
-import { useLocation, useNavigate, useParams } from "react-router-dom"
-import supabase from "../../utils/supabase"
+import { useNavigate, useParams } from "react-router-dom"
+import useMoveNote from "../../hooks/useMoveNote"
+
 
 export default function Folder({ id, title, description, creationDate }) {
     const { id: profileId } = useParams();
 
-    const queryClient = useQueryClient()
     const navigate = useNavigate()
 
-    const mutation = useDeleteFolder();
-
-    const moveNoteMutation = useMutation({
-        mutationFn: async ({ noteId, folderId }) => {
-            const { data, error } = await supabase
-                .from("notes")
-                .update({ folder_id: folderId })
-                .eq("id", noteId)
-                .select()
-                .single()
-
-            if (error) throw error
-            return data
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["notes"] })
-        },
-    })
+    const deleteFolder = useDeleteFolder();
+    const moveNote = useMoveNote()
 
     const handleDrop = (e) => {
         e.preventDefault()
+        e.stopPropagation()
+        e.target.style.transform = "scale(1)"
         const noteId = e.dataTransfer.getData("text/plain")
         document.body.classList.remove("dragging")
 
         if (!noteId) return
-        moveNoteMutation.mutate({ noteId, folderId: id })
+        moveNote.mutate({ noteId, folderId: id })
     }
 
     return (
         <li className="folder tile"
             onDrop={handleDrop}
-            onDragOver={(e) => e.preventDefault()}
+            onDragOver={(e) => {
+                e.preventDefault()
+                e.target.style.transform = "scale(1.05)"
+            }}
+            onDragLeave={(e) => {
+                e.target.style.transform = "scale(1)"
+            }}
             onClick={(e) => { navigate(`/profile/${profileId}/folder/${id}`) }}>
             <div className="folderHeader">
                 <p className="folder-name ">{title}</p>
                 <Button className="delete-button" onClick={(e) => {
                     e.stopPropagation();
                     e.target.closest("li").classList.add("fade-out")
-                    mutation.mutateAsync(id)
+                    deleteFolder.mutateAsync(id)
                 }}>
                     <img width={"40px"} className="delete-button-icon" src="/icons/trash-icon.svg#trash-icon" alt="" />
                 </Button>
