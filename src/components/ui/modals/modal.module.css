@@ -96,15 +96,15 @@
 
 .contentWrapper {
   position: relative;
-  padding: 5px 0;
+  padding: 10px 0;
   overflow-y: auto;
   scrollbar-width: none;
   max-width: 100%;
   mask-image: linear-gradient(
     to bottom,
     transparent,
-    black 8%,
-    black 92%,
+    black 6%,
+    black 94%,
     transparent
   );
 }
