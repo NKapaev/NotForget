@@ -36,7 +36,7 @@
   overflow-y: scroll;
   scrollbar-width: none;
 
-  padding: 0 20px;
+  padding: 0 20px 10px;
   border: 2px solid var(--blue);
   border-radius: 10px;
   background-color: var(--bg-color);
