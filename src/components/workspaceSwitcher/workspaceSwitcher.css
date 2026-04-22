@@ -1,11 +1,10 @@
 .workspaceSwitcher {
   display: flex;
-  justify-content: center;
   align-items: center;
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 60px;
+  width: 100px;
 
   background-color: var(--bg-color);
   border: 2px solid var(--blue);
@@ -19,13 +18,34 @@
 }
 
 .workspaceSwitcher.toRight {
+  padding-right: 10px;
+  justify-content: end;
+
   border-radius: 10px 0 0 10px;
   right: 0;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    transparent 5%,
+    black 45%,
+    black 100%
+  );
 }
 
 .workspaceSwitcher.toLeft {
+  padding-left: 10px;
+  justify-content: start;
+
   border-radius: 0 10px 10px 0;
   left: 0;
+
+  mask-image: linear-gradient(
+    to left,
+    transparent 0%,
+    transparent 5%,
+    black 45%,
+    black 100%
+  );
 }
 
 .workspaceSwitcher.toLeft .workspaceswitcher-icon {
