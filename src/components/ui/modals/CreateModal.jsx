@@ -6,6 +6,8 @@ import Form from "../../form/Form"
 import Button from "../button/Button"
 import Loader from "../loader/Loader"
 
+import { useQueryClient } from "@tanstack/react-query"
+
 import supabase from "../../../utils/supabase"
 import { useDispatch } from "react-redux"
 import { closeModal } from "../../redux/modalsSlice"
@@ -14,6 +16,7 @@ import getUrlPreviewData from "../../../utils/getUrlPreviewData"
 import extractPreviewId from "../../../utils/extractPreviewId"
 
 export default function CreateModal({ entity, folderId = null, taskListId = null, modalId }) {
+    const queryClient = useQueryClient();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isClosing, setIsClosing] = useState(false)
 
@@ -37,21 +40,35 @@ export default function CreateModal({ entity, folderId = null, taskListId = null
                 }, 300);
             }
             if (entity === "note") {
-                const previewId = await extractPreviewId(formData.content)
-
-                await addNote.mutateAsync({
+                const newNote = await addNote.mutateAsync({
                     title: formData.title,
                     content: formData.content,
-                    folderId: folderId,      // Должно совпадать с аргументом в хуке (CamelCase)
+                    folderId: folderId,
                     taskListId: taskListId,
-                    linkPreviewId: previewId
+                    linkPreviewId: null
                 })
 
                 setIsClosing(true);
                 setTimeout(() => {
                     dispatch(closeModal(modalId));
                 }, 300);
+                extractPreviewId(formData.content)
+                    .then(async (previewId) => {
+                        if (previewId && newNote?.id) {
+                            await supabase
+                                .from("notes")
+                                .update({ link_preview_id: previewId })
+                                .eq("id", newNote.id);
+
+                            queryClient.invalidateQueries({ queryKey: ["notes"] });
+                        }
+                    })
+                    .catch((err) => console.error("Background preview error:", err));
+
+                return;
             }
+
+
             if (entity === "tasklist") {
                 addTaskList.mutateAsync({ title: formData.title })
                 setIsClosing(true);
@@ -62,7 +79,7 @@ export default function CreateModal({ entity, folderId = null, taskListId = null
         } catch (error) {
             console.error("Помилка при створенні:", error);
         } finally {
-            setIsSubmitting(false);
+            if (entity !== "note") setIsSubmitting(false)
         }
 
     }

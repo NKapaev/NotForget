@@ -170,6 +170,7 @@
 
 .borderRounded {
   border-radius: 25px;
+  margin-bottom: 10px;
 }
 
 @keyframes blink {
