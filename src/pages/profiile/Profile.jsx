@@ -15,6 +15,7 @@ import Modal from '../../components/ui/modals/Modal';
 import FolderTitleOutput from '../../components/folderTitleOutput/FolderTitleOutput';
 import CreateEntityButton from '../../components/createEntityButton/CreateEntityButton';
 import EntityList from "../../components/entityList/EntityList"
+import FindButton from '../../components/findButton/FindButton';
 
 import useNotes from '../../hooks/useNotes';
 import useFolders from '../../hooks/useFolders';
@@ -41,7 +42,11 @@ export default function Profile() {
     const [isSwiping, setIsSwiping] = useState(false);
 
     const [shouldRenderGoBack, setShouldRenderGoBack] = useState(!!folderId);
-    const [isExiting, setIsExiting] = useState(false);;
+    const [isExiting, setIsExiting] = useState(false);
+
+    const [searchQuery, setSearchQuery] = useState("");
+
+
 
 
     useEffect(() => {
@@ -65,6 +70,13 @@ export default function Profile() {
     const sortedDataToDisplay = [...dataToDisplay].sort(
         (a, b) => new Date(a.updated_at) - new Date(b.updated_at)
     ).reverse()
+
+    const filteredData = searchQuery
+        ? sortedDataToDisplay.filter(item =>
+            item.title?.toLowerCase().includes(searchQuery.toLowerCase())
+            || item.description?.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        : sortedDataToDisplay;
 
 
     useEffect(() => {
@@ -184,7 +196,6 @@ export default function Profile() {
                 >
                     <div className={styles.mainPanel}
                         onDrop={(e) => {
-                            console.log(e.target)
                             e.preventDefault()
                             e.stopPropagation()
                             const noteId = e.dataTransfer.getData("text/plain")
@@ -207,6 +218,7 @@ export default function Profile() {
                                 </button>
                             )}
                             <CreateEntityButton folderId={folderId} />
+                            <FindButton onSearch={setSearchQuery}></FindButton>
                             {shouldRenderGoBack && (
                                 <FolderTitleOutput
                                     title={folder?.title}
@@ -214,8 +226,11 @@ export default function Profile() {
                             )}
                         </div>
 
+                        {/* В EntityList: */}
+
+
                         <EntityList>
-                            {sortedDataToDisplay.map((item) => {
+                            {filteredData.map((item) => {
                                 if (item.type === "folder") {
                                     return <Folder key={item.id} id={item.id} title={item.title} description={item.description} creationDate={item.created_at} />
                                 }
@@ -223,6 +238,8 @@ export default function Profile() {
                                     return <Note key={item.id} note={item} linkPreviewId={item.link_preview_id} />
                                 }
                             })}
+
+                            {/* {filteredData.map((item) => { ... })} */}
                         </EntityList>
 
                     </div>
