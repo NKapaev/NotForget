@@ -97,6 +97,13 @@
   transform: scaleY(0);
 }
 
+.taskContentWrapper {
+}
+
+.taskTitle {
+  margin: 5px;
+}
+
 .taskContent {
   hyphens: auto;
   overflow-wrap: anywhere;

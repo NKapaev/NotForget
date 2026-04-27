@@ -140,7 +140,10 @@ export default function TaskList({ id, className, title }) {
                         >
 
                             <TaskExecution key={note.id} taskId={note.id}></TaskExecution>
-                            <p className={styles.taskContent}>{linkifyText(note.content)}</p>
+                            <div className={styles.taskContentWrapper}>
+                                {note.title && <h3 className={styles.taskTitle}>{note.title}</h3>}
+                                <p className={styles.taskContent}>{linkifyText(note.content)}</p>
+                            </div>
                             <Button
                                 className={`${styles.deleteButton} delete-button`}
                                 onClick={(e) => {
