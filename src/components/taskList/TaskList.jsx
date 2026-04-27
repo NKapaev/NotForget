@@ -13,6 +13,7 @@ import { useFadeToggle } from "../../hooks/useFadeToggle"
 import TaskExecution from "../taskExecution/TaskExecution"
 import Button from "../ui/button/Button"
 import Loader from "../ui/loader/Loader"
+import { extractLink } from "../../utils/extractLink"
 
 export default function TaskList({ id, className, title }) {
     const [isOpen, setIsOpen] = useState(false)
@@ -114,7 +115,7 @@ export default function TaskList({ id, className, title }) {
 
             {/* Проверяем, что notes не пустой массив */}
 
-            <div ref={ref} className={`task-list-content`}>
+            <div ref={ref} className={styles.taskListContent}>
                 {/* ${isOpen ? "isOpen" : ""} */}
                 {notes?.length ? (
                     notes.map((note) => (
@@ -127,6 +128,11 @@ export default function TaskList({ id, className, title }) {
                                 document.body.classList.remove("dragging")
                             }}
                             onClick={(e) => {
+                                console.log(e.target)
+                                if (e.target.tagName === "A") {
+                                    return
+                                }
+
                                 e.preventDefault()
                                 dispatch(openModal({ type: "view", entity: "note", modalId: crypto.randomUUID(), noteId: note.id, props: { content: note.content, title: note.title } }))
                             }}
@@ -141,8 +147,36 @@ export default function TaskList({ id, className, title }) {
 
                             <TaskExecution key={note.id} taskId={note.id}></TaskExecution>
                             <div className={styles.taskContentWrapper}>
-                                {note.title && <h3 className={styles.taskTitle}>{note.title}</h3>}
-                                <p className={styles.taskContent}>{linkifyText(note.content)}</p>
+                                {(() => {
+                                    const detectedLink = extractLink(note.content);
+
+                                    return (
+                                        <>
+                                            {/* 1. Заголовок отображается всегда, если он есть */}
+                                            {note.title && (
+                                                detectedLink ? (
+                                                    // Если есть и заголовок, и ссылка — заголовок становится ссылкой
+                                                    <a
+                                                        rel="noopener noreferrer"
+                                                        target="_blank"
+                                                        className={`${styles.taskTitle} ${styles.taskTitleLink}`}
+                                                        href={detectedLink.toLowerCase().startsWith('http') ? detectedLink : `https://${detectedLink}`}
+                                                    >
+                                                        {note.title}
+                                                    </a>
+                                                ) : (
+                                                    // Если есть только заголовок — выводим обычный текст (h3 или span по вкусу)
+                                                    <h3 className={styles.taskTitle}>{note.title}</h3>
+                                                )
+                                            )}
+
+                                            {/* 2. Контент: ссылка внутри скроется, только если отобразился заголовок-ссылка */}
+                                            <p className={styles.taskContent}>
+                                                {linkifyText(note.content, note.title ? detectedLink : null)}
+                                            </p>
+                                        </>
+                                    );
+                                })()}
                             </div>
                             <Button
                                 className={`${styles.deleteButton} delete-button`}
