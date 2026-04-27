@@ -80,8 +80,17 @@
   display: flex;
   padding: 10px;
   padding-top: 20px;
+  border-radius: 5px;
 
-  transition: transform linear 0.1s;
+  transition:
+    transform linear 0.1,
+    background-color 0.3s linear;
+}
+
+.taskListItem:hover,
+.taskListItem:focus {
+  background-color: var(--grey-color);
+  color: var(--white);
 }
 
 .taskListItem.fadeOut {
@@ -90,7 +99,7 @@
 
 .taskContent {
   hyphens: auto;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
   text-overflow: ellipsis;
 }
 

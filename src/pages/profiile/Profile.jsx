@@ -239,7 +239,6 @@ export default function Profile() {
                                 }
                             })}
 
-                            {/* {filteredData.map((item) => { ... })} */}
                         </EntityList>
 
                     </div>

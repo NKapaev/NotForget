@@ -3,6 +3,7 @@ import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { openModal } from "../redux/modalsSlice"
+import { linkifyText } from "../../utils/linkifyText"
 import supabase from "../../utils/supabase"
 import useNotes from "../../hooks/useNotes"
 import useDeleteNote from "../../hooks/useDeleteNote"
@@ -125,7 +126,8 @@ export default function TaskList({ id, className, title }) {
                             onDragEnd={() => {
                                 document.body.classList.remove("dragging")
                             }}
-                            onClick={() => {
+                            onClick={(e) => {
+                                e.preventDefault()
                                 dispatch(openModal({ type: "view", entity: "note", modalId: crypto.randomUUID(), noteId: note.id, props: { content: note.content, title: note.title } }))
                             }}
                             onDragOver={(e) => { e.currentTarget.style.transform = "scale(1.01)" }}
@@ -138,7 +140,7 @@ export default function TaskList({ id, className, title }) {
                         >
 
                             <TaskExecution key={note.id} taskId={note.id}></TaskExecution>
-                            <p className={styles.taskContent}>{note.content}</p>
+                            <p className={styles.taskContent}>{linkifyText(note.content)}</p>
                             <Button
                                 className={`${styles.deleteButton} delete-button`}
                                 onClick={(e) => {
