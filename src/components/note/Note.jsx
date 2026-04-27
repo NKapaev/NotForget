@@ -1,14 +1,18 @@
 import "./note.css"
 import useDeleteNote from "../../hooks/useDeleteNote"
 import useNote from "../../hooks/useNote"
+import useGetPreviewData from "../../hooks/useGetPreviewData"
 import Button from "../ui/button/Button"
+import UrlPreviewCard from "../ui/urlPreviewCard/UrlPreviewCard"
 import { openModal } from "../../components/redux/modalsSlice"
 import { linkifyText } from "../../utils/linkifyText"
 
 import { useDispatch } from "react-redux"
 
-export default function Note({ note: { id, title, content, linkPreviewId = null, created_at } }) {
+export default function Note({ note, linkPreviewId }) {
+    const { id, title, content, created_at } = note;
     const deleteNote = useDeleteNote()
+    const { data: previewData, isLoading } = useGetPreviewData(linkPreviewId);
 
     const dispatch = useDispatch()
 
@@ -30,6 +34,9 @@ export default function Note({ note: { id, title, content, linkPreviewId = null,
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
             onClick={(e) => {
+                if (e.target.closest('[class*="urlPreview"]')) {
+                    return;
+                }
                 e.preventDefault()
                 dispatch(openModal({
                     type: 'view',
@@ -60,6 +67,9 @@ export default function Note({ note: { id, title, content, linkPreviewId = null,
                 </Button>
             </div>
             <div className="note-content-wrapper">
+                {linkPreviewId && previewData && !isLoading && (
+                    <UrlPreviewCard borderRounded={true} previewData={previewData} />
+                )}
                 <p className="note-content">{linkifyText(content)}</p>
             </div>
             <p className="creation-date ">{new Date(created_at).toLocaleDateString()}</p>

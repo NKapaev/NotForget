@@ -22,3 +22,8 @@
 .previewDescription {
   margin: 0;
 }
+
+.borderRounded {
+  border-radius: 25px;
+  margin-bottom: 10px;
+}

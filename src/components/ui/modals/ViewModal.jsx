@@ -94,7 +94,7 @@ export default function ViewModal({ modalId, noteId }) {
                 </div>
 
                 <div className={styles.contentWrapper} ref={contentRef}>
-                    {previewData && <UrlPreviewCard className={styles.borderRounded} previewData={previewData} />}
+                    {previewData && <UrlPreviewCard borderRounded={true} previewData={previewData} />}
                     <p className={styles.modalContent}>{linkifyText(note.content)}</p>
                 </div>
 

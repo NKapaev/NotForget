@@ -168,11 +168,6 @@
   margin-right: 10px;
 }
 
-.borderRounded {
-  border-radius: 25px;
-  margin-bottom: 10px;
-}
-
 @keyframes blink {
   0%,
   100% {
