@@ -45,8 +45,43 @@ export default function Profile() {
     const [isExiting, setIsExiting] = useState(false);
 
     const [searchQuery, setSearchQuery] = useState("");
+    const [searchMode, setSearchMode] = useState('folder');
+
+    const [globalData, setGlobalData] = useState([]);
+    const [isGlobalLoading, setIsGlobalLoading] = useState(false);
 
 
+    useEffect(() => {
+        const fetchGlobalSearch = async () => {
+            if (searchMode === "all" && searchQuery.trim() !== "") {
+                setIsGlobalLoading(true);
+
+                // Робимо два запити паралельно: по нотатках і по папках
+                const [notesRes, foldersRes] = await Promise.all([
+                    supabase
+                        .from('notes')
+                        .select('*')
+                        .or(`title.ilike.%${searchQuery}%,content.ilike.%${searchQuery}%`),
+                    supabase
+                        .from('folders')
+                        .select('*')
+                        .or(`title.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%`),
+                ]);
+
+                const combined = [
+                    ...(notesRes.data || []).map(n => ({ ...n, type: 'note' })),
+                    ...(foldersRes.data || []).map(f => ({ ...f, type: 'folder' }))
+                ];
+
+                setGlobalData(combined);
+                setIsGlobalLoading(false);
+            } else {
+                setGlobalData([]); // Очищуємо, якщо режим змінився або запит порожній
+            }
+        };
+
+        fetchGlobalSearch();
+    }, [searchMode, searchQuery, profileId]);
 
 
     useEffect(() => {
@@ -71,10 +106,13 @@ export default function Profile() {
         (a, b) => new Date(a.updated_at) - new Date(b.updated_at)
     ).reverse()
 
+    const baseData = searchMode === "all" ? globalData : sortedDataToDisplay;
+
     const filteredData = searchQuery
-        ? sortedDataToDisplay.filter(item =>
-            item.title?.toLowerCase().includes(searchQuery.toLowerCase())
-            || item.description?.toLowerCase().includes(searchQuery.toLowerCase())
+        ? baseData.filter(item =>
+            item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.content?.toLowerCase().includes(searchQuery.toLowerCase())
         )
         : sortedDataToDisplay;
 
@@ -218,7 +256,7 @@ export default function Profile() {
                                 </button>
                             )}
                             <CreateEntityButton folderId={folderId} />
-                            <FindButton onSearch={setSearchQuery}></FindButton>
+                            <FindButton onSearch={setSearchQuery} onModeChange={setSearchMode}></FindButton>
                             {shouldRenderGoBack && (
                                 <FolderTitleOutput
                                     title={folder?.title}
@@ -226,7 +264,7 @@ export default function Profile() {
                             )}
                         </div>
 
-                        {/* В EntityList: */}
+
 
 
                         <EntityList>

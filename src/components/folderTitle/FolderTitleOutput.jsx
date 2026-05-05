@@ -36,8 +36,8 @@ export default function FolderTitleOutput({ title, isExiting }) {
 
     return (
         <div
-            ref={tickerRef}
             className={`${styles.tickerWindow} ${isExiting ? styles.fadeOut : ''}`}
+            ref={tickerRef}
         >
             <h2
                 className={`${styles.folderNameOutput} ${offset < 0 ? styles.pingPongAnimation : ''}`}

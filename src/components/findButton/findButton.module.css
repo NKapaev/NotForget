@@ -1,9 +1,10 @@
 .findButtonWrapper {
-  position: relative;
+  position: absolute;
+  left: 85px;
   width: 45px;
   height: 45px;
   overflow: hidden;
-  z-index: 0;
+  z-index: 1;
   margin-left: -20px;
 
   display: flex;
@@ -18,7 +19,7 @@
 }
 
 .findButtonWrapper.isOpen {
-  width: 250px;
+  width: calc(100vw - 110px);
 }
 
 .findButton {
@@ -53,7 +54,7 @@
   background: var(--bg-color);
 
   color: inherit;
-  max-width: 250px;
+  max-width: 100%;
 
   opacity: 0;
   transform: translateX(-20px);

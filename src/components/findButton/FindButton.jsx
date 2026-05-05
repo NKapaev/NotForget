@@ -1,14 +1,23 @@
 import styles from "./findButton.module.css"
 import { useState, useRef, useEffect, useCallback } from "react"
+import FindModeButton from "../ui/findModeButton/FindModeButton"
 import debounce from "../../utils/debounce"
 
-export default function FindButton({ className, onSearch }) {
+export default function FindButton({ className, onSearch, onModeChange }) {
     const [isOpen, setIsOpen] = useState(false)
     const inputRef = useRef(null)
     const [searchValue, setSearchValue] = useState('');
+    const [searchMode, setSearchMode] = useState('folder')
+
+    const toggleMode = () => {
+        const newMode = searchMode === "folder" ? "all" : "folder";
+        setSearchMode(newMode);
+        onModeChange?.(newMode);
+    };
+
 
     const debouncedSearch = useCallback(
-        debounce((value) => onSearch?.(value), 300),
+        debounce((value) => onSearch?.(value), 500),
         []
     );
 
@@ -51,9 +60,14 @@ export default function FindButton({ className, onSearch }) {
                 value={searchValue}
                 onChange={(e) => { handleChange(e) }}
                 onClick={(e) => e.stopPropagation()}
+                placeholder={searchMode === "folder" ? "Шукати в поточному місці" : "Шукати всюди"}
                 className={`${styles.findInput} ${isOpen ? styles.isOpen : ""}`}
                 type="text"
             />
+
+            <FindModeButton currentMode={searchMode}
+                onToggle={toggleMode}
+                visible={isOpen} />
 
         </div>
     )
