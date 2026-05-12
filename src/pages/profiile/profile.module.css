@@ -2,8 +2,6 @@
   position: relative;
   background-color: var(--bg-color);
   color: var(--text-color);
-
-  transition: all cubic-bezier(0.17, 0.67, 0.71, 0.3) 3s;
 }
 
 .profileLoader {
@@ -15,9 +13,8 @@
   position: relative;
   padding-top: 10px;
   max-height: calc(100vh - 70px);
-  overflow-y: hidden;
+  overflow: hidden;
   scrollbar-width: normal;
-  overflow-x: hidden;
 }
 
 .profileContentWrapper {
