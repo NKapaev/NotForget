@@ -22,7 +22,7 @@ export default function Modal({ modal }) {
         }, 300); // время должно совпадать с CSS анимацией
     };
 
-    const props = { ...modal, isClosing, onClose: handleClose }
+    const props = { ...modal, isClosing, closeModal: handleClose }
 
     return (
         <div className={`${styles.modalBackdrop} ${isClosing ? styles.isClosing : ""}`}

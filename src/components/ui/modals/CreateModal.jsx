@@ -10,31 +10,26 @@ import { useQueryClient } from "@tanstack/react-query"
 
 import supabase from "../../../utils/supabase"
 import { useDispatch } from "react-redux"
-import { closeModal } from "../../redux/modalsSlice"
 import { useState, useRef } from "react"
-import getUrlPreviewData from "../../../utils/getUrlPreviewData"
 import extractPreviewId from "../../../utils/extractPreviewId"
 
-export default function CreateModal({ entity, folderId = null, taskListId = null, modalId, isClosing, onClose }) {
+export default function CreateModal({ entity, folderId = null, taskListId = null, modalId, isClosing, closeModal }) {
+    const dispatch = useDispatch();
     const queryClient = useQueryClient();
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const addFolder = useAddFolder(folderId)
     const addNote = useAddNote()
     const addTaskList = useAddTaskList()
 
-    const dispatch = useDispatch();
-    // const modals = useSelector((state) => state.modal.modals);
 
     const handleSubmit = async (formData) => {
         setIsSubmitting(true);
         try {
             if (entity === "folder") {
                 addFolder.mutateAsync({ title: formData.title, description: formData.description, folderId: folderId ?? null })
-                setIsClosing(true);
-                setTimeout(() => {
-                    dispatch(closeModal(modalId));
-                }, 300);
+                closeModal()
             }
             if (entity === "note") {
                 const newNote = await addNote.mutateAsync({
@@ -45,10 +40,7 @@ export default function CreateModal({ entity, folderId = null, taskListId = null
                     linkPreviewId: null
                 })
 
-                setIsClosing(true);
-                setTimeout(() => {
-                    dispatch(closeModal(modalId));
-                }, 300);
+                closeModal()
                 extractPreviewId(formData.content)
                     .then(async (previewId) => {
                         if (previewId && newNote?.id) {
@@ -68,10 +60,7 @@ export default function CreateModal({ entity, folderId = null, taskListId = null
 
             if (entity === "tasklist") {
                 addTaskList.mutateAsync({ title: formData.title })
-                setIsClosing(true);
-                setTimeout(() => {
-                    dispatch(closeModal(modalId));
-                }, 300);
+                closeModal()
             }
         } catch (error) {
             console.error("Помилка при створенні:", error);
@@ -89,7 +78,7 @@ export default function CreateModal({ entity, folderId = null, taskListId = null
                     <div className={styles.modalHeader}>
                         <h2 className={styles.modalTitle}>Створення папки</h2>
                         <div className={styles.buttonsContainer}>
-                            <Button className={styles.modalControlButton} onClick={onClose} style={{ padding: 0 }}>
+                            <Button className={styles.modalControlButton} onClick={closeModal} style={{ padding: 0 }}>
                                 <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
                             </Button>
                         </div>
@@ -109,7 +98,7 @@ export default function CreateModal({ entity, folderId = null, taskListId = null
                     <div className={styles.modalHeader}>
                         <h2 className={styles.modalTitle}>Створення нотатки</h2>
                         <div className={styles.buttonsContainer}>
-                            <Button className={styles.modalControlButton} onClick={onClose} style={{ padding: 0 }}>
+                            <Button className={styles.modalControlButton} onClick={closeModal} style={{ padding: 0 }}>
                                 <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
                             </Button>
                         </div>
@@ -129,7 +118,7 @@ export default function CreateModal({ entity, folderId = null, taskListId = null
                     <div className={styles.modalHeader}>
                         <h2 className={styles.modalTitle}>Створення списку задач</h2>
                         <div className={styles.buttonsContainer}>
-                            <Button className={styles.modalControlButton} onClick={onClose} style={{ padding: 0 }}>
+                            <Button className={styles.modalControlButton} onClick={closeModal} style={{ padding: 0 }}>
                                 <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
                             </Button>
                         </div>

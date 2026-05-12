@@ -10,7 +10,7 @@ import useScrollArrows from "../../../hooks/useScrollArrows";
 
 import Button from "../button/Button"
 
-export default function ViewModal({ modalId, noteId, isClosing, onClose }) {
+export default function ViewModal({ modalId, noteId, isClosing, closeModal }) {
 
     const dispatch = useDispatch();
     const { data: note, isLoading } = useNote(noteId)
@@ -58,7 +58,7 @@ export default function ViewModal({ modalId, noteId, isClosing, onClose }) {
                     <Button className={styles.modalControlButton} onClick={() => { dispatch(openModal({ type: "edit", modalId: crypto.randomUUID(), noteId })) }}>
                         <img width="15px" src="/icons/pencil.svg#pencil-icon" alt="Edit" />
                     </Button>
-                    <Button className={styles.modalControlButton} onClick={onClose} style={{ padding: 0 }}>
+                    <Button className={styles.modalControlButton} onClick={closeModal} style={{ padding: 0 }}>
                         <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
                     </Button>
                 </div>

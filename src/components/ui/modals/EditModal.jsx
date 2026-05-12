@@ -13,7 +13,7 @@ import supabase from "../../../utils/supabase";
 import Form from "../../form/Form";
 import Button from "../button/Button";
 
-export default function EditModal({ modalId, noteId, isClosing, onClose }) {
+export default function EditModal({ modalId, noteId, isClosing, closeModal }) {
 
     const { data: note } = useNote(noteId)
 
@@ -29,7 +29,7 @@ export default function EditModal({ modalId, noteId, isClosing, onClose }) {
         <div className={`${styles.modal} ${isClosing ? styles.isClosing : ""}`} onClick={(e) => e.stopPropagation()}>
             <div className={styles.modalHeader}>
                 <div className={styles.buttonsContainer} style={{ marginLeft: "auto" }}>
-                    <Button className={styles.modalControlButton} onClick={onClose} style={{ padding: 0 }}>
+                    <Button className={styles.modalControlButton} onClick={closeModal} style={{ padding: 0 }}>
                         <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
                     </Button>
                 </div>
@@ -44,7 +44,7 @@ export default function EditModal({ modalId, noteId, isClosing, onClose }) {
                         content: formData.content,
                         linkPreviewId: null
                     })
-                    onClose()
+                    closeModal()
 
                     extractPreviewId(formData.content)
                         .then(async (previewId) => {
