@@ -17,12 +17,17 @@
   /* Для iOS/Safari добавьте это: */
   height: -webkit-fill-available;
 
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.2);
   opacity: 1;
   pointer-events: all;
   overflow: hidden;
 
   transition: all 0.3s linear;
+  animation: fadeIn 0.3s linear forwards;
+}
+
+.modalBackdrop.isClosing {
+  animation: fadeOut 0.3s linear forwards;
 }
 
 .modal {
@@ -181,7 +186,7 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: scale(0.8);
+    transform: scale(1.1);
   }
   to {
     opacity: 1;
@@ -196,6 +201,6 @@
   }
   to {
     opacity: 0;
-    transform: scale(0.8);
+    transform: scale(1.1);
   }
 }

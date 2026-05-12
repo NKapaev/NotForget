@@ -15,12 +15,9 @@ import { useState, useRef } from "react"
 import getUrlPreviewData from "../../../utils/getUrlPreviewData"
 import extractPreviewId from "../../../utils/extractPreviewId"
 
-export default function CreateModal({ entity, folderId = null, taskListId = null, modalId }) {
+export default function CreateModal({ entity, folderId = null, taskListId = null, modalId, isClosing, onClose }) {
     const queryClient = useQueryClient();
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isClosing, setIsClosing] = useState(false)
-
-    const clickTargetRef = useRef(null)
 
     const addFolder = useAddFolder(folderId)
     const addNote = useAddNote()
@@ -85,95 +82,68 @@ export default function CreateModal({ entity, folderId = null, taskListId = null
     }
 
     return (
-        <div className={styles.modalBackdrop} onClick={(e) => {
-            if (e.target === e.currentTarget && clickTargetRef.current === e.currentTarget) {
-                setIsClosing(true);
-                setTimeout(() => {
-                    dispatch(closeModal(modalId));
-                }, 300);
-            }
-        }}
-            onMouseDown={(e) => {
-                clickTargetRef.current = e.target;
-            }}>
-            <div className={`${styles.modal} ${isClosing ? styles.isClosing : ""}`} onClick={(e) => e.stopPropagation()}>
-                {entity === "folder" && (
-                    <>
-                        <div className={styles.modalHeader}>
-                            <h2 className={styles.modalTitle}>Створення папки</h2>
-                            <div className={styles.buttonsContainer}>
-                                <Button className={styles.modalControlButton} onClick={() => {
-                                    setIsClosing(true);
-                                    setTimeout(() => {
-                                        dispatch(closeModal(modalId));
-                                    }, 300);
-                                }} style={{ padding: 0 }}>
-                                    <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
-                                </Button>
-                            </div>
+
+        <div className={`${styles.modal} ${isClosing ? styles.isClosing : ""}`} onClick={(e) => e.stopPropagation()}>
+            {entity === "folder" && (
+                <>
+                    <div className={styles.modalHeader}>
+                        <h2 className={styles.modalTitle}>Створення папки</h2>
+                        <div className={styles.buttonsContainer}>
+                            <Button className={styles.modalControlButton} onClick={onClose} style={{ padding: 0 }}>
+                                <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
+                            </Button>
+                        </div>
+                    </div>
+
+                    <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Назва" }, { name: "description", type: "text", placeholder: "Опис" }]} >
+                        <div className="form-button-container">
+                            <Button disabled={isSubmitting} type="submit">
+                                {isSubmitting ? "Створення..." : "Створити"}
+                            </Button>
+                        </div>
+                    </Form>
+                </>
+            )}
+            {entity === "note" && (
+                <>
+                    <div className={styles.modalHeader}>
+                        <h2 className={styles.modalTitle}>Створення нотатки</h2>
+                        <div className={styles.buttonsContainer}>
+                            <Button className={styles.modalControlButton} onClick={onClose} style={{ padding: 0 }}>
+                                <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
+                            </Button>
                         </div>
 
-                        <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Назва" }, { name: "description", type: "text", placeholder: "Опис" }]} >
-                            <div className="form-button-container">
-                                <Button disabled={isSubmitting} type="submit">
-                                    {isSubmitting ? "Створення..." : "Створити"}
-                                </Button>
-                            </div>
-                        </Form>
-                    </>
-                )}
-                {entity === "note" && (
-                    <>
-                        <div className={styles.modalHeader}>
-                            <h2 className={styles.modalTitle}>Створення нотатки</h2>
-                            <div className={styles.buttonsContainer}>
-                                <Button className={styles.modalControlButton} onClick={() => {
-                                    setIsClosing(true);
-                                    setTimeout(() => {
-                                        dispatch(closeModal(modalId));
-                                    }, 300);
-                                }} style={{ padding: 0 }}>
-                                    <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
-                                </Button>
-                            </div>
-
+                    </div>
+                    <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Заголовок" }, { name: "content", type: "textarea", placeholder: "Запис", listenUrl: true }]}>
+                        <div className="form-button-container">
+                            <Button disabled={isSubmitting} type="submit">
+                                {isSubmitting ? <>< Loader className={styles.addButtonLoader} /> Створення...</> : "Створити"}
+                            </Button>
                         </div>
-                        <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Заголовок" }, { name: "content", type: "textarea", placeholder: "Запис", listenUrl: true }]}>
-                            <div className="form-button-container">
-                                <Button disabled={isSubmitting} type="submit">
-                                    {isSubmitting ? <>< Loader className={styles.addButtonLoader} /> Створення...</> : "Створити"}
-                                </Button>
-                            </div>
-                        </Form>
-                    </>
-                )}
-                {entity === "tasklist" && (
-                    <>
-                        <div className={styles.modalHeader}>
-                            <h2 className={styles.modalTitle}>Створення списку задач</h2>
-                            <div className={styles.buttonsContainer}>
-                                <Button className={styles.modalControlButton} onClick={() => {
-                                    setIsClosing(true);
-                                    setTimeout(() => {
-                                        dispatch(closeModal(modalId));
-                                    }, 300);
-                                }} style={{ padding: 0 }}>
-                                    <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
-                                </Button>
-                            </div>
-
+                    </Form>
+                </>
+            )}
+            {entity === "tasklist" && (
+                <>
+                    <div className={styles.modalHeader}>
+                        <h2 className={styles.modalTitle}>Створення списку задач</h2>
+                        <div className={styles.buttonsContainer}>
+                            <Button className={styles.modalControlButton} onClick={onClose} style={{ padding: 0 }}>
+                                <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
+                            </Button>
                         </div>
-                        <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Назва списку задач" }]}>
-                            <div className="form-button-container">
-                                <Button disabled={isSubmitting} type="submit">
-                                    {isSubmitting ? "Створення..." : "Створити"}
-                                </Button>
-                            </div>
-                        </Form>
-                    </>
-                )}
-            </div>
+
+                    </div>
+                    <Form onSubmit={handleSubmit} fields={[{ name: "title", type: "text", placeholder: "Назва списку задач" }]}>
+                        <div className="form-button-container">
+                            <Button disabled={isSubmitting} type="submit">
+                                {isSubmitting ? "Створення..." : "Створити"}
+                            </Button>
+                        </div>
+                    </Form>
+                </>
+            )}
         </div>
-
     )
 }
