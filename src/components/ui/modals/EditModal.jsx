@@ -2,7 +2,6 @@ import styles from "./modal.module.css"
 
 import useNote from "../../../hooks/useNote"
 import useUpdateNote from "../../../hooks/useUpdateNote"
-import { useDispatch } from "react-redux";
 import extractPreviewId from "../../../utils/extractPreviewId"
 import { useQueryClient } from "@tanstack/react-query";
 import supabase from "../../../utils/supabase";

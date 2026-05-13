@@ -1,7 +1,6 @@
 import styles from "./urlPreviewCard.module.css"
 
 export default function UrlPreviewCard({ previewData, borderRounded = false, className = "" }) {
-    console.log(previewData)
 
     return (
         < a
