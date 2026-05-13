@@ -1,49 +1,21 @@
-import styles from "./modal.module.css"
-import { useDispatch } from "react-redux"
-import { useState, useRef, useEffect } from "react"
-import { closeModal, openModal } from "../../redux/modalsSlice"
-import { linkifyText } from "../../../utils/linkifyText"
-import UrlPreviewCard from "../urlPreviewCard/UrlPreviewCard"
-import useNote from "../../../hooks/useNote"
-import supabase from "../../../utils/supabase"
-import useScrollArrows from "../../../hooks/useScrollArrows";
+import styles from "./modal.module.css";
 
-import Button from "../button/Button"
+import useGetPreviewData from "../../../hooks/useGetPreviewData";
+import useScrollArrows from "../../../hooks/useScrollArrows";
+import useNote from "../../../hooks/useNote";
+import UrlPreviewCard from "../urlPreviewCard/UrlPreviewCard";
+import { useDispatch } from "react-redux";
+import { linkifyText } from "../../../utils/linkifyText";
+import { openModal } from "../../redux/modalsSlice";
+
+import Button from "../button/Button";
 
 export default function ViewModal({ modalId, noteId, isClosing, closeModal }) {
 
     const dispatch = useDispatch();
     const { data: note, isLoading } = useNote(noteId)
-    const [previewData, setPreviewData] = useState(null)
+    const { data: previewData } = useGetPreviewData(note?.link_preview_id)
     const { contentRef, canScrollUp, canScrollDown } = useScrollArrows(note?.content);
-
-    useEffect(() => {
-        let isCurrent = true;
-
-        if (note?.link_preview_id) {
-            const fetchPreviewData = async () => {
-                const { data, error } = await supabase
-                    .from("link_previews")
-                    .select("*")
-                    .eq("id", note.link_preview_id)
-                    .single();
-
-                if (error) {
-                    if (isCurrent) console.error(error.message);
-                } else {
-                    if (isCurrent) {
-                        setPreviewData(data);
-                    }
-                }
-            };
-
-            fetchPreviewData();
-        }
-
-        return () => {
-            isCurrent = false;
-        };
-    }, [note?.link_preview_id]);
 
     if (isLoading || !note) return null;
 
@@ -58,7 +30,9 @@ export default function ViewModal({ modalId, noteId, isClosing, closeModal }) {
                     <Button className={styles.modalControlButton} onClick={() => { dispatch(openModal({ type: "edit", modalId: crypto.randomUUID(), noteId })) }}>
                         <img width="15px" src="/icons/pencil.svg#pencil-icon" alt="Edit" />
                     </Button>
-                    <Button className={styles.modalControlButton} onClick={closeModal} style={{ padding: 0 }}>
+                    <Button className={styles.modalControlButton} onClick={
+
+                        closeModal} style={{ padding: 0 }}>
                         <img width="15px" src="/icons/cross-icon.svg#cross-icon" alt="Close modal" />
                     </Button>
                 </div>

@@ -1,5 +1,7 @@
 import supabase from "./supabase";
 
+import normalizePreviewData from "./normalizePreviewData";
+
 export default async function getUrlPreviewData(url) {
     if (!url) return null;
 
@@ -15,7 +17,7 @@ export default async function getUrlPreviewData(url) {
         .maybeSingle();
 
     if (existing) {
-        return existing
+        return normalizePreviewData(existing)
     }
 
     try {
@@ -26,7 +28,7 @@ export default async function getUrlPreviewData(url) {
         });
 
         const meta = await response.json();
-        return { ...meta, url: cleanUrl, isNew: true };
+        return { ...normalizePreviewData({ ...meta, url: cleanUrl }), isNew: true };
     } catch (err) {
         return null
     }

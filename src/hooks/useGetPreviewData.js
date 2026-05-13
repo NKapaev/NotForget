@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import supabase from "../utils/supabase";
 
+import normalizePreviewData from "../utils/normalizePreviewData";
+
 export default function useGetPreviewData(id) {
     return useQuery({
         queryKey: ["link_preview", id],
@@ -11,7 +13,7 @@ export default function useGetPreviewData(id) {
                 .eq("id", id)
                 .single();
             if (error) throw error;
-            return data;
+            return normalizePreviewData(data);
         },
 
         enabled: !!id,

@@ -3,9 +3,7 @@ import styles from "./modal.module.css"
 import useNote from "../../../hooks/useNote"
 import useUpdateNote from "../../../hooks/useUpdateNote"
 import { useDispatch } from "react-redux";
-import { closeModal } from "../../redux/modalsSlice";
 import extractPreviewId from "../../../utils/extractPreviewId"
-import { useState, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import supabase from "../../../utils/supabase";
 
@@ -18,7 +16,6 @@ export default function EditModal({ modalId, noteId, isClosing, closeModal }) {
     const { data: note } = useNote(noteId)
 
     const queryClient = useQueryClient();
-    const dispatch = useDispatch();
     const updateNote = useUpdateNote()
 
     if (!note) return null

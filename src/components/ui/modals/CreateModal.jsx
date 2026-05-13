@@ -9,12 +9,10 @@ import Loader from "../loader/Loader"
 import { useQueryClient } from "@tanstack/react-query"
 
 import supabase from "../../../utils/supabase"
-import { useDispatch } from "react-redux"
-import { useState, useRef } from "react"
+import { useState } from "react"
 import extractPreviewId from "../../../utils/extractPreviewId"
 
 export default function CreateModal({ entity, folderId = null, taskListId = null, modalId, isClosing, closeModal }) {
-    const dispatch = useDispatch();
     const queryClient = useQueryClient();
 
     const [isSubmitting, setIsSubmitting] = useState(false);
