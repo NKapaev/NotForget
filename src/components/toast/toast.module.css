@@ -1,0 +1,86 @@
+.toastContainer {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  z-index: 5;
+
+  /* border: 2px solid var(--blue);
+  border-radius: 5px;
+
+  background-color: var(--bg-color); */
+
+  transform: translateX(-50%);
+}
+
+.toast {
+  transform: translateY(20px);
+  width: 100%;
+  padding: 10px;
+  display: flex;
+
+  align-items: center;
+
+  border: 2px solid var(--blue);
+  border-radius: 5px;
+
+  background-color: var(--bg-color);
+
+  animation: fadeInToast 250ms forwards;
+}
+
+.toast.toastHidden {
+  animation: fadeOutToast 250ms forwards;
+}
+
+.toast > p {
+  margin: 0 auto 0 0;
+}
+
+.toast + .toast {
+  border-top: 2px solid var(--blue);
+}
+
+.toastControllersContainer {
+  display: flex;
+}
+
+.toastController {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  padding: 0;
+  border-radius: 50%;
+  background-color: var(--bg-color);
+  margin-left: 10px;
+  fill: var(--blue);
+}
+
+.toastController:hover,
+.toastController:focus {
+  background-color: var(--grey-color);
+}
+
+.toastController > svg {
+  margin: auto;
+}
+
+@keyframes fadeInToast {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutToast {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

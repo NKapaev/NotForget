@@ -23,6 +23,8 @@ import useFolder from '../../hooks/useFolder';
 import useMoveNote from '../../hooks/useMoveNote';
 
 import Loader from '../../components/ui/loader/Loader';
+import Toast from '../../components/toast/Toast';
+import { useToast } from '../../components/toast/toastContext';
 
 export default function Profile() {
     const { id: profileId, folderId } = useParams();
@@ -49,6 +51,8 @@ export default function Profile() {
 
     const [globalData, setGlobalData] = useState([]);
     const [isGlobalLoading, setIsGlobalLoading] = useState(false);
+
+    const { toasts } = useToast()
 
 
     useEffect(() => {
@@ -157,6 +161,8 @@ export default function Profile() {
                 ))}
             </>
             <Header userData={profile} />
+
+            <Toast toasts={toasts} />
 
             <button
                 className={`${styles.showTaskListButton} ${styles.workspaceController
@@ -270,7 +276,7 @@ export default function Profile() {
                         <EntityList>
                             {filteredData.map((item) => {
                                 if (item.type === "folder") {
-                                    return <Folder key={item.id} id={item.id} title={item.title} description={item.description} creationDate={item.created_at} />
+                                    return <Folder key={item.id} folder={item} />
                                 }
                                 if (item.type === "note") {
                                     return <Note key={item.id} note={item} linkPreviewId={item.link_preview_id} />

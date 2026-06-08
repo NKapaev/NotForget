@@ -12,7 +12,6 @@ node_modules
 dist
 dist-ssr
 .prettierrc.json
-testPage
 *.local
 *.txt
 

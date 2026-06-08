@@ -1,25 +1,41 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import supabase from "../utils/supabase"
+import { useQueryClient } from "@tanstack/react-query"
+import { useToast } from "../components/toast/toastContext";
+import { deleteTaskListRequest } from "../utils/deleteTaskListRequest"
+import { useParams } from "react-router-dom";
 
 export default function useDeleteTaskList() {
-    const queryClient = useQueryClient()
+    const { id } = useParams()
+    const queryClient = useQueryClient();
+    const { addToast } = useToast();
+    const queryKey = ["taskLists", id];
 
-    return useMutation({
-        mutationFn: async ({ id }) => {
-            const { data, error } = await supabase
-                .from("taskLists")
-                .delete()
-                .eq("id", id)
+    const deleteTaskList = (taskList) => {
+        const previousTaskLists = queryClient.getQueryData(queryKey);
 
-            if (error) throw error
-            return data
-        },
-        onSuccess: () => {
-            // вариант 1: рефетч из базы
-            queryClient.invalidateQueries({ queryKey: ["taskLists"] })
+        queryClient.setQueryData(
+            queryKey,
+            old =>
+                old.filter(tl => tl.id !== taskList.id)
+        );
 
-            // вариант 2 (быстрее): обновить кэш локально
-            // queryClient.setQueryData(["folders"], (old) => [...(old || []), newFolder])
-        },
-    })
+        addToast({
+            type: "taskList",
+            title: taskList.title,
+
+            onUndo: () => {
+                queryClient.setQueryData(
+                    queryKey,
+                    previousTaskLists
+                );
+            },
+
+            onConfirm: async () => {
+                await deleteTaskListRequest(taskList.id)
+            }
+        });
+
+
+    };
+
+    return deleteTaskList;
 }

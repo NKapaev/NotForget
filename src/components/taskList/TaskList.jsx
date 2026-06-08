@@ -15,7 +15,7 @@ import Button from "../ui/button/Button"
 import Loader from "../ui/loader/Loader"
 import { extractLink } from "../../utils/extractLink"
 
-export default function TaskList({ id, className, title }) {
+export default function TaskList({ id, className, taskList }) {
     const [isOpen, setIsOpen] = useState(false)
     const queryClient = useQueryClient()
     const deleteTaskList = useDeleteTaskList()
@@ -84,7 +84,7 @@ export default function TaskList({ id, className, title }) {
                         </svg>
                     </Button>
 
-                    <p className={styles.taskListTitle}>{title}</p>
+                    <p className={styles.taskListTitle}>{taskList.title}</p>
 
                     <Button
                         className={styles.addTaskButton}
@@ -102,7 +102,9 @@ export default function TaskList({ id, className, title }) {
 
                 <Button
                     className="delete-button"
-                    onClick={() => deleteTaskList.mutateAsync({ id })}
+                    onClick={() => {
+                        deleteTaskList(taskList)
+                    }}
                 >
                     <img
                         width="40px"

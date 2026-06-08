@@ -9,6 +9,7 @@ import ThemeProvider from "./components/ui/themeToggle/ThemeContext";
 import EmailConfirmed from './pages/emailConfirmed/EmailConfirmed';
 import SettingsPage from './pages/settings/SettingsPage';
 import ResetPassword from './pages/resetPassword/ResetPassword';
+import ToastProvider from './components/toast/toastContext';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -18,26 +19,28 @@ function App() {
   return (
     <>
       <ThemeProvider>
-        <BrowserRouter>
-          <Routes>
-            {/* Общедоступные маршруты */}
-            <Route path="/" element={<Greeting />} />
-            <Route path="/registration" element={<Registration />} />
-            <Route path="/confirmEmail" element={<ConfirmEmail />} />
-            <Route path='/reset-password' element={<ResetPassword />} />
-            <Route path='/emailConfirmed' element={<EmailConfirmed />} />
+        <ToastProvider>
+          <BrowserRouter>
+            <Routes>
+              {/* Общедоступные маршруты */}
+              <Route path="/" element={<Greeting />} />
+              <Route path="/registration" element={<Registration />} />
+              <Route path="/confirmEmail" element={<ConfirmEmail />} />
+              <Route path='/reset-password' element={<ResetPassword />} />
+              <Route path='/emailConfirmed' element={<EmailConfirmed />} />
 
-            {/* Приватные маршруты */}
-            <Route element={<PrivateRoute />}>
-              <Route path="/profile/:id" element={<Profile />} />
-              <Route path="/profile/:id/folder/:folderId/*" element={<Profile />} />
-              <Route path="/profile/:id/settings" element={<SettingsPage />} />
-            </Route>
+              {/* Приватные маршруты */}
+              <Route element={<PrivateRoute />}>
+                <Route path="/profile/:id" element={<Profile />} />
+                <Route path="/profile/:id/folder/:folderId/*" element={<Profile />} />
+                <Route path="/profile/:id/settings" element={<SettingsPage />} />
+              </Route>
 
-            {/* 404 */}
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
-        </BrowserRouter>
+              {/* 404 */}
+              <Route path="*" element={<ErrorPage />} />
+            </Routes>
+          </BrowserRouter>
+        </ToastProvider>
       </ThemeProvider>
     </>
   )

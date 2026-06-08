@@ -5,12 +5,14 @@ import { useNavigate, useParams } from "react-router-dom"
 import useMoveNote from "../../hooks/useMoveNote"
 
 
-export default function Folder({ id, title, description, creationDate }) {
-    const { id: profileId } = useParams();
+export default function Folder({ folder }) {
+
+    const params = useParams();
+    const { id, title, description, created_at } = folder
 
     const navigate = useNavigate()
 
-    const deleteFolder = useDeleteFolder();
+    const deleteFolder = useDeleteFolder(params.folderId ?? null);
     const moveNote = useMoveNote()
 
     const handleDrop = (e) => {
@@ -34,19 +36,19 @@ export default function Folder({ id, title, description, creationDate }) {
             onDragLeave={(e) => {
                 e.target.style.transform = "scale(1)"
             }}
-            onClick={(e) => { navigate(`/profile/${profileId}/folder/${id}`) }}>
+            onClick={() => { navigate(`/profile/${params.id}/folder/${id}`) }}>
             <div className="folderHeader">
                 <p className="folder-name ">{title}</p>
                 <Button className="delete-button" onClick={(e) => {
                     e.stopPropagation();
-                    e.target.closest("li").classList.add("fade-out")
-                    deleteFolder.mutateAsync(id)
+                    // e.target.closest("li").classList.add("fade-out")
+                    deleteFolder(folder)
                 }}>
                     <img width={"40px"} className="delete-button-icon" src="/icons/trash-icon.svg#trash-icon" alt="" />
                 </Button>
             </div>
             <p className="folder-description ">{description}</p>
-            <p className="creation-date ">{new Date(creationDate).toLocaleDateString()}</p>
+            <p className="creation-date ">{new Date(created_at).toLocaleDateString()}</p>
         </li>
     )
 }

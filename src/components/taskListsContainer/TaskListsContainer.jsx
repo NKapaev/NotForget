@@ -31,7 +31,7 @@ export default function TaskListsContainer({ isMobile = false }) {
             const { data, error } = await supabase
                 .from("taskLists")
                 .select("*")
-                .eq("user_id", id).order("created_at", { ascending: false })
+            // .eq("user_id", id).order("created_at", { ascending: false })
 
             if (error) throw error
             return data
@@ -67,7 +67,7 @@ export default function TaskListsContainer({ isMobile = false }) {
 
             {taskLists?.map((taskList) => {
                 return (
-                    <TaskList key={taskList.id} title={taskList.title} id={taskList.id} />
+                    <TaskList key={taskList.id} taskList={taskList} id={taskList.id} />
                 )
             })}
         </div>

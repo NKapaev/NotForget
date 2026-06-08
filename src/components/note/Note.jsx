@@ -1,6 +1,5 @@
 import "./note.css"
 import useDeleteNote from "../../hooks/useDeleteNote"
-import useNote from "../../hooks/useNote"
 import useGetPreviewData from "../../hooks/useGetPreviewData"
 import Button from "../ui/button/Button"
 import UrlPreviewCard from "../ui/urlPreviewCard/UrlPreviewCard"
@@ -10,8 +9,10 @@ import { linkifyText } from "../../utils/linkifyText"
 import { useDispatch } from "react-redux"
 
 export default function Note({ note, linkPreviewId }) {
+
+
     const { id, title, content, created_at } = note;
-    const deleteNote = useDeleteNote()
+    const deleteNote = useDeleteNote(note.folder_id, note.task_list_id);
     const { data: previewData, isLoading } = useGetPreviewData(linkPreviewId);
 
     const dispatch = useDispatch()
@@ -22,7 +23,7 @@ export default function Note({ note, linkPreviewId }) {
         document.body.classList.add("dragging")
     }
 
-    const handleDragEnd = (e) => {
+    const handleDragEnd = () => {
         document.body.classList.remove("dragging")
     }
 
@@ -53,9 +54,11 @@ export default function Note({ note, linkPreviewId }) {
                     className="delete-button"
                     onClick={(e) => {
                         e.stopPropagation()
-                        e.target.closest("li").classList.add("fade-out")
+                        // e.target.closest("li").classList.add("fade-out")
 
-                        deleteNote.mutateAsync(id)
+                        deleteNote(note);
+
+
                     }}
                 >
                     <img
