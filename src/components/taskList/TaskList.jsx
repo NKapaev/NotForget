@@ -2,6 +2,7 @@ import styles from "./taskList.module.css"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
+import { useParams } from "react-router-dom"
 import { openModal } from "../redux/modalsSlice"
 import { linkifyText } from "../../utils/linkifyText"
 import supabase from "../../utils/supabase"
@@ -16,6 +17,7 @@ import Loader from "../ui/loader/Loader"
 import { extractLink } from "../../utils/extractLink"
 
 export default function TaskList({ id, className, taskList }) {
+    const params = useParams()
     const [isOpen, setIsOpen] = useState(false)
     const queryClient = useQueryClient()
     const deleteTaskList = useDeleteTaskList()
@@ -44,7 +46,7 @@ export default function TaskList({ id, className, taskList }) {
         },
     })
 
-    const deleteNote = useDeleteNote()
+    const deleteNote = useDeleteNote(params.folderId, id)
 
     const handleDrop = (e) => {
         e.preventDefault()
@@ -185,7 +187,7 @@ export default function TaskList({ id, className, taskList }) {
                                 onClick={(e) => {
                                     e.stopPropagation()
                                     e.target.closest("div").classList.add(styles.fadeOut)
-                                    deleteNote.mutateAsync(note.id)
+                                    deleteNote(note)
                                 }
                                 }
                             >

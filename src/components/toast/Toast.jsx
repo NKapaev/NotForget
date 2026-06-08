@@ -20,12 +20,11 @@ export default function Toast() {
                                 styles.toastHidden : ""
                             }
                     `}>
-                            <p>
-                                {toast.type === "note" && "Запис "}
-                                {toast.type === "folder" && "Папку "}
-                                {toast.type === "taskList" && "Список "}
-                                {toast.title} буде видалено
-                            </p>
+                            <div className={styles.toastMessage}>
+                                {toast.type === "note" && <p className={styles.toastText}> Буде видалено запис: <span className={styles.toastTitle}>{toast.title}</span></p>}
+                                {toast.type === "folder" && <p className={styles.toastText}> Буде видалено папку: <span className={styles.toastTitle}>{toast.title}</span></p>}
+                                {toast.type === "taskList" && <p className={styles.toastText}> Буде видалено список: <span className={styles.toastTitle}>{toast.title}</span></p>}
+                            </div>
 
                             <div className={styles.toastControllersContainer}>
                                 <button className={styles.toastController} onClick={() =>
