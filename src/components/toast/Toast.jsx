@@ -21,9 +21,9 @@ export default function Toast() {
                             }
                     `}>
                             <div className={styles.toastMessage}>
-                                {toast.type === "note" && <p className={styles.toastText}> Буде видалено запис: <span className={styles.toastTitle}>{toast.title}</span></p>}
-                                {toast.type === "folder" && <p className={styles.toastText}> Буде видалено папку: <span className={styles.toastTitle}>{toast.title}</span></p>}
-                                {toast.type === "taskList" && <p className={styles.toastText}> Буде видалено список: <span className={styles.toastTitle}>{toast.title}</span></p>}
+                                {toast.type === "note" && <p className={styles.toastText}> Видалено запису: <span className={styles.toastTitle}>{toast.title}</span></p>}
+                                {toast.type === "folder" && <p className={styles.toastText}> Видалено папки: <span className={styles.toastTitle}>{toast.title}</span></p>}
+                                {toast.type === "taskList" && <p className={styles.toastText}> Видалено списку: <span className={styles.toastTitle}>{toast.title}</span></p>}
                             </div>
 
                             <div className={styles.toastControllersContainer}>

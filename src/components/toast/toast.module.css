@@ -1,7 +1,6 @@
 .toastContainer {
   position: fixed;
-  max-width: calc(100vw - 70px);
-  min-width: 80%;
+  width: min(700px, 80vw);
   top: 10px;
   left: 50%;
   z-index: 5;
@@ -14,6 +13,7 @@
   /* width: 100%; */
   padding: 10px;
   display: flex;
+  justify-content: space-between;
 
   align-items: center;
 
@@ -33,7 +33,7 @@
 }
 
 .toastText {
-  margin: 0 auto 0 0;
+  margin-right: 15px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2; /* Укажите нужное количество строк */
