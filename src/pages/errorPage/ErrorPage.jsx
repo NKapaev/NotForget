@@ -1,6 +1,5 @@
 import styles from "./errorPage.module.css"
 import { useLocation, useNavigate } from 'react-router-dom'
-import ThemeToggle from "../../components/ui/themeToggle/ThemeToggle"
 
 import Button from "../../components/ui/button/Button"
 
