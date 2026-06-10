@@ -1,5 +1,6 @@
-import "./errorPage.css"
+import styles from "./errorPage.module.css"
 import { useLocation, useNavigate } from 'react-router-dom'
+import ThemeToggle from "../../components/ui/themeToggle/ThemeToggle"
 
 import Button from "../../components/ui/button/Button"
 
@@ -10,15 +11,19 @@ export default function ErrorPage() {
     const error = location.state || {}
 
     return (
-        <>
-            <svg width='100px' height="100px">
-                <use href="/smallLogo.svg#smallLogo" width="100px" height="100px" fill="#313ab1"></use>
-            </svg>
-            <p className="error-code">{error.code}</p>
-            <p>{error.message}</p>
+        <section className={styles.errorSection}>
+            <div className={styles.iconWrapper}>
+                <svg className={styles.brainIcon} width='100px' height="100px">
+                    <use href="/smallLogo.svg#smallLogo" width="100px" height="100px" fill="#313ab1"></use>
+                </svg>
+                <svg className={styles.warningIcon}>
+                    <use href="/icons/warning.svg"></use>
+                </svg>
+            </div>
+            <p className={styles.errorMessage}>{error.message}</p>
             <Button onClick={() => {
                 navigate("/")
-            }}>Back to main page</Button>
-        </>
+            }}>На головну</Button>
+        </section>
     )
 }

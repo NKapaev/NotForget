@@ -1,0 +1,29 @@
+.errorSection {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.errorMessage {
+  color: var(--accent-color);
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.iconWrapper {
+  position: relative;
+}
+
+.brainIcon {
+}
+
+.warningIcon {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  bottom: 25px;
+  right: 10px;
+}
