@@ -46,6 +46,10 @@
   border-radius: 10px;
   background-color: var(--bg-color);
   animation: fadeIn 0.3s linear forwards;
+
+  @media screen and (min-width: 481px) {
+    min-width: 250px;
+  }
 }
 
 .modal.isClosing {
@@ -96,7 +100,9 @@
 }
 
 .modalTitle {
-  margin: 0;
+  margin: 0 10px 0 0;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .contentWrapper {

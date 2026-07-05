@@ -9,7 +9,9 @@ import supabase from "../../utils/supabase"
 import useNotes from "../../hooks/useNotes"
 import useDeleteNote from "../../hooks/useDeleteNote"
 import useDeleteTaskList from "../../hooks/useDeleteTaskList"
+import useMoveNote from "../../hooks/useMoveNote"
 import { useFadeToggle } from "../../hooks/useFadeToggle"
+import { hideTaskList } from "../redux/taskListSlice"
 
 import TaskExecution from "../taskExecution/TaskExecution"
 import Button from "../ui/button/Button"
@@ -24,6 +26,8 @@ export default function TaskList({ id, className, taskList }) {
     const { data: notes, isLoading, error } = useNotes(null, id)
     const { ref, hide, show } = useFadeToggle(200);
     const dispatch = useDispatch()
+
+    const moveNote = useMoveNote()
 
     const moveNoteMutation = useMutation({
         mutationFn: async ({ noteId, taskListId }) => {
@@ -50,10 +54,15 @@ export default function TaskList({ id, className, taskList }) {
 
     const handleDrop = (e) => {
         e.preventDefault()
+        e.stopPropagation()
         const noteId = e.dataTransfer.getData("text/plain")
+        const wasClosedBeforeDrag = e.dataTransfer.getData('wasClosedBeforeDrag') === 'true';
         document.body.classList.remove("dragging")
         if (!noteId) return
-        moveNoteMutation.mutate({ noteId, taskListId: id })
+        moveNote.mutate({ noteId, folderId: null, taskListId: id, })
+        if (wasClosedBeforeDrag) {
+            dispatch(hideTaskList());
+        }
     }
 
     const toggle = (e) => {
@@ -100,21 +109,22 @@ export default function TaskList({ id, className, taskList }) {
                             <use href="/icons/plus-icon.svg#plus" fill="var(--blue)" width="20px" height="20px"></use>
                         </svg>
                     </Button>
+                    <Button
+                        className="delete-button"
+                        onClick={() => {
+                            deleteTaskList(taskList)
+                        }}
+                    >
+                        <img
+                            width="40px"
+                            className="delete-button-icon"
+                            src="/icons/trash-icon.svg#trash-icon"
+                            alt=""
+                        />
+                    </Button>
                 </div>
 
-                <Button
-                    className="delete-button"
-                    onClick={() => {
-                        deleteTaskList(taskList)
-                    }}
-                >
-                    <img
-                        width="40px"
-                        className="delete-button-icon"
-                        src="/icons/trash-icon.svg#trash-icon"
-                        alt=""
-                    />
-                </Button>
+
             </div>
 
             {/* Проверяем, что notes не пустой массив */}
@@ -149,8 +159,8 @@ export default function TaskList({ id, className, taskList }) {
                             }}
                         >
 
-                            <TaskExecution key={note.id} taskId={note.id}></TaskExecution>
                             <div className={styles.taskContentWrapper}>
+                                <TaskExecution key={note.id} taskId={note.id}></TaskExecution>
                                 {(() => {
                                     const detectedLink = extractLink(note.content);
 

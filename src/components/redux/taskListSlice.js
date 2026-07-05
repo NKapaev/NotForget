@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     taskListShown: false,
+    previousListShown: false,
 }
 
 export const taskListSlice = createSlice({
@@ -10,9 +11,11 @@ export const taskListSlice = createSlice({
     reducers: {
         showTaskList: (state) => {
             state.taskListShown = true;
+            state.previousListShown = true;
         },
         hideTaskList: (state) => {
             state.taskListShown = false;
+            state.previousListShown = false;
         },
     },
 })

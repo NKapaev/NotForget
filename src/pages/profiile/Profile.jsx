@@ -33,15 +33,9 @@ export default function Profile() {
     const navigate = useNavigate();
     const moveNote = useMoveNote()
 
-    // const isMobile = window.innerWidth < 768;
-    const isMobile = true;
     const { data: notes } = useNotes(folderId)
     const { data: folders } = useFolders(folderId)
     const { data: folder } = useFolder(folderId || null)
-
-    const [startTouchX, setStartTouchX] = useState(0);
-    const [translate, setTranslate] = useState(0);
-    const [isSwiping, setIsSwiping] = useState(false);
 
     const [shouldRenderGoBack, setShouldRenderGoBack] = useState(!!folderId);
     const [isExiting, setIsExiting] = useState(false);
@@ -144,14 +138,6 @@ export default function Profile() {
 
     if (!profile) return <Loader variant="big"></Loader>;
 
-    const wrapper = document.querySelector('.profileContentWrapper');
-
-    const baseTranslate =
-        taskListState && wrapper
-            ? -wrapper.offsetWidth
-            : 0;
-    const totalTranslate = baseTranslate + translate;
-
     return (
 
         <section className="profile">
@@ -161,35 +147,23 @@ export default function Profile() {
                 ))}
             </>
             <Header userData={profile} />
-
             <Toast toasts={toasts} />
 
-            <button
-                className={`${styles.showTaskListButton} ${styles.workspaceController
-                    } ${taskListState ? styles.none : ''}`}
-                onClick={() => {
-                    dispatch(showTaskList());
+            <div className={`container ${styles.profileContainer} ${taskListState ? styles.taskListOpen : ""}`}
+
+                onDrop={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    const noteId = e.dataTransfer.getData("text/plain")
+                    document.body.classList.remove("dragging")
+                    if (!noteId) return
+                    moveNote.mutate({ noteId, folderId: folderId || null })
+                }}
+                onDragOver={(e) => {
+                    e.preventDefault()
                 }}
             >
-                <svg width={'32px'} height={'32px'}>
-                    <use href="/icons/tasklist-icon.svg#tasklist-icon"></use>
-                </svg>
-            </button>
-
-            <button
-                className={`${styles.hideTaskListButton} ${styles.workspaceController
-                    } ${taskListState ? '' : styles.none}`}
-                onClick={() => {
-                    dispatch(hideTaskList());
-                }}
-            >
-                <svg width="25px" height="25px">
-                    <use href="/icons/folder-icon.svg#folder"></use>
-                </svg>
-            </button>
-
-            <div className={`container ${styles.profileContainer}`}>
-                {taskListState ? (
+                {/* {taskListState ? (
                     <WorkspaceSwitcher
                         className={'toLeft'}
                         onTrigger={() => {
@@ -203,92 +177,40 @@ export default function Profile() {
                             dispatch(showTaskList());
                         }}
                     ></WorkspaceSwitcher>
-                )}
-
-                <div
-                    className={`profileContentWrapper ${styles.profileContentWrapper}`}
-                    style={{
-                        transform: `translateX(${totalTranslate}px)`,
-                        transition: 'all linear 0.3',
-                    }}
-                    onTouchStart={e => {
-                        setStartTouchX(e.touches[0].clientX);
-                        setIsSwiping(true);
-                    }}
-                    onTouchMove={e => {
-                        if (!isSwiping) return;
-
-                        const deltaX = e.touches[0].clientX - startTouchX;
-
-                        if (
-                            (taskListState === false && deltaX < 0) ||
-                            (taskListState === true && deltaX > 0)
-                        ) {
-                            setTranslate(deltaX);
-                        }
-                    }}
-                    onTouchEnd={e => {
-                        if (translate < -60) {
-                            dispatch(showTaskList());
-                            setIsSwiping(false);
-                        } else if (translate > 60) {
-                            dispatch(hideTaskList());
-                            setIsSwiping(false);
-                        }
-                        setTranslate(0);
-                    }}
-                >
-                    <div className={styles.mainPanel}
-                        onDrop={(e) => {
-                            e.preventDefault()
-                            e.stopPropagation()
-                            const noteId = e.dataTransfer.getData("text/plain")
-                            document.body.classList.remove("dragging")
-
-                            if (!noteId) return
-                            moveNote.mutate({ noteId, folderId: folderId || null })
-                        }}
-                        onDragOver={(e) => e.preventDefault()}
-                    >
-                        <div className={styles.subHeder}>
-                            {shouldRenderGoBack && (
-                                <button
-                                    className={`${styles.goBackButton} ${isExiting ? styles.fadeOut : ''}`}
-                                    onClick={() => navigate(-1)}
-                                >
-                                    <svg width={'30px'} height={'30px'}>
-                                        <use href='/icons/go-back-icon.svg' width={'30px'} height={"30px"}></use>
-                                    </svg>
-                                </button>
-                            )}
-                            <CreateEntityButton folderId={folderId} />
-                            <FindButton onSearch={setSearchQuery} onModeChange={setSearchMode}></FindButton>
-                            {shouldRenderGoBack && (
-                                <FolderTitleOutput
-                                    title={folder?.title}
-                                    isExiting={isExiting} />
-                            )}
-                        </div>
-
-
-
-
-                        <EntityList>
-                            {filteredData.map((item) => {
-                                if (item.type === "folder") {
-                                    return <Folder key={item.id} folder={item} />
-                                }
-                                if (item.type === "note") {
-                                    return <Note key={item.id} note={item} linkPreviewId={item.link_preview_id} />
-                                }
-                            })}
-
-                        </EntityList>
-
-                    </div>
-
-                    {isMobile && <TaskListsContainer isMobile={isMobile} />}
+                )} */}
+                <div className={styles.subHeder}>
+                    {shouldRenderGoBack && (
+                        <button
+                            className={`${styles.goBackButton} ${isExiting ? styles.fadeOut : ''}`}
+                            onClick={() => navigate(-1)}
+                        >
+                            <svg width={'30px'} height={'30px'}>
+                                <use href='/icons/go-back-icon.svg' width={'30px'} height={"30px"}></use>
+                            </svg>
+                        </button>
+                    )}
+                    <CreateEntityButton folderId={folderId} />
+                    <FindButton onSearch={setSearchQuery} onModeChange={setSearchMode}></FindButton>
+                    {shouldRenderGoBack && (
+                        <FolderTitleOutput
+                            title={folder?.title}
+                            isExiting={isExiting} />
+                    )}
                 </div>
+
+                <EntityList reduced={taskListState}>
+                    {filteredData.map((item) => {
+                        if (item.type === "folder") {
+                            return <Folder key={item.id} folder={item} />
+                        }
+                        if (item.type === "note") {
+                            return <Note key={item.id} note={item} linkPreviewId={item.link_preview_id} />
+                        }
+                    })}
+
+                </EntityList>
+                <TaskListsContainer />
+
             </div>
         </section >
     );

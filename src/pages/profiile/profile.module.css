@@ -11,21 +11,36 @@
 
 .profileContainer {
   position: relative;
-  padding-top: 10px;
-  max-height: calc(100vh - 70px);
+  padding: 10px 30px 0;
+  height: calc(100vh - 70px);
   overflow: hidden;
-  scrollbar-width: normal;
-}
 
-.profileContentWrapper {
+  width: 100%;
   display: flex;
   align-items: flex-start;
 }
 
-.mainPanel {
+.profileContainer.taskListOpen {
+}
+
+.profileContentWrapper {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* .profileContentWrapper.taskListOpen {
+  width: 70%;
+} */
+
+/* .mainPanel {
   width: 100%;
   flex-shrink: 0;
 }
+
+.mainPanel.taskListOpen {
+  width: 70%;
+} */
 
 .subHeder {
   position: absolute;

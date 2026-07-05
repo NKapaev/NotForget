@@ -24,7 +24,7 @@ export default function ViewModal({ modalId, noteId, isClosing, closeModal }) {
             e.stopPropagation()
         }}>
             <div className={styles.modalHeader}>
-                <p>{note.title}</p>
+                <p className={styles.modalTitle}>{note.title}</p>
 
                 <div className={styles.buttonsContainer}>
                     <Button className={styles.modalControlButton} onClick={() => { dispatch(openModal({ type: "edit", modalId: crypto.randomUUID(), noteId })) }}>

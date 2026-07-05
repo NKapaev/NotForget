@@ -6,7 +6,7 @@ import UrlPreviewCard from "../ui/urlPreviewCard/UrlPreviewCard"
 import { openModal } from "../../components/redux/modalsSlice"
 import { linkifyText } from "../../utils/linkifyText"
 
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 export default function Note({ note, linkPreviewId }) {
 
@@ -15,12 +15,16 @@ export default function Note({ note, linkPreviewId }) {
     const deleteNote = useDeleteNote(note.folder_id, note.task_list_id);
     const { data: previewData, isLoading } = useGetPreviewData(linkPreviewId);
 
+    const { taskListShown } = useSelector((state) => state.taskList)
     const dispatch = useDispatch()
 
     const handleDragStart = (e) => {
         e.dataTransfer.setData("text/plain", id)
         e.dataTransfer.effectAllowed = "move"
         document.body.classList.add("dragging")
+
+        const wasClosedBeforeDrag = !taskListShown;
+        e.dataTransfer.setData('wasClosedBeforeDrag', String(wasClosedBeforeDrag))
     }
 
     const handleDragEnd = () => {
@@ -71,8 +75,7 @@ export default function Note({ note, linkPreviewId }) {
             </div>
             <div className="note-content-wrapper">
                 {linkPreviewId && previewData && !isLoading && (
-                    <UrlPreviewCard borderRounded={true} previewData={previewData} />
-                )}
+                    <UrlPreviewCard borderRounded={true} previewData={previewData} />)}
                 <p className="note-content">{linkifyText(content)}</p>
             </div>
             <p className="creation-date ">{new Date(created_at).toLocaleDateString()}</p>

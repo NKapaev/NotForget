@@ -1,26 +1,52 @@
 .task-lists-container {
-  display: block;
-  /* padding: 10px; */
-  /* outline: 2px solid blue; */
-  width: 100%;
-  /* position: fixed; */
-  /* right: 0; */
-  /* top: 90px; */
-  /* transform: translateX(0); */
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 80%;
+  height: calc(100vh - 90px);
 
-  background-color: var(--bg-color);
-  z-index: 1;
+  display: flex;
+  flex-direction: column;
   flex-shrink: 0;
-  height: calc(100vh - 80px);
-  overflow-y: scroll;
-  scrollbar-width: none;
-  padding: 0 30px 20px 30px;
+
+  margin-top: 10px;
+  padding: 20px 20px 20px 30px;
+  border: 2px solid var(--accent-color);
+  border-radius: 10px;
+  background-color: var(--bg-color);
+
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 1);
+  -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 1);
+
+  z-index: 1;
+  pointer-events: all;
+
+  /* transform: translateX(100%); */
+  /* animation: taskListFadeOut 0.3s linear forwards; */
+  transform: translateX(calc(100% - 30px));
+
+  @media screen and (min-width: 769px) {
+    width: 40%;
+  }
 }
 
 .task-lists-container.open {
-  /* transform: translateX(0); */
+  /* animation: taskListFadeIn 0.3s linear forwards; */
+  pointer-events: all;
+  transform: translateX(0);
 }
 
+.scrollableTaskLists {
+  flex-grow: 1;
+
+  /* Разрешаем внутреннему блоку сжиматься, чтобы активировался скролл */
+  min-height: 0;
+
+  /* Сюда переносим управление прокруткой */
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
 .toggle-task-list-btn {
   font-size: 30px;
   font-weight: 700;
@@ -32,12 +58,12 @@
 }
 
 .add-tasklist-button {
-  /* width: 34px; */
-  padding: 0 10px;
+  align-self: start;
+  padding: 5px;
   height: 34px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: left;
   margin-bottom: 20px;
 }
 
@@ -48,3 +74,49 @@
 
 .tasklist-add-icon > use {
 }
+
+.taskListController {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--bg-color);
+  border: 2px solid var(--accent-color);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.taskListController:hover,
+.taskListController:focus {
+  background-color: var(--grey-color);
+  transform: scale(1.1) translate(-45%, -45%);
+}
+
+.taskListControllerIcon {
+  pointer-events: none;
+}
+/* 
+@keyframes taskListFadeIn {
+  0% {
+    transform: translateX(95%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes taskListFadeOut {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(95%);
+  }
+} */
