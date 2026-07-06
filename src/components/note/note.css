@@ -1,5 +1,6 @@
 .note {
   position: relative;
+  isolation: isolate;
 }
 
 .note::after {
@@ -16,7 +17,7 @@
   background-size: contain;
   opacity: 0.2;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 
 .noteHeader {
