@@ -83,9 +83,12 @@ export default function TaskExecution({ taskId }) {
 
     return (
         <div
-            className={`task-execution ${executionState?.split(" ").join("-")}`}
+            className={`task-execution`}
             onClick={handleClick}
         >
+            <div className={`executionIndicator not-started ${executionState === "not started" ? "visible" : ""}`}></div>
+            <div className={`executionIndicator in-progress ${executionState === "in progress" ? "visible" : ""}`}></div>
+            <div className={`executionIndicator completed ${executionState === "completed" ? "visible" : ""}`}></div>
         </div>
     )
 }

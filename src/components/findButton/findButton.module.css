@@ -19,7 +19,7 @@
 }
 
 .findButtonWrapper.isOpen {
-  width: calc(100vw - 110px);
+  width: calc(100vw - 145px);
 }
 
 .findButton {

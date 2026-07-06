@@ -1,4 +1,5 @@
 .task-execution {
+  position: relative;
   display: flex;
   flex-shrink: 0;
   width: 30px;
@@ -8,16 +9,31 @@
   cursor: pointer;
 }
 
-.task-execution.not-started {
+.not-started {
   background-image: linear-gradient(to right, #313030, #aaaaaa);
 }
-.task-execution.in-progress {
+.in-progress {
   background-image: linear-gradient(to right, #553803, #d3a604);
 }
-.task-execution.completed {
+.completed {
   background-image: linear-gradient(to right, #004b23, #38b000);
+}
+/* background-color: #008000; */
 
-  /* background-color: #008000; */
+.executionIndicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  opacity: 0;
+}
+
+.executionIndicator.visible {
+  opacity: 1;
 }
 
 /* ["not started", "in progress", "completed"]; */
