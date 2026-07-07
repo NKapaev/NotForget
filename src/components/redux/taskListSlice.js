@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     taskListShown: false,
+    wasClosedBeforeDrag: false,
 }
 
 export const taskListSlice = createSlice({
@@ -14,9 +15,12 @@ export const taskListSlice = createSlice({
         hideTaskList: (state) => {
             state.taskListShown = false;
         },
+        setWasClosedBeforeDrag: (state, action) => {
+            state.wasClosedBeforeDrag = action.payload;
+        },
     },
 })
 
-export const { showTaskList, hideTaskList } = taskListSlice.actions
+export const { showTaskList, hideTaskList, setWasClosedBeforeDrag } = taskListSlice.actions
 
 export default taskListSlice.reducer

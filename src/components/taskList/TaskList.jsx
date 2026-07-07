@@ -9,7 +9,7 @@ import useDeleteNote from "../../hooks/useDeleteNote"
 import useDeleteTaskList from "../../hooks/useDeleteTaskList"
 import useMoveNote from "../../hooks/useMoveNote"
 import { useFadeToggle } from "../../hooks/useFadeToggle"
-import { hideTaskList } from "../redux/taskListSlice"
+import { hideTaskList, setWasClosedBeforeDrag } from "../redux/taskListSlice"
 
 import TaskExecution from "../taskExecution/TaskExecution"
 import Button from "../ui/button/Button"
@@ -19,7 +19,7 @@ import { extractLink } from "../../utils/extractLink"
 export default function TaskList({ id, className, taskList }) {
     const params = useParams()
     const [isOpen, setIsOpen] = useState(false)
-    const { taskListShown } = useSelector((state) => state.taskList)
+    const { taskListShown, wasClosedBeforeDrag } = useSelector((state) => state.taskList)
 
     const deleteTaskList = useDeleteTaskList()
     const { data: notes, isLoading, error } = useNotes(null, id)
@@ -36,10 +36,9 @@ export default function TaskList({ id, className, taskList }) {
         const noteId = e.dataTransfer.getData("text/plain")
         document.body.classList.remove("dragging")
         if (!noteId) return
-        moveNote.mutate({ noteId, folderId: null, taskListId: id, })
-        const wasClosedBeforeDrag = e.dataTransfer.getData('wasClosedBeforeDrag') === 'true';
-        if (wasClosedBeforeDrag) {
-            dispatch(hideTaskList());
+        moveNote.mutate({ noteId, folderId: null, taskListId: id })
+        if (wasClosedBeforeDrag) { // берём из Redux, а не из dataTransfer
+            dispatch(hideTaskList())
         }
     }
 
@@ -115,9 +114,7 @@ export default function TaskList({ id, className, taskList }) {
                             onDragStart={(e) => {
                                 e.dataTransfer.setData("text/plain", note.id)
                                 document.body.classList.add("dragging")
-                                const wasClosedBeforeDrag = !taskListShown;
-                                console.log(wasClosedBeforeDrag)
-                                e.dataTransfer.setData('wasClosedBeforeDrag', String(wasClosedBeforeDrag))
+                                dispatch(setWasClosedBeforeDrag(!taskListShown)) // вместо dataTransfer.setData('wasClosedBeforeDrag', ...)
                             }}
                             onDragEnd={() => {
                                 document.body.classList.remove("dragging")
@@ -130,13 +127,13 @@ export default function TaskList({ id, className, taskList }) {
                                 e.preventDefault()
                                 dispatch(openModal({ type: "view", entity: "note", modalId: crypto.randomUUID(), noteId: note.id, props: { content: note.content, title: note.title } }))
                             }}
-                            onDragOver={(e) => { e.currentTarget.style.transform = "scale(1.01)" }}
-                            onDragLeave={(e) => { e.currentTarget.style.transform = "scale(1)" }}
+                        // onDragOver={(e) => { e.currentTarget.style.transform = "scale(1.01)" }}
+                        // onDragLeave={(e) => { e.currentTarget.style.transform = "scale(1)" }}
 
-                            onDrop={(e) => {
-                                e.currentTarget.style.transform = "scale(1)"
-                                document.body.classList.remove("dragging")
-                            }}
+                        // onDrop={(e) => {
+                        //     e.currentTarget.style.transform = "scale(1)"
+                        //     document.body.classList.remove("dragging")
+                        // }}
                         >
 
                             <div className={styles.taskContentWrapper}>

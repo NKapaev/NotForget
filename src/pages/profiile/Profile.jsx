@@ -95,7 +95,7 @@ export default function Profile() {
     }, [folderId])
 
     const dispatch = useDispatch();
-    const { taskListShown } = useSelector(state => state.taskList);
+    const { taskListShown, wasClosedBeforeDrag } = useSelector(state => state.taskList);
     const { stack } = useSelector(state => state.modals);
 
     const dataToDisplay = [...(notes || []).map(note => ({ ...note, type: "note" })), ...(folders || []).map(folder => ({ ...folder, type: "folder" }))];
@@ -157,8 +157,6 @@ export default function Profile() {
                     document.body.classList.remove("dragging")
                     if (!noteId) return
                     moveNote.mutate({ noteId, folderId: folderId || null })
-                    const wasClosedBeforeDrag = e.dataTransfer.getData('wasClosedBeforeDrag') === 'true';
-                    console.log(wasClosedBeforeDrag)
                     if (wasClosedBeforeDrag) {
                         dispatch(hideTaskList());
                     } else {

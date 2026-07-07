@@ -5,6 +5,7 @@ import Button from "../ui/button/Button"
 import UrlPreviewCard from "../ui/urlPreviewCard/UrlPreviewCard"
 import { openModal } from "../../components/redux/modalsSlice"
 import { linkifyText } from "../../utils/linkifyText"
+import { setWasClosedBeforeDrag } from "../redux/taskListSlice"
 
 import { useDispatch, useSelector } from "react-redux"
 
@@ -23,8 +24,7 @@ export default function Note({ note, linkPreviewId }) {
         e.dataTransfer.effectAllowed = "move"
         document.body.classList.add("dragging")
 
-        const wasClosedBeforeDrag = !taskListShown;
-        e.dataTransfer.setData('wasClosedBeforeDrag', String(wasClosedBeforeDrag))
+        dispatch(setWasClosedBeforeDrag(!taskListShown)) // вместо e.dataTransfer.setData(...)
     }
 
     const handleDragEnd = () => {
