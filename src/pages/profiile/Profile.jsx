@@ -10,7 +10,6 @@ import Header from '../../components/header/Header';
 import Folder from '../../components/folder/Folder';
 import Note from '../../components/note/Note';
 import TaskListsContainer from '../../components/taskListsContainer/TaskListsContainer';
-import WorkspaceSwitcher from '../../components/workspaceSwitcher/WorkspaceSwitcher';
 import Modal from '../../components/ui/modals/Modal';
 import FolderTitleOutput from '../../components/folderTitleOutput/FolderTitleOutput';
 import CreateEntityButton from '../../components/createEntityButton/CreateEntityButton';
@@ -96,7 +95,7 @@ export default function Profile() {
     }, [folderId])
 
     const dispatch = useDispatch();
-    const taskListState = useSelector(state => state.taskList.taskListShown);
+    const { taskListShown } = useSelector(state => state.taskList);
     const { stack } = useSelector(state => state.modals);
 
     const dataToDisplay = [...(notes || []).map(note => ({ ...note, type: "note" })), ...(folders || []).map(folder => ({ ...folder, type: "folder" }))];
@@ -149,7 +148,7 @@ export default function Profile() {
             <Header userData={profile} />
             <Toast toasts={toasts} />
 
-            <div className={`container ${styles.profileContainer} ${taskListState ? styles.taskListOpen : ""}`}
+            <div className={`container ${styles.profileContainer} ${taskListShown ? styles.taskListOpen : ""}`}
 
                 onDrop={(e) => {
                     e.preventDefault()
@@ -158,6 +157,13 @@ export default function Profile() {
                     document.body.classList.remove("dragging")
                     if (!noteId) return
                     moveNote.mutate({ noteId, folderId: folderId || null })
+                    const wasClosedBeforeDrag = e.dataTransfer.getData('wasClosedBeforeDrag') === 'true';
+                    console.log(wasClosedBeforeDrag)
+                    if (wasClosedBeforeDrag) {
+                        dispatch(hideTaskList());
+                    } else {
+                        dispatch(showTaskList());
+                    }
                 }}
                 onDragOver={(e) => {
                     e.preventDefault()
@@ -198,7 +204,7 @@ export default function Profile() {
                     )}
                 </div>
 
-                <EntityList reduced={taskListState}>
+                <EntityList>
                     {filteredData.map((item) => {
                         if (item.type === "folder") {
                             return <Folder key={item.id} folder={item} />

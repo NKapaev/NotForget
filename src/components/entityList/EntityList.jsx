@@ -1,11 +1,10 @@
 import styles from "./entityList.module.css"
-import { useSelector } from "react-redux"
 
 
-export default function EntityList({ reduced, children }) {
+export default function EntityList({ children }) {
 
     return (
-        <div className={`${styles.entiyList} ${reduced ? styles.reduced : ""}`}>
+        <div className={`${styles.entiyList}`}>
             {children}
         </div>
     )

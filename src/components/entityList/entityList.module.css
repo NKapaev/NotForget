@@ -13,22 +13,9 @@
   padding-top: 60px;
 }
 
-.entiyList.reduced {
-  width: 100%;
-}
-
 @media screen and (min-width: 481px) {
   .entiyList {
     flex-direction: row;
     flex-wrap: wrap;
-  }
-  .entiyList.reduced {
-    width: 70%;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .entiyList.reduced {
-    width: 100%;
   }
 }

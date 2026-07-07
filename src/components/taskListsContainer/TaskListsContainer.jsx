@@ -11,7 +11,7 @@ import { useSelector } from "react-redux"
 import { useQuery } from "@tanstack/react-query"
 
 export default function TaskListsContainer() {
-    const taskListState = useSelector(state => state.taskList.taskListShown);
+    const { taskListShown } = useSelector(state => state.taskList);
     const dispatch = useDispatch()
 
     const { id } = useParams()
@@ -28,15 +28,21 @@ export default function TaskListsContainer() {
     })
 
     return (
-        <div className={`task-lists-container ${taskListState ? "open" : ""}`}
+        <div className={`task-lists-container ${taskListShown ? "open" : ""}`}
             onDragEnter={(e) => {
                 dispatch(showTaskList())
+            }}
+
+            onDragLeave={(e) => {
+                if (e.currentTarget && !e.currentTarget.contains(e.relatedTarget)) {
+                    dispatch(hideTaskList())
+                }
             }}
         >
             <button className="taskListController"
                 onClick={(e) => {
                     e.target.blur()
-                    taskListState ? dispatch(hideTaskList()) : dispatch(showTaskList())
+                    taskListShown ? dispatch(hideTaskList()) : dispatch(showTaskList())
                 }}>
                 <svg className="taskListControllerIcon" fill="var(--accent-color)" width={20} height={20}>
                     <use href="/icons/list.svg" ></use>

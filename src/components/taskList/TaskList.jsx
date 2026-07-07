@@ -1,11 +1,9 @@
 import styles from "./taskList.module.css"
-import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { openModal } from "../redux/modalsSlice"
 import { linkifyText } from "../../utils/linkifyText"
-import supabase from "../../utils/supabase"
 import useNotes from "../../hooks/useNotes"
 import useDeleteNote from "../../hooks/useDeleteNote"
 import useDeleteTaskList from "../../hooks/useDeleteTaskList"
@@ -21,7 +19,8 @@ import { extractLink } from "../../utils/extractLink"
 export default function TaskList({ id, className, taskList }) {
     const params = useParams()
     const [isOpen, setIsOpen] = useState(false)
-    const queryClient = useQueryClient()
+    const { taskListShown } = useSelector((state) => state.taskList)
+
     const deleteTaskList = useDeleteTaskList()
     const { data: notes, isLoading, error } = useNotes(null, id)
     const { ref, hide, show } = useFadeToggle(200);
@@ -29,37 +28,16 @@ export default function TaskList({ id, className, taskList }) {
 
     const moveNote = useMoveNote()
 
-    const moveNoteMutation = useMutation({
-        mutationFn: async ({ noteId, taskListId }) => {
-            const { data, error } = await supabase
-                .from("notes")
-                .update({
-                    task_list_id: taskListId,
-                    folder_id: null
-                })
-                .eq("id", noteId)
-                .select()
-                .single()
-
-            if (error) throw error
-
-            return data
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["notes"] })
-        },
-    })
-
     const deleteNote = useDeleteNote(params.folderId, id)
 
     const handleDrop = (e) => {
         e.preventDefault()
         e.stopPropagation()
         const noteId = e.dataTransfer.getData("text/plain")
-        const wasClosedBeforeDrag = e.dataTransfer.getData('wasClosedBeforeDrag') === 'true';
         document.body.classList.remove("dragging")
         if (!noteId) return
         moveNote.mutate({ noteId, folderId: null, taskListId: id, })
+        const wasClosedBeforeDrag = e.dataTransfer.getData('wasClosedBeforeDrag') === 'true';
         if (wasClosedBeforeDrag) {
             dispatch(hideTaskList());
         }
@@ -137,12 +115,14 @@ export default function TaskList({ id, className, taskList }) {
                             onDragStart={(e) => {
                                 e.dataTransfer.setData("text/plain", note.id)
                                 document.body.classList.add("dragging")
+                                const wasClosedBeforeDrag = !taskListShown;
+                                console.log(wasClosedBeforeDrag)
+                                e.dataTransfer.setData('wasClosedBeforeDrag', String(wasClosedBeforeDrag))
                             }}
                             onDragEnd={() => {
                                 document.body.classList.remove("dragging")
                             }}
                             onClick={(e) => {
-                                console.log(e.target)
                                 if (e.target.tagName === "A") {
                                     return
                                 }
@@ -160,7 +140,7 @@ export default function TaskList({ id, className, taskList }) {
                         >
 
                             <div className={styles.taskContentWrapper}>
-                                <TaskExecution key={note.id} taskId={note.id}></TaskExecution>
+                                <TaskExecution taskId={note.id}></TaskExecution>
                                 {(() => {
                                     const detectedLink = extractLink(note.content);
 

@@ -113,6 +113,7 @@
 
 .taskListItem:hover,
 .taskListItem:focus {
+  cursor: pointer;
   color: var(--white);
 }
 
