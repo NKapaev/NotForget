@@ -1,0 +1,128 @@
+.settingsPageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.settingsPageTitle {
+  color: var(--blue);
+  font-size: 32px;
+}
+.displayModSetting {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.displayModInput {
+  appearance: none;
+}
+.displayModInput:not(:placeholder-shown) ~ .displayModLabel {
+  transform: translateY(0);
+}
+
+.displayModLabel {
+  display: flex;
+  align-items: center;
+}
+
+.displayModLabel:not(:last-child) {
+  margin-bottom: 20px;
+}
+/*
+.displayModLabel:not(:last-child) {
+  margin-right: 50px;
+} */
+
+.visualisationIcon {
+  display: flex;
+  padding: 10px;
+  margin-right: 10px;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 100px;
+  border: 2px solid var(--blue);
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 1);
+  -webkit-box-shadow: 0px 0px 10px 1px rgb(10, 0, 0);
+  -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 1);
+}
+
+.iconPart {
+  display: block;
+  border: 2px solid var(--blue);
+  border-radius: 4px;
+}
+
+.displayModInput:checked + .displayModLabel .visualisationIcon {
+  color: var(--blue);
+  box-shadow:
+    0px 0px 10px 1px rgba(0, 0, 0, 1),
+    inset 0 0 10px 1px var(--blue);
+  -webkit-box-shadow:
+    0px 0px 10px 1px rgb(10, 0, 0),
+    inset 0 0 10px 1px var(--blue);
+  -moz-box-shadow:
+    0px 0px 10px 1px rgba(0, 0, 0, 1),
+    inset 0 0 10px 1px var(--blue);
+}
+
+.displayModInput:checked + .displayModLabel:hover .visualisationIcon {
+  box-shadow:
+    0px 0px 10px 1px var(--blue),
+    inset 0 0 10px 1px var(--blue);
+
+  -webkit-box-shadow:
+    0px 0px 10px 1px var(--blue),
+    inset 0 0 10px 1px var(--blue);
+  -moz-box-shadow:
+    0px 0px 10px 1px var(--blue),
+    inset 0 0 10px 1px var(--blue);
+}
+
+.displayModInput:checked + .displayModLabel .iconPart {
+  background-color: var(--blue);
+}
+
+.displayModInput:checked + .displayModLabel {
+  color: var(--blue);
+}
+
+.displayModLabel:hover .visualisationIcon {
+  box-shadow: 0px 0px 10px 1px var(--blue);
+  -webkit-box-shadow: 0px 0px 10px 1px var(--blue);
+  -moz-box-shadow: 0px 0px 10px 1px var(--blue);
+}
+
+.gridVisualisationIcon {
+  flex-wrap: wrap;
+}
+
+.gridVisualisationIcon .iconPart {
+  width: calc((100% - 2 * 10px) / 3);
+  height: 20px;
+}
+
+.listVisualisationIcon {
+  flex-direction: column;
+}
+
+.listVisualisationIcon .iconPart {
+  display: block;
+  width: 100%;
+  height: 15px;
+}
+
+@media screen and (min-width: 720px) {
+  .displayModSetting {
+    flex-direction: row;
+  }
+
+  .displayModLabel:not(:last-child) {
+    margin-bottom: 0;
+    margin-right: 20px;
+  }
+}

@@ -9,7 +9,7 @@ import { setWasClosedBeforeDrag } from "../redux/taskListSlice"
 
 import { useDispatch, useSelector } from "react-redux"
 
-export default function Note({ note, linkPreviewId }) {
+export default function Note({ note, linkPreviewId, displayMod }) {
 
 
     const { id, title, content, created_at } = note;
@@ -34,7 +34,7 @@ export default function Note({ note, linkPreviewId }) {
     return (
         <li
             draggable
-            className="tile note"
+            className={`tile note ${displayMod === "list" ? "row" : ""}`}
             id={id}
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}

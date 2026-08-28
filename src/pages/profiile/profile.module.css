@@ -11,7 +11,7 @@
 
 .profileContainer {
   position: relative;
-  padding: 10px 30px 0;
+  padding: 10px 40px 0 0;
   height: calc(100vh - 70px);
   overflow: hidden;
 
@@ -42,12 +42,14 @@
   width: 70%;
 } */
 
-.subHeder {
+.subHeader {
   position: absolute;
   display: flex;
   align-items: center;
   gap: 10px;
   z-index: 1;
+  top: 10px;
+  left: 10px;
 }
 
 @keyframes goBackFadeIn {

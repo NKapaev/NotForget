@@ -45,7 +45,7 @@ export default function TaskListsContainer() {
                     taskListShown ? dispatch(hideTaskList()) : dispatch(showTaskList())
                 }}>
                 <svg className="taskListControllerIcon" fill="var(--accent-color)" width={20} height={20}>
-                    <use href="/icons/list.svg" ></use>
+                    <use href="/icons/list.svg#listIcon" ></use>
                 </svg>
             </button>
             <Button aria-label="Створити новий список задач" className="add-tasklist-button" onClick={(e) => {

@@ -3,6 +3,10 @@
   isolation: isolate;
 }
 
+.note:hover::after {
+  opacity: 0.4;
+}
+
 .note::after {
   content: '';
   position: absolute;
@@ -18,6 +22,14 @@
   opacity: 0.2;
   pointer-events: none;
   z-index: 1;
+}
+
+.note.row:after {
+  width: 80px;
+  height: 80px;
+  top: 45px;
+  left: 40px;
+  background-position: left;
 }
 
 .noteHeader {

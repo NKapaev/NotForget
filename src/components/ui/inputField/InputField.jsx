@@ -1,7 +1,7 @@
 import styles from "./inputField.module.css";
 import useUrlPreviewData from "../../../hooks/useUrlPreviewData";
 import UrlPreviewCard from "../urlPreviewCard/UrlPreviewCard";
-import { useState, useRef, use } from "react";
+import { useState } from "react";
 
 
 export default function InputField({

@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import useMoveNote from "../../hooks/useMoveNote"
 
 
-export default function Folder({ folder }) {
+export default function Folder({ folder, displayMod }) {
 
     const params = useParams();
     const { id, title, description, created_at } = folder
@@ -27,7 +27,7 @@ export default function Folder({ folder }) {
     }
 
     return (
-        <li className="folder tile"
+        <li className={`folder tile ${displayMod === "list" && "row"}`}
             onDrop={handleDrop}
             onDragOver={(e) => {
                 e.preventDefault()

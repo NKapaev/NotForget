@@ -182,7 +182,7 @@ export default function Profile() {
                         }}
                     ></WorkspaceSwitcher>
                 )} */}
-                <div className={styles.subHeder}>
+                <div className={styles.subHeader}>
                     {shouldRenderGoBack && (
                         <button
                             className={`${styles.goBackButton} ${isExiting ? styles.fadeOut : ''}`}
@@ -205,10 +205,10 @@ export default function Profile() {
                 <EntityList>
                     {filteredData.map((item) => {
                         if (item.type === "folder") {
-                            return <Folder key={item.id} folder={item} />
+                            return <Folder key={item.id} folder={item} displayMod={profile.displayMod} />
                         }
                         if (item.type === "note") {
-                            return <Note key={item.id} note={item} linkPreviewId={item.link_preview_id} />
+                            return <Note key={item.id} note={item} linkPreviewId={item.link_preview_id} displayMod={profile.displayMod} />
                         }
                     })}
 

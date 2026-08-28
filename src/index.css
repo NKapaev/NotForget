@@ -111,13 +111,14 @@ button {
 }
 
 .tile {
+  direction: ltr;
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
   margin-right: 0;
   cursor: pointer;
-  height: 200px;
+  max-height: 200px;
   background-color: var(--bg-color);
 
   border: 2px solid var(--blue);
@@ -171,4 +172,18 @@ button {
   .tile {
     width: calc((100% - 4 * 15px) / 5);
   }
+}
+
+.tile.row {
+  width: 100%;
+  max-height: none;
+}
+
+.tile.row .note-content-wrapper {
+  display: block;
+}
+
+.tile.row:hover,
+.tile.row:focus {
+  transform: scale(1.01);
 }
